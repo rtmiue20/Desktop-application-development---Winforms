@@ -1,0 +1,147 @@
+{
+  "version": 3,
+  "targets": {
+    "net9.0-windows7.0": {
+      "BUS/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "DAL": "1.0.0",
+          "DTO": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BUS.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BUS.dll": {}
+        }
+      },
+      "DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "DTO": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DAL.dll": {}
+        }
+      },
+      "DTO/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/DTO.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DTO.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BUS/1.0.0": {
+      "type": "project",
+      "path": "../BUS/BUS.csproj",
+      "msbuildProject": "../BUS/BUS.csproj"
+    },
+    "DAL/1.0.0": {
+      "type": "project",
+      "path": "../DAL/DAL.csproj",
+      "msbuildProject": "../DAL/DAL.csproj"
+    },
+    "DTO/1.0.0": {
+      "type": "project",
+      "path": "../DTO/DTO.csproj",
+      "msbuildProject": "../DTO/DTO.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net9.0-windows7.0": [
+      "BUS >= 1.0.0",
+      "DTO >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\MinhTrieu\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\MinhTrieu\\UEH\\PTUDDesktop\\Desktop_Application_Development\\GUI\\GUI.csproj",
+      "projectName": "GUI",
+      "projectPath": "C:\\Users\\MinhTrieu\\UEH\\PTUDDesktop\\Desktop_Application_Development\\GUI\\GUI.csproj",
+      "packagesPath": "C:\\Users\\MinhTrieu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MinhTrieu\\UEH\\PTUDDesktop\\Desktop_Application_Development\\GUI\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\MinhTrieu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net9.0-windows"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows",
+          "projectReferences": {
+            "C:\\Users\\MinhTrieu\\UEH\\PTUDDesktop\\Desktop_Application_Development\\BUS\\BUS.csproj": {
+              "projectPath": "C:\\Users\\MinhTrieu\\UEH\\PTUDDesktop\\Desktop_Application_Development\\BUS\\BUS.csproj"
+            },
+            "C:\\Users\\MinhTrieu\\UEH\\PTUDDesktop\\Desktop_Application_Development\\DTO\\DTO.csproj": {
+              "projectPath": "C:\\Users\\MinhTrieu\\UEH\\PTUDDesktop\\Desktop_Application_Development\\DTO\\DTO.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
+    },
+    "frameworks": {
+      "net9.0-windows7.0": {
+        "targetAlias": "net9.0-windows",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WindowsForms": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
