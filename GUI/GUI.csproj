@@ -30,7 +30,7 @@
       <Compile Update="FormIntoWarehouse.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="FormCheckInventory.cs">
+      <Compile Update="FormInventory.cs">
         <SubType>Form</SubType>
       </Compile>
       <Compile Update="FormSupplier.cs">
@@ -55,6 +55,12 @@
         <SubType>Form</SubType>
       </Compile>
       <Compile Update="FormPromotion.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="FormCategory.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="FormWarranty.cs">
         <SubType>Form</SubType>
       </Compile>
     </ItemGroup>

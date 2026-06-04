@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Desktop_Application_Development;
 
-partial class FormCheckInventory
+partial class FormInventory
 {
     /// <summary>
     /// Required designer variable.

@@ -1,8 +1,8 @@
 namespace Desktop_Application_Development;
 
-public partial class FormCheckInventory : Form
+public partial class FormInventory : Form
 {
-    public FormCheckInventory()
+    public FormInventory()
     {
         InitializeComponent();
     }
