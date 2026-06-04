@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj": {}
+    "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj": {
+    "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj",
+        "projectUniqueName": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj",
         "projectName": "BUS",
-        "projectPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\obj\\",
+        "projectPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj",
+        "packagesPath": "C:\\Users\\MinhTrieu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "E:\\study\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MinhTrieu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,17 +26,18 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj"
+              "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj"
               },
-              "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj"
+              "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj": {
+                "projectPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj"
               }
             }
           }
@@ -51,7 +52,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -72,24 +73,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj": {
+    "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\obj\\",
+        "projectPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\MinhTrieu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "E:\\study\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MinhTrieu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -98,14 +99,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj"
+              "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj": {
+                "projectPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj"
               }
             }
           }
@@ -120,7 +122,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -151,24 +153,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj": {
+    "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj",
+        "projectUniqueName": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj",
         "projectName": "DTO",
-        "projectPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\obj\\",
+        "projectPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj",
+        "packagesPath": "C:\\Users\\MinhTrieu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "E:\\study\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MinhTrieu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -177,6 +179,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -195,7 +198,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -216,7 +219,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
