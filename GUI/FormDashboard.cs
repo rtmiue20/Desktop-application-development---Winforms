@@ -1,6 +1,7 @@
 using BUS;
+using Desktop_Application_Development;
 
-namespace Desktop_Application_Development;
+namespace GUI;
 
 public partial class FormDashboard : Form
 {

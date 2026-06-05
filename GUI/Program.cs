@@ -1,4 +1,4 @@
-namespace Desktop_Application_Development;
+namespace GUI;
 
 static class Program
 {
