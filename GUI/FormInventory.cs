@@ -1,13 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace GUI
 {
     public partial class FormInventory : Form
     {
-        // Danh sách giả lập cơ sở dữ liệu sản phẩm trong kho phục vụ kiểm kê
-        private List<dynamic> _inventoryList = new List<dynamic>();
+        private class InventoryModel
+        {
+            // Triệt tiêu cảnh báo CS8618
+            public string ProductCode { get; set; } = string.Empty;
+            public string ProductName { get; set; } = string.Empty;
+            public string Category { get; set; } = string.Empty;
+            public int Stock { get; set; }
+            public int MinStock { get; set; }
+            public string Status { get; set; } = string.Empty;
+        }
+
+        private List<InventoryModel> _items = new List<InventoryModel>();
 
         public FormInventory()
         {
@@ -16,116 +27,58 @@ namespace GUI
 
         private void FormInventory_Load(object sender, EventArgs e)
         {
-            LoadMockInventoryData();
+            cb_categories.Items.AddRange(new[] { "Tất cả danh mục", "Điện thoại", "Máy tính bảng" });
+            cb_categories.SelectedIndex = 0;
+            cb_statusFilter.Items.AddRange(new[] { "Tất cả trạng thái", "Còn hàng", "Sắp hết", "Hết hàng" });
+            cb_statusFilter.SelectedIndex = 0;
+
+            LoadData();
         }
 
-        private void LoadMockInventoryData()
+        private void LoadData()
         {
-            _inventoryList = new List<dynamic>()
+            _items = new List<InventoryModel>
             {
-                new { MaSP = "SP001", TenSP = "Laptop ASUS ROG Strix", TonHeThong = 15, TonThucTe = 15, ChenhLech = 0, GhiChu = "Khớp" },
-                new { MaSP = "SP002", TenSP = "iPhone 15 Pro Max", TonHeThong = 30, TonThucTe = 29, ChenhLech = -1, GhiChu = "Chưa rõ lý do hao hụt" },
-                new { MaSP = "SP003", TenSP = "Bàn phím cơ Akko 3098B", TonHeThong = 8, TonThucTe = 8, ChenhLech = 0, GhiChu = "Khớp" }
+                new InventoryModel { ProductCode = "SP001", ProductName = "iPhone 15 Pro", Category = "Điện thoại", Stock = 8, MinStock = 5, Status = "Còn hàng" },
+                new InventoryModel { ProductCode = "SP002", ProductName = "Samsung S24", Category = "Điện thoại", Stock = 3, MinStock = 5, Status = "Sắp hết" },
+                new InventoryModel { ProductCode = "SP003", ProductName = "iPad Pro M2", Category = "Máy tính bảng", Stock = 0, MinStock = 3, Status = "Hết hàng" }
             };
-            dgvInventory.DataSource = _inventoryList;
+            ApplyFilter();
         }
 
-        // Sự kiện chọn dòng trên Grid để lấy thông tin chỉnh sửa số kiểm kê thực tế
-        private void dgvInventory_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void ApplyFilter()
         {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dgvInventory.Rows[e.RowIndex];
-                txtProductCode.Text = row.Cells["MaSP"].Value?.ToString();
-                txtProductName.Text = row.Cells["TenSP"].Value?.ToString();
-                txtSystemQty.Text = row.Cells["TonHeThong"].Value?.ToString();
-                nudActualQty.Value = Convert.ToInt32(row.Cells["TonThucTe"].Value);
-                txtNote.Text = row.Cells["GhiChu"].Value?.ToString();
+            // Đảm bảo Text không bị null (CS8602)
+            string selectedCategory = cb_categories.Text ?? string.Empty;
+            string selectedStatus = cb_statusFilter.Text ?? string.Empty;
 
-                TinhChenhLech();
-            }
+            var filtered = _items.Where(x =>
+                (cb_categories.SelectedIndex == 0 || x.Category == selectedCategory) &&
+                (cb_statusFilter.SelectedIndex == 0 || x.Status == selectedStatus)).ToList();
+
+            dgv_inventory.DataSource = filtered;
+
+            if (dgv_inventory.Columns["ProductCode"] != null) dgv_inventory.Columns["ProductCode"].HeaderText = "Mã SP";
+            if (dgv_inventory.Columns["ProductName"] != null) dgv_inventory.Columns["ProductName"].HeaderText = "Tên sản phẩm";
+            if (dgv_inventory.Columns["Category"] != null) dgv_inventory.Columns["Category"].HeaderText = "Danh mục";
+            if (dgv_inventory.Columns["Stock"] != null) dgv_inventory.Columns["Stock"].HeaderText = "Tồn kho";
+            if (dgv_inventory.Columns["MinStock"] != null) dgv_inventory.Columns["MinStock"].HeaderText = "Tồn tối thiểu";
+            if (dgv_inventory.Columns["Status"] != null) dgv_inventory.Columns["Status"].HeaderText = "Trạng thái";
+
+            lbl_totalCount.Text = "24\nTổng sản phẩm";
+            lbl_availableCount.Text = "18\nCòn hàng";
+            lbl_warningCount.Text = "4\nSắp hết (≤ MinStock)";
+            lbl_outOfStockCount.Text = "2\nHết hàng";
+            lbl_timeUpdate.Text = $"Cập nhật lúc: {DateTime.Now:HH:mm dd/MM/yyyy}";
         }
 
-        private void nudActualQty_ValueChanged(object sender, EventArgs e)
+        private void btn_filter_Click(object sender, EventArgs e) => ApplyFilter();
+        private void btn_export_Click(object sender, EventArgs e) => MessageBox.Show("Đã xuất Excel!");
+        private void btn_refresh_Click(object sender, EventArgs e) { cb_categories.SelectedIndex = 0; cb_statusFilter.SelectedIndex = 0; LoadData(); }
+
+        private void lbl_timeUpdate_Click(object sender, EventArgs e)
         {
-            TinhChenhLech();
-        }
 
-        private void TinhChenhLech()
-        {
-            if (int.TryParse(txtSystemQty.Text, out int systemQty))
-            {
-                int actualQty = (int)nudActualQty.Value;
-                int diff = actualQty - systemQty;
-                txtDifference.Text = diff.ToString();
-            }
-        }
-
-        // Nút CẬP NHẬT SỐ LIỆU KIỂM KÊ TẠM THỜI LÊN LƯỚI
-        private void btnUpdateRecord_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtProductCode.Text))
-            {
-                MessageBox.Show("Vui lòng chọn một sản phẩm từ danh sách kiểm kê!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string code = txtProductCode.Text;
-            int actualQty = (int)nudActualQty.Value;
-            int systemQty = int.Parse(txtSystemQty.Text);
-            int diff = actualQty - systemQty;
-            string note = txtNote.Text.Trim();
-
-            // Cập nhật lại danh sách In-memory
-            for (int i = 0; i < _inventoryList.Count; i++)
-            {
-                if (_inventoryList[i].MaSP == code)
-                {
-                    _inventoryList[i] = new
-                    {
-                        MaSP = code,
-                        TenSP = txtProductName.Text,
-                        TonHeThong = systemQty,
-                        TonThucTe = actualQty,
-                        ChenhLech = diff,
-                        GhiChu = string.IsNullOrEmpty(note) ? "Đã kiểm kê" : note
-                    };
-                    break;
-                }
-            }
-
-            dgvInventory.DataSource = null;
-            dgvInventory.DataSource = _inventoryList;
-            MessageBox.Show("Cập nhật số liệu kiểm kê tạm thời thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ClearInputs();
-        }
-
-        // Nút LƯU BIÊN BẢN KIỂM KÊ TOÀN BỘ XUỐNG HỆ THỐNG
-        private void btnSaveInventory_Click(object sender, EventArgs e)
-        {
-            // Điểm kết nối nghiệp vụ (BUS Layer) sau khi hoàn thiện cơ sở dữ liệu
-            MessageBox.Show("Đã lưu biên bản kiểm kê kho và cân bằng số lượng tồn kho thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ClearInputs();
-        }
-
-        private void ClearInputs()
-        {
-            txtProductCode.Clear();
-            txtProductName.Clear();
-            txtSystemQty.Clear();
-            txtDifference.Clear();
-            txtNote.Clear();
-            nudActualQty.Value = 0;
-        }
-
-        private void txtProductName_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void txtNote_TextChanged(object sender, EventArgs e)
-        {
-            
         }
     }
 }

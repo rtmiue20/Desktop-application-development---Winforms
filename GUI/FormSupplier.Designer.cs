@@ -2,203 +2,169 @@ namespace GUI
 {
     partial class FormSupplier
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            dgvSuppliers = new DataGridView();
-            txtSupplierCode = new TextBox();
-            txtSupplierName = new TextBox();
-            txtPhone = new TextBox();
-            txtAddress = new TextBox();
-            btnAdd = new Button();
-            btnUpdate = new Button();
-            btnClear = new Button();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dgvSuppliers).BeginInit();
-            SuspendLayout();
-            // 
-            // dgvSuppliers
-            // 
-            dgvSuppliers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSuppliers.Location = new Point(19, 223);
-            dgvSuppliers.Margin = new Padding(4, 5, 4, 5);
-            dgvSuppliers.Name = "dgvSuppliers";
-            dgvSuppliers.RowHeadersWidth = 51;
-            dgvSuppliers.Size = new Size(1013, 385);
-            dgvSuppliers.TabIndex = 0;
-            dgvSuppliers.CellClick += dgvSuppliers_CellClick;
-            // 
-            // txtSupplierCode
-            // 
-            txtSupplierCode.Location = new Point(160, 31);
-            txtSupplierCode.Margin = new Padding(4, 5, 4, 5);
-            txtSupplierCode.Name = "txtSupplierCode";
-            txtSupplierCode.Size = new Size(265, 27);
-            txtSupplierCode.TabIndex = 1;
-            // 
-            // txtSupplierName
-            // 
-            txtSupplierName.Location = new Point(160, 77);
-            txtSupplierName.Margin = new Padding(4, 5, 4, 5);
-            txtSupplierName.Name = "txtSupplierName";
-            txtSupplierName.Size = new Size(265, 27);
-            txtSupplierName.TabIndex = 2;
-            // 
-            // txtPhone
-            // 
-            txtPhone.Location = new Point(160, 123);
-            txtPhone.Margin = new Padding(4, 5, 4, 5);
-            txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(265, 27);
-            txtPhone.TabIndex = 3;
-            // 
-            // txtAddress
-            // 
-            txtAddress.Location = new Point(160, 169);
-            txtAddress.Margin = new Padding(4, 5, 4, 5);
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(265, 27);
-            txtAddress.TabIndex = 4;
-            // 
-            // btnAdd
-            // 
-            btnAdd.Location = new Point(467, 28);
-            btnAdd.Margin = new Padding(4, 5, 4, 5);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(133, 46);
-            btnAdd.TabIndex = 5;
-            btnAdd.Text = "Thêm";
-            btnAdd.UseVisualStyleBackColor = true;
-            btnAdd.Click += btnAdd_Click;
-            // 
-            // btnUpdate
-            // 
-            btnUpdate.Location = new Point(467, 89);
-            btnUpdate.Margin = new Padding(4, 5, 4, 5);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(133, 46);
-            btnUpdate.TabIndex = 6;
-            btnUpdate.Text = "Cập nhật";
-            btnUpdate.UseVisualStyleBackColor = true;
-            btnUpdate.Click += btnUpdate_Click;
-            // 
-            // btnClear
-            // 
-            btnClear.Location = new Point(467, 151);
-            btnClear.Margin = new Padding(4, 5, 4, 5);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(133, 46);
-            btnClear.TabIndex = 7;
-            btnClear.Text = "Làm mới";
-            btnClear.UseVisualStyleBackColor = true;
-            btnClear.Click += btnClear_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(27, 35);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(66, 20);
-            label1.TabIndex = 8;
-            label1.Text = "Mã NCC:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(27, 82);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(68, 20);
-            label2.TabIndex = 9;
-            label2.Text = "Tên NCC:";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(27, 128);
-            label3.Margin = new Padding(4, 0, 4, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(39, 20);
-            label3.TabIndex = 10;
-            label3.Text = "SĐT:";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(27, 174);
-            label4.Margin = new Padding(4, 0, 4, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(58, 20);
-            label4.TabIndex = 11;
-            label4.Text = "Địa chỉ:";
-            // 
+            this.pnl_header = new System.Windows.Forms.Panel();
+            this.btn_refresh = new System.Windows.Forms.Button();
+            this.btn_delete = new System.Windows.Forms.Button();
+            this.btn_edit = new System.Windows.Forms.Button();
+            this.btn_add = new System.Windows.Forms.Button();
+            this.dgv_suppliers = new System.Windows.Forms.DataGridView();
+            this.pnl_details = new System.Windows.Forms.Panel();
+            this.btn_cancel = new System.Windows.Forms.Button();
+            this.btn_save = new System.Windows.Forms.Button();
+            this.txt_debt = new System.Windows.Forms.TextBox();
+            this.lbl_debt = new System.Windows.Forms.Label();
+            this.txt_address = new System.Windows.Forms.TextBox();
+            this.lbl_address = new System.Windows.Forms.Label();
+            this.txt_phone = new System.Windows.Forms.TextBox();
+            this.lbl_phone = new System.Windows.Forms.Label();
+            this.txt_supplierName = new System.Windows.Forms.TextBox();
+            this.lbl_supplierName = new System.Windows.Forms.Label();
+            this.lbl_infoTitle = new System.Windows.Forms.Label();
+            this.pnl_status = new System.Windows.Forms.Panel();
+            this.lbl_totalDebt = new System.Windows.Forms.Label();
+            this.lbl_totalSuppliers = new System.Windows.Forms.Label();
+            this.pnl_header.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_suppliers)).BeginInit();
+            this.pnl_details.SuspendLayout();
+            this.pnl_status.SuspendLayout();
+            this.SuspendLayout();
+            // pnl_header
+            this.pnl_header.Controls.Add(this.btn_refresh);
+            this.pnl_header.Controls.Add(this.btn_delete);
+            this.pnl_header.Controls.Add(this.btn_edit);
+            this.pnl_header.Controls.Add(this.btn_add);
+            this.pnl_header.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnl_header.Height = 55;
+            // btn_refresh
+            this.btn_refresh.Location = new System.Drawing.Point(340, 12);
+            this.btn_refresh.Size = new System.Drawing.Size(100, 32);
+            this.btn_refresh.Text = "🔄 Làm mới";
+            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
+            // btn_delete
+            this.btn_delete.Location = new System.Drawing.Point(234, 12);
+            this.btn_delete.Size = new System.Drawing.Size(100, 32);
+            this.btn_delete.Text = "🗑️ Xóa";
+            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
+            // btn_edit
+            this.btn_edit.Location = new System.Drawing.Point(128, 12);
+            this.btn_edit.Size = new System.Drawing.Size(100, 32);
+            this.btn_edit.Text = "✏️ Sửa";
+            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click);
+            // btn_add
+            this.btn_add.Location = new System.Drawing.Point(12, 12);
+            this.btn_add.Size = new System.Drawing.Size(110, 32);
+            this.btn_add.Text = "➕ Thêm NCC";
+            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
+            // dgv_suppliers
+            this.dgv_suppliers.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dgv_suppliers.Width = 640;
+            this.dgv_suppliers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_suppliers_CellClick);
+            // pnl_details
+            this.pnl_details.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_details.Controls.Add(this.btn_cancel);
+            this.pnl_details.Controls.Add(this.btn_save);
+            this.pnl_details.Controls.Add(this.txt_debt);
+            this.pnl_details.Controls.Add(this.lbl_debt);
+            this.pnl_details.Controls.Add(this.txt_address);
+            this.pnl_details.Controls.Add(this.lbl_address);
+            this.pnl_details.Controls.Add(this.txt_phone);
+            this.pnl_details.Controls.Add(this.lbl_phone);
+            this.pnl_details.Controls.Add(this.txt_supplierName);
+            this.pnl_details.Controls.Add(this.lbl_supplierName);
+            this.pnl_details.Controls.Add(this.lbl_infoTitle);
+            // btn_cancel
+            this.btn_cancel.Location = new System.Drawing.Point(175, 335);
+            this.btn_cancel.Size = new System.Drawing.Size(120, 35);
+            this.btn_cancel.Text = "❌ Hủy";
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
+            // btn_save
+            this.btn_save.Location = new System.Drawing.Point(35, 335);
+            this.btn_save.Size = new System.Drawing.Size(120, 35);
+            this.btn_save.Text = "💾 Lưu";
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
+            // txt_debt
+            this.txt_debt.Location = new System.Drawing.Point(20, 280);
+            this.txt_debt.Size = new System.Drawing.Size(300, 26);
+            // lbl_debt
+            this.lbl_debt.Location = new System.Drawing.Point(20, 260);
+            this.lbl_debt.Text = "Công nợ (đ)";
+            // txt_address
+            this.txt_address.Location = new System.Drawing.Point(20, 210);
+            this.txt_address.Size = new System.Drawing.Size(300, 26);
+            // lbl_address
+            this.lbl_address.Location = new System.Drawing.Point(20, 190);
+            this.lbl_address.Text = "Địa chỉ";
+            // txt_phone
+            this.txt_phone.Location = new System.Drawing.Point(20, 140);
+            this.txt_phone.Size = new System.Drawing.Size(300, 26);
+            // lbl_phone
+            this.lbl_phone.Location = new System.Drawing.Point(20, 120);
+            this.lbl_phone.Text = "Số điện thoại *";
+            // txt_supplierName
+            this.txt_supplierName.Location = new System.Drawing.Point(20, 70);
+            this.txt_supplierName.Size = new System.Drawing.Size(300, 29);
+            // lbl_supplierName
+            this.lbl_supplierName.Location = new System.Drawing.Point(20, 50);
+            this.lbl_supplierName.Text = "Tên nhà cung cấp *";
+            // lbl_infoTitle
+            this.lbl_infoTitle.Location = new System.Drawing.Point(20, 15);
+            this.lbl_infoTitle.Text = "📝 Thông tin NCC";
+            // pnl_status
+            this.pnl_status.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnl_status.Height = 30;
+            this.pnl_status.Controls.Add(this.lbl_totalDebt);
+            this.pnl_status.Controls.Add(this.lbl_totalSuppliers);
+            // lbl_totalDebt
+            this.lbl_totalDebt.Location = new System.Drawing.Point(750, 8);
+            this.lbl_totalDebt.Text = "Tổng công nợ: 120,000,000 đ";
+            // lbl_totalSuppliers
+            this.lbl_totalSuppliers.Location = new System.Drawing.Point(12, 8);
+            this.lbl_totalSuppliers.Text = "Tổng: 2 nhà cung cấp";
             // FormSupplier
-            // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1045, 678);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(btnClear);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnAdd);
-            Controls.Add(txtAddress);
-            Controls.Add(txtPhone);
-            Controls.Add(txtSupplierName);
-            Controls.Add(txtSupplierCode);
-            Controls.Add(dgvSuppliers);
-            Margin = new Padding(4, 5, 4, 5);
-            Name = "FormSupplier";
-            Text = "Quản lý Nhà cung cấp";
-            Load += FormSupplier_Load;
-            ((System.ComponentModel.ISupportInitialize)dgvSuppliers).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
-
+            this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.pnl_details);
+            this.Controls.Add(this.dgv_suppliers);
+            this.Controls.Add(this.pnl_header);
+            this.Controls.Add(this.pnl_status);
+            this.Text = "Quản lý Nhà cung cấp";
+            this.Load += new System.EventHandler(this.FormSupplier_Load);
+            this.pnl_header.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_suppliers)).EndInit();
+            this.pnl_details.ResumeLayout(false);
+            this.pnl_status.ResumeLayout(false);
+            this.ResumeLayout(false);
         }
-
-        #endregion
-
-        private System.Windows.Forms.DataGridView dgvSuppliers;
-        private System.Windows.Forms.TextBox txtSupplierCode;
-        private System.Windows.Forms.TextBox txtSupplierName;
-        private System.Windows.Forms.TextBox txtPhone;
-        private System.Windows.Forms.TextBox txtAddress;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel pnl_header;
+        private System.Windows.Forms.Button btn_refresh;
+        private System.Windows.Forms.Button btn_delete;
+        private System.Windows.Forms.Button btn_edit;
+        private System.Windows.Forms.Button btn_add;
+        private System.Windows.Forms.DataGridView dgv_suppliers;
+        private System.Windows.Forms.Panel pnl_details;
+        private System.Windows.Forms.Label lbl_infoTitle;
+        private System.Windows.Forms.TextBox txt_supplierName;
+        private System.Windows.Forms.Label lbl_supplierName;
+        private System.Windows.Forms.TextBox txt_phone;
+        private System.Windows.Forms.Label lbl_phone;
+        private System.Windows.Forms.TextBox txt_address;
+        private System.Windows.Forms.Label lbl_address;
+        private System.Windows.Forms.TextBox txt_debt;
+        private System.Windows.Forms.Label lbl_debt;
+        private System.Windows.Forms.Button btn_cancel;
+        private System.Windows.Forms.Button btn_save;
+        private System.Windows.Forms.Panel pnl_status;
+        private System.Windows.Forms.Label lbl_totalSuppliers;
+        private System.Windows.Forms.Label lbl_totalDebt;
     }
 }

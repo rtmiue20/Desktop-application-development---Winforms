@@ -685,23 +685,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PC\\.nuget\\packages\\": {},
+    "C:\\Users\\MSI\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\RiderProjects\\Desktop-application-development---Winforms\\GUI\\GUI.csproj",
+      "projectUniqueName": "C:\\Users\\MSI\\Source\\Repos\\Desktop-application-development---Winforms\\GUI\\GUI.csproj",
       "projectName": "GUI",
-      "projectPath": "C:\\Users\\PC\\RiderProjects\\Desktop-application-development---Winforms\\GUI\\GUI.csproj",
-      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\RiderProjects\\Desktop-application-development---Winforms\\GUI\\obj\\",
+      "projectPath": "C:\\Users\\MSI\\Source\\Repos\\Desktop-application-development---Winforms\\GUI\\GUI.csproj",
+      "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MSI\\Source\\Repos\\Desktop-application-development---Winforms\\GUI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -716,11 +716,11 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "projectReferences": {
-            "C:\\Users\\PC\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj": {
-              "projectPath": "C:\\Users\\PC\\RiderProjects\\Desktop-application-development---Winforms\\BUS\\BUS.csproj"
+            "C:\\Users\\MSI\\Source\\Repos\\Desktop-application-development---Winforms\\BUS\\BUS.csproj": {
+              "projectPath": "C:\\Users\\MSI\\Source\\Repos\\Desktop-application-development---Winforms\\BUS\\BUS.csproj"
             },
-            "C:\\Users\\PC\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj": {
-              "projectPath": "C:\\Users\\PC\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj"
+            "C:\\Users\\MSI\\Source\\Repos\\Desktop-application-development---Winforms\\DTO\\DTO.csproj": {
+              "projectPath": "C:\\Users\\MSI\\Source\\Repos\\Desktop-application-development---Winforms\\DTO\\DTO.csproj"
             }
           }
         }
@@ -759,7 +759,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.314/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
