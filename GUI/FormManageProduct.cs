@@ -10,74 +10,79 @@ namespace GUI
 {
     public partial class FormManageProduct : Form
     {
-        // Khai báo BUS (Sử dụng ProductBUS thực tế của bạn)
-        // private readonly ProductsBUS _productBUS = new ProductsBUS();
-        // private readonly CategoriesBUS _categoryBUS = new CategoriesBUS();
+        // 1. Khai báo các đối tượng giao tiếp tầng BUS và biến trạng thái lưu trữ
+        private readonly ProductsBUS _productBUS = new ProductsBUS();
+        private readonly CategoriesBUS _categoryBUS = new CategoriesBUS();
 
-        // Dữ liệu tạm để giả lập logic lọc theo ảnh (thay bằng List<ProductsDTO> thật)
-        private object _originalProductList;
-        private string _selectedCategoryID = "All"; // Lưu id danh mục đang chọn
-        private string _selectedProductID = null;
+        private List<ProductsDTO> _originalProductList = new List<ProductsDTO>();
+        private int _selectedCategoryID = -1; // Khóa chính của danh mục đang được áp dụng bộ lọc (-1 là Tất cả)
+        private int _selectedProductID = -1; // Khóa chính của sản phẩm đang được thao tác (-1 là chưa chọn)
 
         public FormManageProduct()
         {
             InitializeComponent();
         }
 
+        // 2. Thiết lập trạng thái mặc định và nạp dữ liệu khi khởi tạo Form
         private void FormManageProduct_Load(object sender, EventArgs e)
         {
-            cb_StatusFilter.SelectedIndex = 0; // Mặc định "Tất cả trạng thái"
+            cb_StatusFilter.SelectedIndex = 0; // Khởi tạo tiêu chí lọc mặc định
             LoadCategories();
             LoadProducts();
         }
 
+        // Truy xuất danh mục từ cơ sở dữ liệu và liên kết với lưới điều hướng bên trái
         private void LoadCategories()
         {
-            // TODO: Thay bằng list CategoriesDTO thực tế từ database
-            // Var categories = _categoryBUS.GetAll();
-            // Dưới đây là cách tạo bảng ảo để nhúng vào DataGridView hiển thị Danh mục (Có đếm số lượng SP)
-            var dtCategories = new System.Data.DataTable();
-            dtCategories.Columns.Add("CatID", typeof(string));
-            dtCategories.Columns.Add("CatName", typeof(string));
-            dtCategories.Columns.Add("Count", typeof(string));
+            var categories = _categoryBUS.GetAll();
+            dgv_CategoryFilter.DataSource = categories;
 
-            dtCategories.Rows.Add("All", "Tất cả", "24");
-            dtCategories.Rows.Add("DM01", "Điện thoại", "12");
-            dtCategories.Rows.Add("DM02", "Máy tính bảng", "5");
-            dtCategories.Rows.Add("DM03", "Phụ kiện", "4");
-            dtCategories.Rows.Add("DM04", "Tai nghe", "3");
+            // Tùy chỉnh định dạng hiển thị cho lưới danh mục (ẩn cột ID)
+            if (dgv_CategoryFilter.Columns["CategoryID"] != null)
+                dgv_CategoryFilter.Columns["CategoryID"].Visible = false;
 
-            dgv_CategoryFilter.DataSource = dtCategories;
-            dgv_CategoryFilter.Columns["CatID"].Visible = false; // Ẩn mã ID
-
-            // Format cho giao diện đẹp giống menu danh mục bên trái
-            dgv_CategoryFilter.Columns["CatName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgv_CategoryFilter.Columns["Count"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgv_CategoryFilter.Columns["Count"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgv_CategoryFilter.Columns["Count"].DefaultCellStyle.ForeColor = Color.White;
-            dgv_CategoryFilter.Columns["Count"].DefaultCellStyle.BackColor = Color.Navy; // Giả lập huy hiệu đếm số lượng
             dgv_CategoryFilter.ClearSelection();
         }
 
+        // Truy xuất toàn bộ bản ghi sản phẩm và kích hoạt chu trình lọc
         private void LoadProducts()
         {
-            // TODO: Gọi _originalProductList = _productBUS.GetAll();
-            // Gán hiển thị dgv_ProductList.DataSource = _originalProductList;
-
-            UpdateBottomStatus();
+            _originalProductList = _productBUS.GetAll();
             ApplyFilters();
         }
 
+        // 3. Xử lý logic lọc dữ liệu đa chiều và cập nhật thông số thống kê
         private void ApplyFilters()
         {
-            // Hàm xử lý máy lọc (Kết hợp Danh mục bên trái & ComboBox trạng thái bên phải)
-            // if (_originalProductList == null) return;
-            // var filtered = _originalProductList.Where(p => ...).ToList();
-            // dgv_ProductList.DataSource = filtered;
+            if (_originalProductList == null || !_originalProductList.Any()) return;
+
+            // Khởi tạo tập hợp dữ liệu trung gian dựa trên danh sách gốc
+            var filteredList = _originalProductList.AsEnumerable();
+
+            // Áp dụng rào lọc dựa trên khóa chính của danh mục
+            if (_selectedCategoryID != -1)
+            {
+                filteredList = filteredList.Where(p => p.CategoryID == _selectedCategoryID);
+            }
+
+            // Áp dụng rào lọc dựa trên số lượng tồn kho định mức
+            string statusFilter = cb_StatusFilter.Text;
+            if (statusFilter == "Còn hàng")
+            {
+                filteredList = filteredList.Where(p => p.MinStock > 0);
+            }
+            else if (statusFilter == "Hết hàng")
+            {
+                filteredList = filteredList.Where(p => p.MinStock <= 0);
+            }
+
+            // Ràng buộc tập dữ liệu đã qua xử lý lên giao diện người dùng
+            dgv_ProductList.DataSource = filteredList.ToList();
 
             UpdateBottomStatus();
         }
 
+        // Tính toán và hiển thị thông số quản trị trên thanh trạng thái (StatusStrip)
         private void UpdateBottomStatus()
         {
             int totalProducts = dgv_ProductList.Rows.Count;
@@ -85,115 +90,123 @@ namespace GUI
 
             if (dgv_ProductList.SelectedRows.Count > 0)
             {
-                // Giả định cột Tên SP là index 1 hoặc có Name là "ProductName"
                 selectedName = dgv_ProductList.SelectedRows[0].Cells["ProductName"]?.Value?.ToString() ?? "Không";
             }
 
             lbl_StatusSummary.Text = $"Tổng: {totalProducts} sản phẩm | Đang chọn: {selectedName}";
-
-            // TODO: Dùng hàm LINQ đếm thực tế tồn kho < 5 là sắp hết, = 0 là hết hàng
-            // int lowStock = _originalProductList.Count(p => p.Stock > 0 && p.Stock <= 5);
-            // int outOfStock = _originalProductList.Count(p => p.Stock == 0);
-            // lbl_InventoryWarning.Text = $"Tồn kho thấp: {lowStock} SP | Hết hàng: {outOfStock} SP";
         }
 
-        // --- SỰ KIỆN TƯƠNG TÁC LƯỚI ---
+        // 4. Kiểm soát các sự kiện tương tác trên lưới dữ liệu (DataGridView)
 
+        // Nhận diện sự kiện chuyển đổi danh mục và cập nhật luồng lọc
         private void dgv_CategoryFilter_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                _selectedCategoryID = dgv_CategoryFilter.Rows[e.RowIndex].Cells["CatID"].Value.ToString();
-                ApplyFilters(); // Lọc lại danh sách sản phẩm theo danh mục
+                var cellValue = dgv_CategoryFilter.Rows[e.RowIndex].Cells["CategoryID"].Value;
+                if (cellValue != null && int.TryParse(cellValue.ToString(), out int catId))
+                {
+                    _selectedCategoryID = catId;
+                }
+                else
+                {
+                    _selectedCategoryID = -1;
+                }
+                ApplyFilters();
             }
         }
 
+        // Ghi nhận khóa chính của bản ghi khi người dùng thiết lập tiêu điểm
         private void dgv_ProductList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                _selectedProductID = dgv_ProductList.Rows[e.RowIndex].Cells["ProductID"]?.Value.ToString();
+                var cellValue = dgv_ProductList.Rows[e.RowIndex].Cells["ProductID"].Value;
+                if (cellValue != null && int.TryParse(cellValue.ToString(), out int prodId))
+                {
+                    _selectedProductID = prodId;
+                }
                 UpdateBottomStatus();
             }
         }
 
+        // Can thiệp vào quá trình kết xuất đồ họa (render) để định dạng chuỗi tiền tệ
         private void dgv_ProductList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Format màu sắc dựa trên Trạng thái hoặc số lượng tồn kho (Theo ảnh chuẩn)
-            if (dgv_ProductList.Columns[e.ColumnIndex].Name == "Status" && e.Value != null)
-            {
-                string status = e.Value.ToString();
-                if (status == "Còn hàng")
-                    e.CellStyle.ForeColor = Color.Green;
-                else if (status == "Sắp hết")
-                    e.CellStyle.ForeColor = Color.DarkGoldenrod; // Màu vàng cam
-                else if (status == "Hết hàng")
-                    e.CellStyle.ForeColor = Color.Red;
+            if (e.Value == null) return;
 
-                e.FormattingApplied = true;
-            }
-            // Format giá tiền (VNĐ)
-            else if (dgv_ProductList.Columns[e.ColumnIndex].Name == "Price" && e.Value != null)
+            if (dgv_ProductList.Columns[e.ColumnIndex].Name == "Price")
             {
                 if (decimal.TryParse(e.Value.ToString(), out decimal price))
                 {
-                    e.Value = price.ToString("#,##0");
+                    e.Value = price.ToString("#,##0"); // Định dạng phân cách hàng nghìn
                     e.FormattingApplied = true;
                 }
             }
         }
 
+        // Kích hoạt lại chu trình lọc dữ liệu khi tiêu chí trạng thái thay đổi
         private void cb_StatusFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             ApplyFilters();
         }
 
-        // --- CÁC NÚT THANH CÔNG CỤ TÌM/THÊM/SỬA/XÓA ---
+        // 5. Kiểm soát các thao tác chức năng chính của Form (CRUD)
 
+        // Khởi tạo phiên giao dịch bổ sung bản ghi sản phẩm mới
         private void btn_ProductAdd_Click(object sender, EventArgs e)
         {
-            // Form này chỉ xem dạng Master, Thêm mới sẽ mở Dialog
-            MessageBox.Show("Mở form nhập liệu Thêm Sản Phẩm (FormProductDetail)...", "Chức năng", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            // FormProductDetail frm = new FormProductDetail();
-            // if (frm.ShowDialog() == DialogResult.OK) { LoadProducts(); }
+            MessageBox.Show("Vui lòng thực thi luồng chuyển trang thêm sản phẩm tại đây.", "Tiến trình hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // Khởi tạo phiên giao dịch cập nhật thông tin cho bản ghi đang được chọn
         private void btn_ProductEdit_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(_selectedProductID))
+            if (_selectedProductID == -1)
             {
-                MessageBox.Show("Vui lòng chọn một sản phẩm để sửa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chỉ định một bản ghi sản phẩm để thực thi thao tác!", "Cảnh báo thao tác", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            MessageBox.Show($"Mở form sửa sản phẩm mã: {_selectedProductID}", "Chức năng");
+            MessageBox.Show($"Đang truy xuất thông tin cấu hình cho sản phẩm mã: {_selectedProductID}", "Tiến trình hệ thống");
         }
 
+        // Thực thi tiến trình loại bỏ bản ghi ra khỏi cơ sở dữ liệu
         private void btn_ProductDelete_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(_selectedProductID))
+            if (_selectedProductID == -1)
             {
-                MessageBox.Show("Vui lòng chọn một sản phẩm để xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chỉ định một bản ghi sản phẩm để thực thi thao tác xóa!", "Cảnh báo thao tác", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (MessageBox.Show("Bạn có chắc chắn muốn xóa sản phẩm này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Hành động này không thể hoàn tác. Xác nhận loại bỏ bản ghi này?", "Xác thực bảo mật", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                // Gọi BUS xóa
-                // _productBUS.Delete(_selectedProductID);
-                MessageBox.Show("Xóa thành công!");
-                LoadProducts(); // Refresh danh sách
+                var (success, error) = _productBUS.Delete(_selectedProductID);
+
+                if (success)
+                {
+                    MessageBox.Show("Loại bỏ bản ghi thành công!");
+                    LoadProducts();
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi xử lý: " + error, "Ngoại lệ hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
+        // Điều hướng luồng công việc sang phân hệ quản trị danh mục
         private void btn_Category_Click(object sender, EventArgs e)
         {
-            // Nút "Danh mục" trên TopBar -> Thường để mở nhanh Form quản lý Danh mục (FormCategory)
-            MessageBox.Show("Mở Form Quản lý danh mục...", "Điều hướng");
+            MessageBox.Show("Đang chuyển hướng sang phân hệ Quản lý danh mục...", "Điều hướng hệ thống");
         }
 
+        // Hủy bỏ các bộ lọc cục bộ và đồng bộ hóa lại toàn bộ tập dữ liệu
         private void btn_ProductRefresh_Click(object sender, EventArgs e)
         {
             cb_StatusFilter.SelectedIndex = 0;
+            _selectedCategoryID = -1;
+            _selectedProductID = -1;
             LoadCategories();
             LoadProducts();
         }
