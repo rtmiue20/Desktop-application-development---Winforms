@@ -48,5 +48,9 @@ namespace BUS
 
             return (true, null);
         }
+
+        public SalesInvoicesDTO GetByInvoiceCode(string code) => _invoiceDAL.GetByCode(code);
+
+        public List<SalesDetailsDTO> GetInvoiceDetails(int invoiceID) => _detailDAL.GetByInvoiceID(invoiceID);
     }
 }

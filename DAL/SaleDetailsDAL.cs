@@ -26,5 +26,12 @@ namespace DAL
                     "SELECT * FROM SalesDetails WHERE InvoiceID=@invoiceID", new { invoiceID }).AsList();
             }
         }
+        private readonly IDbConnection _db = DatabaseHelper.GetConnection();
+
+        public List<SalesDetailsDTO> GetByInvoiceID(int invoiceID)
+        {
+            string query = "SELECT * FROM SalesDetails WHERE InvoiceID = @InvoiceID";
+            return _db.Query<SalesDetailsDTO>(query, new { InvoiceID = invoiceID }).ToList();
+        }
     }
 }

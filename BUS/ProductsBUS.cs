@@ -42,5 +42,6 @@ namespace BUS
             // TODO: kiểm tra còn ProductItems trong kho không
             return (_dal.Delete(id), "Xóa thất bại.");
         }
+        public ProductsDTO GetById(int id) => GetAll().Find(p => p.ProductID == id);
     }
 }

@@ -33,5 +33,10 @@ namespace BUS
 
         public bool MarkAsDefective(int itemID) =>
             _dal.UpdateStatus(itemID, "Lỗi");
+        public ProductItemsDTO GetByItemCode(string itemCode)
+        {
+            return _dal.GetByItemCode(itemCode);
+        }
+        
     }
 }
