@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Desktop_Application_Development;
+namespace GUI;
 
 partial class FormReport
 {
