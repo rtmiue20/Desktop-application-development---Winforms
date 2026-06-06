@@ -37,5 +37,6 @@ namespace BUS
 
             return (_dal.Update(customer), "Cập nhật thất bại.");
         }
+        public CustomersDTO GetById(int id) => GetAll().Find(c => c.CustomerID == id);
     }
 }
