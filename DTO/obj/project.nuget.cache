@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "DrQp3tiytBU=",
+  "dgSpecHash": "id7ToGU1N3o=",
   "success": true,
-  "projectFilePath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\DTO\\DTO.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\ASUS TUF A15\\Desktop-application-development---Winforms\\DTO\\DTO.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ASUS TUF A15\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.16\\microsoft.netcore.app.ref.9.0.16.nupkg.sha512",
+    "C:\\Users\\ASUS TUF A15\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.16\\microsoft.windowsdesktop.app.ref.9.0.16.nupkg.sha512",
+    "C:\\Users\\ASUS TUF A15\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.16\\microsoft.aspnetcore.app.ref.9.0.16.nupkg.sha512"
+  ],
   "logs": []
 }

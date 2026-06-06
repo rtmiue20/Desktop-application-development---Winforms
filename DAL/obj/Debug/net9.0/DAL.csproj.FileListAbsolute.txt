@@ -1,0 +1,16 @@
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\bin\Debug\net9.0\DAL.deps.json
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\bin\Debug\net9.0\DAL.dll
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\bin\Debug\net9.0\DAL.pdb
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\bin\Debug\net9.0\DTO.dll
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\bin\Debug\net9.0\DTO.pdb
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.csproj.AssemblyReference.cache
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.AssemblyInfoInputs.cache
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.AssemblyInfo.cs
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.sourcelink.json
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.csproj.Up2Date
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.dll
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\refint\DAL.dll
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\DAL.pdb
+C:\Users\ASUS TUF A15\Desktop-application-development---Winforms\DAL\obj\Debug\net9.0\ref\DAL.dll
