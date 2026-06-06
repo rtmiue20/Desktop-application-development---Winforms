@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TechStore Management System - Hệ thống Quản lý Cửa hàng Điện tử
 
 Dự án xây dựng ứng dụng máy tính (Desktop Application) toàn diện hỗ trợ quản lý chuỗi quy trình kinh doanh, vận hành kho, bán hàng và chăm sóc khách hàng chuyên biệt cho các cửa hàng thiết bị công nghệ điện tử. Hệ thống ưu tiên tối ưu hóa hiệu năng, độ chính xác cao và trải nghiệm thao tác thuận tiện cho người sử dụng.
@@ -108,3 +109,7 @@ Hệ thống lưu trữ cấu trúc liên kết chuẩn hóa dữ liệu thông 
 3. Cập nhật lại thuộc tính chuỗi cấu hình `ConnectionString` sao cho khớp thông tin tài khoản truy cập cơ sở dữ liệu cục bộ của bạn:
    ```csharp
    private static readonly string ConnectionString = "Server=localhost;Port=3306;Database=techstore;Uid=Tên_User;Pwd=Mật_Khẩu_Của_Bạn;Charset=utf8mb4;";
+=======
+# Desktop-application-development---Winforms
+Đây là Dự án môn học Phảt triển Ứng dụng Desktop. 
+>>>>>>> 1056ad97bce0c4b8310e1d1ced8d95200e3b5090
