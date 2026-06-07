@@ -227,5 +227,10 @@ namespace GUI
                     name.Contains(keyword);
             }
         }
+
+        private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

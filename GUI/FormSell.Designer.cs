@@ -130,7 +130,7 @@ partial class FormSell
         // 
         // btn_promotion
         // 
-        btn_promotion.Location = new Point(531, 29);
+        btn_promotion.Location = new Point(531, 28);
         btn_promotion.Name = "btn_promotion";
         btn_promotion.Size = new Size(164, 51);
         btn_promotion.TabIndex = 2;
@@ -183,6 +183,7 @@ partial class FormSell
         btn_cancelInvoice.TabIndex = 12;
         btn_cancelInvoice.Text = "Hủy Hóa Đơn";
         btn_cancelInvoice.UseVisualStyleBackColor = true;
+        btn_cancelInvoice.Click += btn_cancelInvoice_Click_1;
         // 
         // btn_print
         // 
@@ -196,7 +197,7 @@ partial class FormSell
         // 
         // btn_payment
         // 
-        btn_payment.Location = new Point(18, 29);
+        btn_payment.Location = new Point(36, 29);
         btn_payment.Name = "btn_payment";
         btn_payment.Size = new Size(132, 42);
         btn_payment.TabIndex = 10;
