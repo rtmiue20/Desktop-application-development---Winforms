@@ -82,6 +82,7 @@ partial class FormGuest
         dgv_guest.RowHeadersWidth = 51;
         dgv_guest.Size = new Size(494, 378);
         dgv_guest.TabIndex = 1;
+        dgv_guest.CellContentClick += dgv_guest_CellContentClick;
         // 
         // btn_addCustomer
         // 
@@ -224,6 +225,7 @@ partial class FormGuest
         txt_address.Name = "txt_address";
         txt_address.Size = new Size(310, 27);
         txt_address.TabIndex = 3;
+        txt_address.TextChanged += txt_address_TextChanged;
         // 
         // cbo_customerType
         // 

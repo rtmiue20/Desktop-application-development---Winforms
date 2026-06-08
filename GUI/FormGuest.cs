@@ -175,5 +175,15 @@ namespace GUI
             string customerPhone = dgv_guest.CurrentRow.Cells[0].Value?.ToString();
             // Mở form lịch sử mua hàng, truyền Số điện thoại khách sang cho tầng BUS lấy danh sách hóa đơn cũ
         }
+
+        private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void txt_address_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

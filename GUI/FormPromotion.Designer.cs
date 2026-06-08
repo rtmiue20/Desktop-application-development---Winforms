@@ -133,6 +133,7 @@
             txt_discountValue.Name = "txt_discountValue";
             txt_discountValue.Size = new Size(346, 27);
             txt_discountValue.TabIndex = 3;
+            txt_discountValue.TextChanged += txt_discountValue_TextChanged;
             // 
             // btn_save
             // 

@@ -261,5 +261,10 @@ namespace GUI
 
         // Tránh lỗi sinh ra do Click nhầm ngoài ý muốn ở file Designer
         private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
+        private void txt_discountValue_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
