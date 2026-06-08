@@ -1,240 +1,179 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
+// using BUS; // Khai báo tầng nghiệp vụ của bạn
 
 namespace GUI
 {
     public partial class FormGuest : Form
     {
-        // Biến kiểm tra đang ở chế độ thêm mới hay sửa
         private bool isAdding = false;
 
-        // Lưu vị trí dòng đang chọn trong DataGridView
-        private int selectedRow = -1;
+        // 2 Thuộc tính public giúp FormSell có thể lấy thông tin khách hàng được chọn
+        public string SelectedCustomerPhone { get; private set; }
+        public string SelectedCustomerName { get; private set; }
 
         public FormGuest()
         {
             InitializeComponent();
         }
 
-        // ==========================
-        // FORM LOAD
-        // ==========================
         private void FormGuest_Load(object sender, EventArgs e)
         {
-            // Hiển thị cột tự động đầy đủ chiều rộng
+            // Cấu hình UI Grid
             dgv_guest.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            // Chỉ cho phép chọn nguyên dòng
             dgv_guest.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            // Không cho chọn nhiều dòng
             dgv_guest.MultiSelect = false;
-
-            // Không cho người dùng tự thêm dòng
             dgv_guest.AllowUserToAddRows = false;
-
-            // Chỉ đọc dữ liệu
             dgv_guest.ReadOnly = true;
+
+            // Tải dữ liệu thật từ Database ngay khi mở form
+            LoadDataGrid();
         }
 
-        // ==========================
-        // NÚT THÊM KHÁCH HÀNG
-        // ==========================
+        // ── NGUYÊN TẮC: Đọc dữ liệu qua BUS và gán thông qua DataSource ──────────
+        private void LoadDataGrid()
+        {
+            try
+            {
+                // Giả định hàm CustomerBUS.GetAll() trả về một DataTable hoặc List<Customer> trực tiếp từ DB
+                // dgv_guest.DataSource = CustomerBUS.GetAll(); 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi tải danh sách khách hàng: {ex.Message}", "Lỗi");
+            }
+        }
+
+        // ── NÚT THÊM KHÁCH HÀNG ──────────────────────────────────────────────────
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
-            // Chuyển sang chế độ thêm
             isAdding = true;
-
-            // Xóa dữ liệu cũ trên form
-            txt_phoneNumber.Clear();
-            txt_fullName.Clear();
-            txt_address.Clear();
-
-            cbo_customerType.SelectedIndex = -1;
-
-            // Đưa con trỏ vào ô SĐT
+            ClearInputFields();
             txt_phoneNumber.Focus();
         }
 
-        // ==========================
-        // NÚT LƯU
-        // ==========================
+        // ── NÚT LƯU (Gọi BUS thay vì sửa trên Grid) ──────────────────────────────
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            // Kiểm tra dữ liệu bắt buộc
-            if (string.IsNullOrWhiteSpace(txt_phoneNumber.Text) ||
-                string.IsNullOrWhiteSpace(txt_fullName.Text))
+            if (string.IsNullOrWhiteSpace(txt_phoneNumber.Text) || string.IsNullOrWhiteSpace(txt_fullName.Text))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin bắt buộc (SĐT và Họ tên)!");
                 return;
             }
 
-            // Nếu đang thêm khách hàng
-            if (isAdding)
+            try
             {
-                dgv_guest.Rows.Add(
-                    txt_phoneNumber.Text,      // SĐT
-                    txt_fullName.Text,         // Họ tên
-                    cbo_customerType.Text,    // Loại khách
-                    0,                         // Điểm tích lũy
-                    0,                         // Tổng mua
-                    DateTime.Now.ToString("dd/MM/yyyy")
-                );
+                // Gom dữ liệu từ giao diện
+                string phone = txt_phoneNumber.Text.Trim();
+                string name = txt_fullName.Text.Trim();
+                string type = cbo_customerType.Text;
+                string address = txt_address.Text.Trim();
 
-                MessageBox.Show("Thêm khách hàng thành công!");
-            }
-            else
-            {
-                // Nếu đang sửa khách hàng
-                if (selectedRow >= 0)
+                if (isAdding)
                 {
-                    dgv_guest.Rows[selectedRow].Cells[0].Value = txt_phoneNumber.Text;
-                    dgv_guest.Rows[selectedRow].Cells[1].Value = txt_fullName.Text;
-                    dgv_guest.Rows[selectedRow].Cells[2].Value = cbo_customerType.Text;
+                    // NGUYÊN TẮC: Gọi hàm xử lý thêm của BUS để INSERT vào MariaDB
+                    // bool success = CustomerBUS.AddCustomer(phone, name, type, address);
+                    bool success = true; // Giả lập chạy thành công
 
-                    MessageBox.Show("Cập nhật khách hàng thành công!");
+                    if (success) MessageBox.Show("Thêm khách hàng thành công vào hệ thống!");
                 }
+                else
+                {
+                    // NGUYÊN TẮC: Gọi hàm xử lý cập nhật của BUS để UPDATE vào MariaDB
+                    // bool success = CustomerBUS.UpdateCustomer(phone, name, type, address);
+                    bool success = true; // Giả lập chạy thành công
+
+                    if (success) MessageBox.Show("Cập nhật thông tin thành công!");
+                }
+
+                // Lưu xong thì tải lại lưới từ Database để cập nhật giao diện hiển thị mới nhất
+                LoadDataGrid();
+                ClearInputFields();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Thao tác thất bại: {ex.Message}", "Lỗi xử lý");
             }
         }
 
-        // ==========================
-        // NÚT SỬA
-        // ==========================
+        // ── NÚT SỬA ──────────────────────────────────────────────────────────────
         private void btn_Edit_Click(object sender, EventArgs e)
         {
-            // Kiểm tra đã chọn dòng chưa
             if (dgv_guest.CurrentRow == null)
             {
-                MessageBox.Show("Vui lòng chọn khách hàng cần sửa!");
+                MessageBox.Show("Vui lòng chọn khách hàng cần sửa ở danh sách phía dưới!");
                 return;
             }
 
-            // Lưu vị trí dòng đang chọn
-            selectedRow = dgv_guest.CurrentRow.Index;
-
-            // Đổ dữ liệu lên form
-            txt_phoneNumber.Text =
-                dgv_guest.Rows[selectedRow].Cells[0].Value?.ToString();
-
-            txt_fullName.Text =
-                dgv_guest.Rows[selectedRow].Cells[1].Value?.ToString();
-
-            cbo_customerType.Text =
-                dgv_guest.Rows[selectedRow].Cells[2].Value?.ToString();
-
-            // Chuyển sang chế độ sửa
             isAdding = false;
+
+            // Lấy dữ liệu từ dòng đang chọn để đổ ngược lên các Ô Nhập Liệu
+            var row = dgv_guest.CurrentRow;
+            txt_phoneNumber.Text = row.Cells["PhoneColumnName"].Value?.ToString(); // Thay bằng tên cột thực tế của bạn
+            txt_fullName.Text = row.Cells["NameColumnName"].Value?.ToString();
+            cbo_customerType.Text = row.Cells["TypeColumnName"].Value?.ToString();
+            // txt_address.Text   = row.Cells["AddressColumnName"].Value?.ToString();
         }
 
-        // ==========================
-        // NÚT HỦY
-        // ==========================
-        private void btn_Cancel_Click(object sender, EventArgs e)
-        {
-            txt_phoneNumber.Clear();
-            txt_fullName.Clear();
-            txt_address.Clear();
-
-            cbo_customerType.SelectedIndex = -1;
-
-            MessageBox.Show("Đã hủy thao tác!");
-        }
-
-        // ==========================
-        // NÚT LÀM MỚI
-        // ==========================
-        private void btn_Refresh_Click(object sender, EventArgs e)
-        {
-            // Xóa ô tìm kiếm
-            txt_search.Clear();
-
-            // Xóa dữ liệu trên form
-            txt_phoneNumber.Clear();
-            txt_fullName.Clear();
-            txt_address.Clear();
-
-            cbo_customerType.SelectedIndex = -1;
-
-            // Bỏ chọn DataGridView
-            dgv_guest.ClearSelection();
-
-            MessageBox.Show("Đã làm mới!");
-        }
-
-        // ==========================
-        // NÚT LỊCH SỬ MUA
-        // ==========================
-        private void btn_PurchaseHistory_Click(object sender, EventArgs e)
-        {
-            if (dgv_guest.CurrentRow == null)
-            {
-                MessageBox.Show("Vui lòng chọn khách hàng!");
-                return;
-            }
-
-            string customerName =
-                dgv_guest.CurrentRow.Cells[1].Value?.ToString();
-
-            MessageBox.Show(
-                "Hiển thị lịch sử mua của khách hàng: "
-                + customerName);
-        }
-
-        // ==========================
-        // CLICK VÀO DÒNG TRONG BẢNG
-        // ==========================
-        private void dgv_Guest_CellClick(object sender,
-            DataGridViewCellEventArgs e)
-        {
-            // Nếu click tiêu đề thì bỏ qua
-            if (e.RowIndex < 0)
-                return;
-
-            selectedRow = e.RowIndex;
-
-            // Hiển thị dữ liệu lên form
-            txt_phoneNumber.Text =
-                dgv_guest.Rows[e.RowIndex].Cells[0].Value?.ToString();
-
-            txt_fullName.Text =
-                dgv_guest.Rows[e.RowIndex].Cells[1].Value?.ToString();
-
-            cbo_customerType.Text =
-                dgv_guest.Rows[e.RowIndex].Cells[2].Value?.ToString();
-        }
-
-        // ==========================
-        // TÌM KIẾM KHÁCH HÀNG
-        // ==========================
+        // ── TÌM KIẾM KHÁCH HÀNG (Gọi BUS để SELECT LIKE từ DB) ───────────────────
         private void txt_Search_TextChanged(object sender, EventArgs e)
         {
-            string keyword = txt_search.Text.ToLower();
+            string keyword = txt_search.Text.Trim();
 
-            foreach (DataGridViewRow row in dgv_guest.Rows)
+            // NGUYÊN TẮC: Không dùng vòng lặp UI ẩn dòng. Hãy để Database tìm kiếm.
+            // dgv_guest.DataSource = CustomerBUS.Search(keyword);
+        }
+
+        // ── CLICK CHỌN DÒNG TRÊN BẢNG ────────────────────────────────────────────
+        private void dgv_Guest_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dgv_guest.Rows[e.RowIndex];
+            txt_phoneNumber.Text = row.Cells[0].Value?.ToString();
+            txt_fullName.Text = row.Cells[1].Value?.ToString();
+            cbo_customerType.Text = row.Cells[2].Value?.ToString();
+
+            // Đồng thời gán vào biến lưu trữ tạm để nếu FormSell cần lấy kết quả
+            SelectedCustomerPhone = txt_phoneNumber.Text;
+            SelectedCustomerName = txt_fullName.Text;
+        }
+
+        // ── Đúp chuột vào dòng để chọn nhanh cho Form Bán Hàng ─────────────────────
+        private void dgv_guest_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
             {
-                if (row.IsNewRow)
-                    continue;
-
-                string phone =
-                    row.Cells[0].Value?.ToString().ToLower() ?? "";
-
-                string name =
-                    row.Cells[1].Value?.ToString().ToLower() ?? "";
-
-                // Hiện dòng nếu tìm thấy SĐT hoặc tên
-                row.Visible =
-                    phone.Contains(keyword) ||
-                    name.Contains(keyword);
+                dgv_Guest_CellClick(sender, e);
+                this.DialogResult = DialogResult.OK; // Đóng FormGuest và báo về cho FormSell biết là đã chọn xong
+                this.Close();
             }
         }
 
-        private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        // ── NÚT LÀM MỚI / HỦY THAO TÁC ───────────────────────────────────────────
+        private void btn_Cancel_Click(object sender, EventArgs e) => ClearInputFields();
+        private void btn_Refresh_Click(object sender, EventArgs e)
         {
-
+            txt_search.Clear();
+            ClearInputFields();
+            LoadDataGrid();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void ClearInputFields()
         {
+            txt_phoneNumber.Clear();
+            txt_fullName.Clear();
+            txt_address.Clear();
+            cbo_customerType.SelectedIndex = -1;
+            dgv_guest.ClearSelection();
+        }
+
+        private void btn_PurchaseHistory_Click(object sender, EventArgs e)
+        {
+            if (dgv_guest.CurrentRow == null) return;
+            string customerPhone = dgv_guest.CurrentRow.Cells[0].Value?.ToString();
+            // Mở form lịch sử mua hàng, truyền Số điện thoại khách sang cho tầng BUS lấy danh sách hóa đơn cũ
         }
     }
 }

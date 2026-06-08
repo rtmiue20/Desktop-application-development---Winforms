@@ -21,31 +21,31 @@ partial class FormSell
     /// </summary>
     private void InitializeComponent()
     {
-        dgv_cart = new System.Windows.Forms.DataGridView();
-        col_ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-        col_SerialNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-        col_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-        col_UnitPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-        col_TotalPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-        col_Remove = new System.Windows.Forms.DataGridViewTextBoxColumn();
-        backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-        grp_Action = new System.Windows.Forms.GroupBox();
-        btn_promotion = new System.Windows.Forms.Button();
-        btn_customer = new System.Windows.Forms.Button();
-        txt_searchProduct = new System.Windows.Forms.TextBox();
-        pnl_top = new System.Windows.Forms.Panel();
-        btn_todayInvoice = new System.Windows.Forms.Button();
-        btn_payment = new System.Windows.Forms.Button();
-        btn_cancelInvoice = new System.Windows.Forms.Button();
-        btn_print = new System.Windows.Forms.Button();
-        groupBox3 = new System.Windows.Forms.GroupBox();
-        lbl_subTotal = new System.Windows.Forms.Label();
-        lbl_discount = new System.Windows.Forms.Label();
-        lbl_finalTotal = new System.Windows.Forms.Label();
-        groupBox4 = new System.Windows.Forms.GroupBox();
-        cbo_paymentMethod = new System.Windows.Forms.ComboBox();
-        btn_confirmPayment = new System.Windows.Forms.Button();
-        ((System.ComponentModel.ISupportInitialize)dgv_cart).BeginInit();
+        dgv_cart = new DataGridView();
+        col_ProductName = new DataGridViewTextBoxColumn();
+        col_SerialNumber = new DataGridViewTextBoxColumn();
+        col_Quantity = new DataGridViewTextBoxColumn();
+        col_UnitPrice = new DataGridViewTextBoxColumn();
+        col_TotalPrice = new DataGridViewTextBoxColumn();
+        col_Remove = new DataGridViewTextBoxColumn();
+        backgroundWorker1 = new BackgroundWorker();
+        grp_Action = new GroupBox();
+        btn_promotion = new Button();
+        btn_customer = new Button();
+        txt_searchProduct = new TextBox();
+        pnl_top = new Panel();
+        btn_todayInvoice = new Button();
+        btn_payment = new Button();
+        btn_cancelInvoice = new Button();
+        btn_print = new Button();
+        groupBox3 = new GroupBox();
+        lbl_subTotal = new Label();
+        lbl_discount = new Label();
+        lbl_finalTotal = new Label();
+        groupBox4 = new GroupBox();
+        cbo_paymentMethod = new ComboBox();
+        btn_confirmPayment = new Button();
+        ((ISupportInitialize)dgv_cart).BeginInit();
         grp_Action.SuspendLayout();
         pnl_top.SuspendLayout();
         groupBox3.SuspendLayout();
@@ -54,12 +54,13 @@ partial class FormSell
         // 
         // dgv_cart
         // 
-        dgv_cart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dgv_cart.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { col_ProductName, col_SerialNumber, col_Quantity, col_UnitPrice, col_TotalPrice, col_Remove });
-        dgv_cart.Location = new System.Drawing.Point(-1, 191);
+        dgv_cart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dgv_cart.Columns.AddRange(new DataGridViewColumn[] { col_ProductName, col_SerialNumber, col_Quantity, col_UnitPrice, col_TotalPrice, col_Remove });
+        dgv_cart.Location = new Point(0, 93);
+        dgv_cart.Margin = new Padding(1, 1, 1, 1);
         dgv_cart.Name = "dgv_cart";
         dgv_cart.RowHeadersWidth = 51;
-        dgv_cart.Size = new System.Drawing.Size(1650, 349);
+        dgv_cart.Size = new Size(776, 170);
         dgv_cart.TabIndex = 4;
         dgv_cart.CellContentClick += dgv_Cart_CellContentClick;
         // 
@@ -110,18 +111,20 @@ partial class FormSell
         grp_Action.Controls.Add(btn_promotion);
         grp_Action.Controls.Add(btn_customer);
         grp_Action.Controls.Add(txt_searchProduct);
-        grp_Action.Location = new System.Drawing.Point(-1, 85);
+        grp_Action.Location = new Point(0, 41);
+        grp_Action.Margin = new Padding(1, 1, 1, 1);
         grp_Action.Name = "grp_Action";
-        grp_Action.Size = new System.Drawing.Size(1650, 100);
+        grp_Action.Padding = new Padding(1, 1, 1, 1);
+        grp_Action.Size = new Size(776, 49);
         grp_Action.TabIndex = 5;
         grp_Action.TabStop = false;
-        grp_Action.Enter += grp_Action_Enter;
         // 
         // btn_promotion
         // 
-        btn_promotion.Location = new System.Drawing.Point(1215, 28);
+        btn_promotion.Location = new Point(572, 14);
+        btn_promotion.Margin = new Padding(1, 1, 1, 1);
         btn_promotion.Name = "btn_promotion";
-        btn_promotion.Size = new System.Drawing.Size(417, 49);
+        btn_promotion.Size = new Size(196, 24);
         btn_promotion.TabIndex = 2;
         btn_promotion.Text = "Mã KM";
         btn_promotion.UseVisualStyleBackColor = true;
@@ -129,9 +132,10 @@ partial class FormSell
         // 
         // btn_customer
         // 
-        btn_customer.Location = new System.Drawing.Point(780, 28);
+        btn_customer.Location = new Point(367, 14);
+        btn_customer.Margin = new Padding(1, 1, 1, 1);
         btn_customer.Name = "btn_customer";
-        btn_customer.Size = new System.Drawing.Size(429, 49);
+        btn_customer.Size = new Size(202, 24);
         btn_customer.TabIndex = 1;
         btn_customer.Text = "SĐT Khách Hàng";
         btn_customer.UseVisualStyleBackColor = true;
@@ -139,10 +143,11 @@ partial class FormSell
         // 
         // txt_searchProduct
         // 
-        txt_searchProduct.Location = new System.Drawing.Point(13, 28);
+        txt_searchProduct.Location = new Point(6, 14);
+        txt_searchProduct.Margin = new Padding(1, 1, 1, 1);
         txt_searchProduct.Name = "txt_searchProduct";
         txt_searchProduct.PlaceholderText = "Quét mã SP / Serial...";
-        txt_searchProduct.Size = new System.Drawing.Size(761, 47);
+        txt_searchProduct.Size = new Size(360, 27);
         txt_searchProduct.TabIndex = 0;
         // 
         // pnl_top
@@ -151,16 +156,18 @@ partial class FormSell
         pnl_top.Controls.Add(btn_payment);
         pnl_top.Controls.Add(btn_cancelInvoice);
         pnl_top.Controls.Add(btn_print);
-        pnl_top.Location = new System.Drawing.Point(-1, -2);
+        pnl_top.Location = new Point(0, -1);
+        pnl_top.Margin = new Padding(1, 1, 1, 1);
         pnl_top.Name = "pnl_top";
-        pnl_top.Size = new System.Drawing.Size(1650, 81);
+        pnl_top.Size = new Size(776, 40);
         pnl_top.TabIndex = 9;
         // 
         // btn_todayInvoice
         // 
-        btn_todayInvoice.Location = new System.Drawing.Point(1215, 14);
+        btn_todayInvoice.Location = new Point(572, 7);
+        btn_todayInvoice.Margin = new Padding(1, 1, 1, 1);
         btn_todayInvoice.Name = "btn_todayInvoice";
-        btn_todayInvoice.Size = new System.Drawing.Size(417, 57);
+        btn_todayInvoice.Size = new Size(196, 28);
         btn_todayInvoice.TabIndex = 13;
         btn_todayInvoice.Text = "Hóa Đơn Hôm Nay";
         btn_todayInvoice.UseVisualStyleBackColor = true;
@@ -168,9 +175,10 @@ partial class FormSell
         // 
         // btn_payment
         // 
-        btn_payment.Location = new System.Drawing.Point(13, 14);
+        btn_payment.Location = new Point(6, 7);
+        btn_payment.Margin = new Padding(1, 1, 1, 1);
         btn_payment.Name = "btn_payment";
-        btn_payment.Size = new System.Drawing.Size(363, 57);
+        btn_payment.Size = new Size(171, 28);
         btn_payment.TabIndex = 10;
         btn_payment.Text = "Thanh Toán";
         btn_payment.UseVisualStyleBackColor = true;
@@ -178,9 +186,10 @@ partial class FormSell
         // 
         // btn_cancelInvoice
         // 
-        btn_cancelInvoice.Location = new System.Drawing.Point(780, 14);
+        btn_cancelInvoice.Location = new Point(367, 7);
+        btn_cancelInvoice.Margin = new Padding(1, 1, 1, 1);
         btn_cancelInvoice.Name = "btn_cancelInvoice";
-        btn_cancelInvoice.Size = new System.Drawing.Size(429, 57);
+        btn_cancelInvoice.Size = new Size(202, 28);
         btn_cancelInvoice.TabIndex = 12;
         btn_cancelInvoice.Text = "Hủy Hóa Đơn";
         btn_cancelInvoice.UseVisualStyleBackColor = true;
@@ -188,9 +197,10 @@ partial class FormSell
         // 
         // btn_print
         // 
-        btn_print.Location = new System.Drawing.Point(382, 14);
+        btn_print.Location = new Point(180, 7);
+        btn_print.Margin = new Padding(1, 1, 1, 1);
         btn_print.Name = "btn_print";
-        btn_print.Size = new System.Drawing.Size(392, 57);
+        btn_print.Size = new Size(184, 28);
         btn_print.TabIndex = 11;
         btn_print.Text = "In Hóa Đơn";
         btn_print.UseVisualStyleBackColor = true;
@@ -201,39 +211,44 @@ partial class FormSell
         groupBox3.Controls.Add(lbl_subTotal);
         groupBox3.Controls.Add(lbl_discount);
         groupBox3.Controls.Add(lbl_finalTotal);
-        groupBox3.Location = new System.Drawing.Point(-1, 546);
+        groupBox3.Location = new Point(0, 266);
+        groupBox3.Margin = new Padding(1, 1, 1, 1);
         groupBox3.Name = "groupBox3";
-        groupBox3.Size = new System.Drawing.Size(1650, 165);
+        groupBox3.Padding = new Padding(1, 1, 1, 1);
+        groupBox3.Size = new Size(776, 80);
         groupBox3.TabIndex = 7;
         groupBox3.TabStop = false;
         // 
         // lbl_subTotal
         // 
         lbl_subTotal.AutoSize = true;
-        lbl_subTotal.Location = new System.Drawing.Point(13, 18);
+        lbl_subTotal.Location = new Point(6, 9);
+        lbl_subTotal.Margin = new Padding(1, 0, 1, 0);
         lbl_subTotal.Name = "lbl_subTotal";
-        lbl_subTotal.Size = new System.Drawing.Size(141, 41);
+        lbl_subTotal.Size = new Size(70, 20);
         lbl_subTotal.TabIndex = 2;
         lbl_subTotal.Text = "Tạm tính:";
         // 
         // lbl_discount
         // 
         lbl_discount.AutoSize = true;
-        lbl_discount.ForeColor = System.Drawing.Color.OrangeRed;
-        lbl_discount.Location = new System.Drawing.Point(13, 69);
+        lbl_discount.ForeColor = Color.OrangeRed;
+        lbl_discount.Location = new Point(6, 34);
+        lbl_discount.Margin = new Padding(1, 0, 1, 0);
         lbl_discount.Name = "lbl_discount";
-        lbl_discount.Size = new System.Drawing.Size(142, 41);
+        lbl_discount.Size = new Size(72, 20);
         lbl_discount.TabIndex = 4;
         lbl_discount.Text = "Giảm giá:";
         // 
         // lbl_finalTotal
         // 
         lbl_finalTotal.AutoSize = true;
-        lbl_finalTotal.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-        lbl_finalTotal.ForeColor = System.Drawing.Color.DarkGreen;
-        lbl_finalTotal.Location = new System.Drawing.Point(6, 114);
+        lbl_finalTotal.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+        lbl_finalTotal.ForeColor = Color.DarkGreen;
+        lbl_finalTotal.Location = new Point(3, 56);
+        lbl_finalTotal.Margin = new Padding(1, 0, 1, 0);
         lbl_finalTotal.Name = "lbl_finalTotal";
-        lbl_finalTotal.Size = new System.Drawing.Size(233, 54);
+        lbl_finalTotal.Size = new Size(117, 28);
         lbl_finalTotal.TabIndex = 6;
         lbl_finalTotal.Text = "Tổng cộng:";
         // 
@@ -241,9 +256,11 @@ partial class FormSell
         // 
         groupBox4.Controls.Add(cbo_paymentMethod);
         groupBox4.Controls.Add(btn_confirmPayment);
-        groupBox4.Location = new System.Drawing.Point(-1, 717);
+        groupBox4.Location = new Point(0, 350);
+        groupBox4.Margin = new Padding(1, 1, 1, 1);
         groupBox4.Name = "groupBox4";
-        groupBox4.Size = new System.Drawing.Size(1652, 164);
+        groupBox4.Padding = new Padding(1, 1, 1, 1);
+        groupBox4.Size = new Size(777, 80);
         groupBox4.TabIndex = 8;
         groupBox4.TabStop = false;
         // 
@@ -251,16 +268,18 @@ partial class FormSell
         // 
         cbo_paymentMethod.FormattingEnabled = true;
         cbo_paymentMethod.Items.AddRange(new object[] { "Tiền mặt", "Chuyển khoản", "MoMo", "ZaloPay", "Thẻ tín dụng" });
-        cbo_paymentMethod.Location = new System.Drawing.Point(13, 34);
+        cbo_paymentMethod.Location = new Point(6, 17);
+        cbo_paymentMethod.Margin = new Padding(1, 1, 1, 1);
         cbo_paymentMethod.Name = "cbo_paymentMethod";
-        cbo_paymentMethod.Size = new System.Drawing.Size(1619, 49);
+        cbo_paymentMethod.Size = new Size(764, 28);
         cbo_paymentMethod.TabIndex = 0;
         // 
         // btn_confirmPayment
         // 
-        btn_confirmPayment.Location = new System.Drawing.Point(13, 89);
+        btn_confirmPayment.Location = new Point(6, 43);
+        btn_confirmPayment.Margin = new Padding(1, 1, 1, 1);
         btn_confirmPayment.Name = "btn_confirmPayment";
-        btn_confirmPayment.Size = new System.Drawing.Size(1619, 57);
+        btn_confirmPayment.Size = new Size(762, 28);
         btn_confirmPayment.TabIndex = 3;
         btn_confirmPayment.Text = "Xác Nhận Thanh Toán";
         btn_confirmPayment.UseVisualStyleBackColor = true;
@@ -268,17 +287,17 @@ partial class FormSell
         // 
         // FormSell
         // 
-        AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
-        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(1643, 894);
+        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(773, 436);
         Controls.Add(pnl_top);
         Controls.Add(grp_Action);
         Controls.Add(dgv_cart);
         Controls.Add(groupBox3);
         Controls.Add(groupBox4);
-        Margin = new System.Windows.Forms.Padding(6);
+        Name = "FormSell";
         Text = "Bán hàng";
-        ((System.ComponentModel.ISupportInitialize)dgv_cart).EndInit();
+        ((ISupportInitialize)dgv_cart).EndInit();
         grp_Action.ResumeLayout(false);
         grp_Action.PerformLayout();
         pnl_top.ResumeLayout(false);

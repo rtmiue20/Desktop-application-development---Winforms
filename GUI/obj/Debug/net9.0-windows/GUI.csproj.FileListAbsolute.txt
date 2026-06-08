@@ -27,7 +27,6 @@ C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\D
 C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\Desktop_Application_Development.FormGuarantee.resources
 C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormGuest.resources
 C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormPromotion.resources
-C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\Desktop_Application_Development.FormReport.resources
 C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormSell.resources
 C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormStaff.resources
 C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormSupplier.resources
@@ -96,3 +95,9 @@ C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.pdb
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.genruntimeconfig.cache
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\ref\GUI.dll
+C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormCategory.resources
+C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormIntoWarehouse.resources
+C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormInventory.resources
+C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormLogin.resources
+C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormManageShift.resources
+C:\Users\tytri\Source\Repos\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormReport.resources

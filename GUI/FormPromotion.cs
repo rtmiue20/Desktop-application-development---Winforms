@@ -16,5 +16,10 @@ namespace GUI
         {
             InitializeComponent();
         }
+
+        private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
