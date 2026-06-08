@@ -62,4 +62,9 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ClosedXML" Version="0.105.0" />
+      <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.33" />
+    </ItemGroup>
+
 </Project>

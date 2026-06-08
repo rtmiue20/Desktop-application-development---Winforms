@@ -22,6 +22,7 @@ namespace GUI
         private void InitializeComponent()
         {
             pnl_topBar = new System.Windows.Forms.Panel();
+            pic_product = new System.Windows.Forms.PictureBox();
             btn_productRefresh = new System.Windows.Forms.Button();
             btn_category = new System.Windows.Forms.Button();
             btn_productDelete = new System.Windows.Forms.Button();
@@ -38,6 +39,7 @@ namespace GUI
             pnl_mainTop = new System.Windows.Forms.Panel();
             cbb_statusFilter = new System.Windows.Forms.ComboBox();
             pnl_topBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pic_product).BeginInit();
             pnl_Bottom.SuspendLayout();
             pnl_Left.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_categoryFilter).BeginInit();
@@ -57,12 +59,20 @@ namespace GUI
             pnl_topBar.Location = new System.Drawing.Point(0, 0);
             pnl_topBar.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             pnl_topBar.Name = "pnl_topBar";
-            pnl_topBar.Size = new System.Drawing.Size(2091, 154);
+            pnl_topBar.Size = new System.Drawing.Size(1981, 154);
             pnl_topBar.TabIndex = 0;
+            // 
+            // pic_product
+            // 
+            pic_product.Location = new System.Drawing.Point(661, 26);
+            pic_product.Name = "pic_product";
+            pic_product.Size = new System.Drawing.Size(790, 290);
+            pic_product.TabIndex = 4;
+            pic_product.TabStop = false;
             // 
             // btn_productRefresh
             // 
-            btn_productRefresh.Location = new System.Drawing.Point(935, 38);
+            btn_productRefresh.Location = new System.Drawing.Point(1049, 38);
             btn_productRefresh.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             btn_productRefresh.Name = "btn_productRefresh";
             btn_productRefresh.Size = new System.Drawing.Size(212, 77);
@@ -73,7 +83,7 @@ namespace GUI
             // 
             // btn_category
             // 
-            btn_category.Location = new System.Drawing.Point(722, 38);
+            btn_category.Location = new System.Drawing.Point(815, 38);
             btn_category.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             btn_category.Name = "btn_category";
             btn_category.Size = new System.Drawing.Size(212, 77);
@@ -84,7 +94,7 @@ namespace GUI
             // 
             // btn_productDelete
             // 
-            btn_productDelete.Location = new System.Drawing.Point(510, 38);
+            btn_productDelete.Location = new System.Drawing.Point(580, 38);
             btn_productDelete.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             btn_productDelete.Name = "btn_productDelete";
             btn_productDelete.Size = new System.Drawing.Size(212, 77);
@@ -95,7 +105,7 @@ namespace GUI
             // 
             // btn_productEdit
             // 
-            btn_productEdit.Location = new System.Drawing.Point(298, 38);
+            btn_productEdit.Location = new System.Drawing.Point(328, 38);
             btn_productEdit.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             btn_productEdit.Name = "btn_productEdit";
             btn_productEdit.Size = new System.Drawing.Size(212, 77);
@@ -124,7 +134,7 @@ namespace GUI
             pnl_Bottom.Location = new System.Drawing.Point(0, 1364);
             pnl_Bottom.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             pnl_Bottom.Name = "pnl_Bottom";
-            pnl_Bottom.Size = new System.Drawing.Size(2091, 74);
+            pnl_Bottom.Size = new System.Drawing.Size(1981, 74);
             pnl_Bottom.TabIndex = 1;
             // 
             // lbl_inventoryWarning
@@ -132,7 +142,7 @@ namespace GUI
             lbl_inventoryWarning.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             lbl_inventoryWarning.AutoSize = true;
             lbl_inventoryWarning.ForeColor = System.Drawing.Color.DimGray;
-            lbl_inventoryWarning.Location = new System.Drawing.Point(1596, 15);
+            lbl_inventoryWarning.Location = new System.Drawing.Point(1486, 15);
             lbl_inventoryWarning.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             lbl_inventoryWarning.Name = "lbl_inventoryWarning";
             lbl_inventoryWarning.Size = new System.Drawing.Size(484, 41);
@@ -211,7 +221,7 @@ namespace GUI
             pnl_main.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             pnl_main.Name = "pnl_main";
             pnl_main.Padding = new System.Windows.Forms.Padding(21, 26, 21, 26);
-            pnl_main.Size = new System.Drawing.Size(1626, 1210);
+            pnl_main.Size = new System.Drawing.Size(1516, 1210);
             pnl_main.TabIndex = 3;
             // 
             // dgv_productList
@@ -221,25 +231,26 @@ namespace GUI
             dgv_productList.BackgroundColor = System.Drawing.Color.White;
             dgv_productList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_productList.Dock = System.Windows.Forms.DockStyle.Fill;
-            dgv_productList.Location = new System.Drawing.Point(21, 154);
+            dgv_productList.Location = new System.Drawing.Point(21, 353);
             dgv_productList.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             dgv_productList.Name = "dgv_productList";
             dgv_productList.ReadOnly = true;
             dgv_productList.RowHeadersWidth = 102;
             dgv_productList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            dgv_productList.Size = new System.Drawing.Size(1584, 1030);
+            dgv_productList.Size = new System.Drawing.Size(1474, 831);
             dgv_productList.TabIndex = 1;
             dgv_productList.CellClick += dgv_ProductList_CellClick;
             dgv_productList.CellFormatting += dgv_ProductList_CellFormatting;
             // 
             // pnl_mainTop
             // 
+            pnl_mainTop.Controls.Add(pic_product);
             pnl_mainTop.Controls.Add(cbb_statusFilter);
             pnl_mainTop.Dock = System.Windows.Forms.DockStyle.Top;
             pnl_mainTop.Location = new System.Drawing.Point(21, 26);
             pnl_mainTop.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             pnl_mainTop.Name = "pnl_mainTop";
-            pnl_mainTop.Size = new System.Drawing.Size(1584, 128);
+            pnl_mainTop.Size = new System.Drawing.Size(1474, 327);
             pnl_mainTop.TabIndex = 0;
             // 
             // cbb_statusFilter
@@ -248,10 +259,10 @@ namespace GUI
             cbb_statusFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
             cbb_statusFilter.FormattingEnabled = true;
             cbb_statusFilter.Items.AddRange(new object[] { "Tất cả trạng thái", "Còn hàng", "Sắp hết", "Hết hàng" });
-            cbb_statusFilter.Location = new System.Drawing.Point(0, 26);
+            cbb_statusFilter.Location = new System.Drawing.Point(6, 26);
             cbb_statusFilter.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             cbb_statusFilter.Name = "cbb_statusFilter";
-            cbb_statusFilter.Size = new System.Drawing.Size(640, 47);
+            cbb_statusFilter.Size = new System.Drawing.Size(634, 47);
             cbb_statusFilter.TabIndex = 0;
             cbb_statusFilter.SelectedIndexChanged += cb_StatusFilter_SelectedIndexChanged;
             // 
@@ -259,7 +270,7 @@ namespace GUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(2091, 1438);
+            ClientSize = new System.Drawing.Size(1981, 1438);
             Controls.Add(pnl_main);
             Controls.Add(pnl_Left);
             Controls.Add(pnl_Bottom);
@@ -268,6 +279,7 @@ namespace GUI
             Text = "Quản lý sản phẩm";
             Load += FormManageProduct_Load;
             pnl_topBar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pic_product).EndInit();
             pnl_Bottom.ResumeLayout(false);
             pnl_Bottom.PerformLayout();
             pnl_Left.ResumeLayout(false);
@@ -277,6 +289,8 @@ namespace GUI
             pnl_mainTop.ResumeLayout(false);
             ResumeLayout(false);
         }
+
+        private System.Windows.Forms.PictureBox pic_product;
 
         #endregion
 

@@ -29,9 +29,9 @@ namespace DAL
             using (IDbConnection db = DatabaseHelper.GetConnection())
             {
                 string query = @"INSERT INTO Products
-                                 (ProductCode,ProductName,CategoryID,IsSerialized,UnitPrice,CostPrice,WarrantyMonths,MinStock)
-                                 VALUES (@ProductCode,@ProductName,@CategoryID,@IsSerialized,@UnitPrice,@CostPrice,@WarrantyMonths,@MinStock);
-                                 SELECT LAST_INSERT_ID();";
+                         (ProductCode, ProductName, CategoryID, IsSerialized, UnitPrice, CostPrice, WarrantyMonths, MinStock, ImagePath)
+                         VALUES (@ProductCode, @ProductName, @CategoryID, @IsSerialized, @UnitPrice, @CostPrice, @WarrantyMonths, @MinStock, @ImagePath);
+                         SELECT LAST_INSERT_ID();";
                 return db.ExecuteScalar<int>(query, product);
             }
         }
@@ -41,9 +41,9 @@ namespace DAL
             using (IDbConnection db = DatabaseHelper.GetConnection())
             {
                 string query = @"UPDATE Products SET ProductName=@ProductName, CategoryID=@CategoryID,
-                                 UnitPrice=@UnitPrice, CostPrice=@CostPrice,
-                                 WarrantyMonths=@WarrantyMonths, MinStock=@MinStock
-                                 WHERE ProductID=@ProductID";
+                         UnitPrice=@UnitPrice, CostPrice=@CostPrice,
+                         WarrantyMonths=@WarrantyMonths, MinStock=@MinStock, ImagePath=@ImagePath
+                         WHERE ProductID=@ProductID";
                 return db.Execute(query, product) > 0;
             }
         }

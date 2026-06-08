@@ -75,6 +75,11 @@ namespace GUI
             {
                 filteredList = filteredList.Where(p => p.MinStock <= 0);
             }
+            // New +
+            if (dgv_productList.Columns["ImagePath"] != null)
+            {
+                dgv_productList.Columns["ImagePath"].Visible = false;
+            }
 
             // Ràng buộc tập dữ liệu đã qua xử lý lên giao diện người dùng
             dgv_productList.DataSource = filteredList.ToList();
@@ -126,6 +131,8 @@ namespace GUI
                 {
                     _selectedProductID = prodId;
                 }
+                var imagePathValue = dgv_productList.Rows[e.RowIndex].Cells["ImagePath"]?.Value?.ToString();
+                DisplayProductImage(imagePathValue);
                 UpdateBottomStatus();
             }
         }
@@ -142,6 +149,44 @@ namespace GUI
                     e.Value = price.ToString("#,##0"); // Định dạng phân cách hàng nghìn
                     e.FormattingApplied = true;
                 }
+            }
+        }
+        // New +
+        private void DisplayProductImage(string relativePath)
+        {
+            if (string.IsNullOrEmpty(relativePath))
+            {
+                pic_product.Image = null;
+                return;
+            }
+
+            try
+            {
+                // Tìm ảnh trong thư mục thực thi của ứng dụng (bin/Debug/Images/...)
+                string fullPath = System.IO.Path.Combine(Application.StartupPath, relativePath);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    using (var stream = new System.IO.FileStream(fullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                    {
+                        pic_product.Image = Image.FromStream(stream);
+                    }
+                }
+                else if (System.IO.File.Exists(relativePath)) // Kiểm tra phòng trường hợp lưu đường dẫn tuyệt đối
+                {
+                    using (var stream = new System.IO.FileStream(relativePath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                    {
+                        pic_product.Image = Image.FromStream(stream);
+                    }
+                }
+                else
+                {
+                    pic_product.Image = null; // Không tìm thấy file ảnh trên ổ đĩa
+                }
+            }
+            catch
+            {
+                pic_product.Image = null; // Tránh treo app nếu file ảnh bị lỗi định dạng
             }
         }
 
