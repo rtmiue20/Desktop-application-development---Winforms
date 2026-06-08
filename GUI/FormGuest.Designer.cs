@@ -76,7 +76,7 @@ partial class FormGuest
         // 
         dgv_guest.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dgv_guest.Columns.AddRange(new DataGridViewColumn[] { col_Phone, col_Name, col_Type, col_Point, col_Total, col_Date });
-        dgv_guest.Location = new Point(8, 93);
+        dgv_guest.Location = new Point(8, 65);
         dgv_guest.Margin = new Padding(1);
         dgv_guest.Name = "dgv_guest";
         dgv_guest.RowHeadersWidth = 51;
