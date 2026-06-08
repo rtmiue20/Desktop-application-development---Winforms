@@ -10,6 +10,6 @@ public class ProductsDTO
     public decimal UnitPrice { get; set; }
     public decimal CostPrice { get; set; }
     public int WarrantyMonths { get; set; }
-    public string? ImagePath { get; set; }
     public int MinStock { get; set; }
+    public string? ImagePath { get; set; }
 }

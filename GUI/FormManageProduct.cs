@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging; // Add this if not present
+using System.IO;          // Cần thiết để xử lý đường dẫn Path
 using System.Linq;
 using System.Windows.Forms;
 using BUS;
 using DTO;
+using ImageMagick;        // Thư viện giải mã WebP, AVIF
 
 namespace GUI
 {
@@ -75,11 +78,6 @@ namespace GUI
             {
                 filteredList = filteredList.Where(p => p.MinStock <= 0);
             }
-            // New +
-            if (dgv_productList.Columns["ImagePath"] != null)
-            {
-                dgv_productList.Columns["ImagePath"].Visible = false;
-            }
 
             // Ràng buộc tập dữ liệu đã qua xử lý lên giao diện người dùng
             dgv_productList.DataSource = filteredList.ToList();
@@ -121,7 +119,7 @@ namespace GUI
             }
         }
 
-        // Ghi nhận khóa chính của bản ghi khi người dùng thiết lập tiêu điểm
+        // Ghi nhận khóa chính của bản ghi khi người dùng thiết lập tiêu điểm VÀ LOAD ẢNH
         private void dgv_ProductList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -131,9 +129,51 @@ namespace GUI
                 {
                     _selectedProductID = prodId;
                 }
-                var imagePathValue = dgv_productList.Rows[e.RowIndex].Cells["ImagePath"]?.Value?.ToString();
-                DisplayProductImage(imagePathValue);
                 UpdateBottomStatus();
+
+                // Lấy đối tượng DTO từ dòng được chọn để truyền ImagePath
+                var selectedProduct = dgv_productList.Rows[e.RowIndex].DataBoundItem as ProductsDTO;
+                if (selectedProduct != null)
+                {
+                    HienThiAnhSanPham(selectedProduct.ImagePath);
+                }
+            }
+        }
+
+        // HÀM MỚI: Xử lý giải mã ảnh WebP/AVIF bằng Magick.NET
+        private void HienThiAnhSanPham(string imagePath)
+        {
+            // Dọn bộ nhớ ảnh cũ nếu có
+            if (pic_productImage.Image != null)
+            {
+                pic_productImage.Image.Dispose();
+                pic_productImage.Image = null;
+            }
+
+            if (string.IsNullOrWhiteSpace(imagePath)) return;
+
+            // Kết hợp thư mục chạy ứng dụng (net9.0-windows) với đường dẫn tương đối trong DB
+            string fullPath = Path.Combine(Application.StartupPath, imagePath);
+
+            if (File.Exists(fullPath))
+            {
+                try
+                {
+                    // Magick.NET không có ToBitmap, cần chuyển đổi thủ công
+                    using (var magickImage = new MagickImage(fullPath))
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            magickImage.Write(memoryStream, MagickFormat.Bmp);
+                            memoryStream.Position = 0;
+                            pic_productImage.Image = new Bitmap(memoryStream);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi load ảnh: {ex.Message}");
+                }
             }
         }
 
@@ -149,44 +189,6 @@ namespace GUI
                     e.Value = price.ToString("#,##0"); // Định dạng phân cách hàng nghìn
                     e.FormattingApplied = true;
                 }
-            }
-        }
-        // New +
-        private void DisplayProductImage(string relativePath)
-        {
-            if (string.IsNullOrEmpty(relativePath))
-            {
-                pic_product.Image = null;
-                return;
-            }
-
-            try
-            {
-                // Tìm ảnh trong thư mục thực thi của ứng dụng (bin/Debug/Images/...)
-                string fullPath = System.IO.Path.Combine(Application.StartupPath, relativePath);
-
-                if (System.IO.File.Exists(fullPath))
-                {
-                    using (var stream = new System.IO.FileStream(fullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-                    {
-                        pic_product.Image = Image.FromStream(stream);
-                    }
-                }
-                else if (System.IO.File.Exists(relativePath)) // Kiểm tra phòng trường hợp lưu đường dẫn tuyệt đối
-                {
-                    using (var stream = new System.IO.FileStream(relativePath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-                    {
-                        pic_product.Image = Image.FromStream(stream);
-                    }
-                }
-                else
-                {
-                    pic_product.Image = null; // Không tìm thấy file ảnh trên ổ đĩa
-                }
-            }
-            catch
-            {
-                pic_product.Image = null; // Tránh treo app nếu file ảnh bị lỗi định dạng
             }
         }
 
