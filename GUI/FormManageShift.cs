@@ -8,12 +8,7 @@ namespace GUI;
 public partial class FormManageShift : Form
 {
     private bool _isShiftOpen = true;
-
-    private List<ShiftRecord> _shiftList = new List<ShiftRecord>
-    {
-        new ShiftRecord { MaCa = "CA001", NhanVien = "Minh Triều", MoLuc = "08:00", DongLuc = "—",     TienDau = 500000, TienCuoi = 0,          ChenhLech = 0,      TrangThai = "Đang mở" },
-        new ShiftRecord { MaCa = "CA000", NhanVien = "Minh Triều", MoLuc = "08:00", DongLuc = "17:00", TienDau = 500000, TienCuoi = 146200000,  ChenhLech = 500000, TrangThai = "Đã chốt" },
-    };
+    private List<ShiftRecord> _shiftList = new List<ShiftRecord>();
 
     public FormManageShift()
     {
@@ -30,27 +25,27 @@ public partial class FormManageShift : Form
 
     private void UpdateCards()
     {
-        lbl_resStatus.Text              = _isShiftOpen ? "Đang mở" : "Đã đóng";
-        lbl_resStatus.ForeColor         = _isShiftOpen ? Color.FromArgb(0, 140, 0) : Color.Red;
-        lbl_resTime.Text    = "08:00";
-        lbl_resMoney.Text  = "500,000";
-        lbl_resActivity.Text  = "12";
-        lbl_resRevenue.Text = "145,200,000";
-        lbl_resRevenue.ForeColor = Color.FromArgb(0, 102, 204);
+        lbl_trangThaiTitle.Text      = _isShiftOpen ? "Đang mở" : "Đã đóng";
+        lbl_trangThaiTitle.ForeColor = _isShiftOpen ? Color.FromArgb(0, 140, 0) : Color.Red;
+        lbl_gioMoCa.Text             = "—";
+        lbl_tienDauca.Text           = "—";
+        lbl_hdTrongca.Text           = "—";
+        lbl_doanhThuca.Text          = "—";
+        lbl_doanhThuca.ForeColor     = Color.FromArgb(0, 102, 204);
     }
 
     private void LoadTable()
     {
-        dgv_listShift.Rows.Clear();
-        dgv_listShift.RowHeadersVisible  = false;
-        dgv_listShift.AllowUserToAddRows = false;
-        dgv_listShift.ReadOnly           = true;
-        dgv_listShift.SelectionMode      = DataGridViewSelectionMode.FullRowSelect;
-        dgv_listShift.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 248, 255);
+        dgv_danhSachCa.Rows.Clear();
+        dgv_danhSachCa.RowHeadersVisible  = false;
+        dgv_danhSachCa.AllowUserToAddRows = false;
+        dgv_danhSachCa.ReadOnly           = true;
+        dgv_danhSachCa.SelectionMode      = DataGridViewSelectionMode.FullRowSelect;
+        dgv_danhSachCa.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 248, 255);
 
         foreach (var s in _shiftList)
         {
-            int i = dgv_listShift.Rows.Add(
+            int i = dgv_danhSachCa.Rows.Add(
                 s.MaCa, s.NhanVien, s.MoLuc, s.DongLuc,
                 string.Format("{0:N0}", s.TienDau),
                 s.TienCuoi > 0 ? string.Format("{0:N0}", s.TienCuoi) : "—",
@@ -58,13 +53,13 @@ public partial class FormManageShift : Form
                 s.TrangThai
             );
 
-            var ttCell = dgv_listShift.Rows[i].Cells["col_trangThai"];
+            var ttCell = dgv_danhSachCa.Rows[i].Cells["col_trangThai"];
             if (s.TrangThai == "Đang mở")
             { ttCell.Style.BackColor = Color.FromArgb(0, 102, 204); ttCell.Style.ForeColor = Color.White; }
             else
             { ttCell.Style.BackColor = Color.FromArgb(100, 100, 100); ttCell.Style.ForeColor = Color.White; }
 
-            var clCell = dgv_listShift.Rows[i].Cells["col_chenhLech"];
+            var clCell = dgv_danhSachCa.Rows[i].Cells["col_chenhLech"];
             if (s.ChenhLech > 0) clCell.Style.ForeColor = Color.Green;
             else if (s.ChenhLech < 0) clCell.Style.ForeColor = Color.Red;
         }
@@ -72,8 +67,8 @@ public partial class FormManageShift : Form
 
     private void UpdateFooter()
     {
-        lbl_footerLeft.Text  = "Ca hiện tại: CA001 | Minh Triều";
-        lbl_footerRight.Text = "Mở lúc: 08:00 01/06/2024";
+        lbl_footerLeft.Text  = "Ca hiện tại: —";
+        lbl_footerRight.Text = "Mở lúc: —";
     }
 
     private void btn_moCa_Click(object sender, EventArgs e)
@@ -110,11 +105,6 @@ public partial class FormManageShift : Form
 
     private void label2_Click_1(object sender, EventArgs e) { }
     private void label2_Click_2(object sender, EventArgs e) { }
-
-    private void lbl_tienDaucaTitle_Click(object sender, EventArgs e)
-    {
-        
-    }
 }
 
 public class ShiftRecord
@@ -128,3 +118,4 @@ public class ShiftRecord
     public decimal ChenhLech { get; set; }
     public string  TrangThai { get; set; }
 }
+
