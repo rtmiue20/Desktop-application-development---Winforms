@@ -33,12 +33,6 @@ partial class FormGuest
     {
         mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
         dgv_guest = new DataGridView();
-        col_Phone = new DataGridViewTextBoxColumn();
-        col_Name = new DataGridViewTextBoxColumn();
-        col_Type = new DataGridViewTextBoxColumn();
-        col_Point = new DataGridViewTextBoxColumn();
-        col_Total = new DataGridViewTextBoxColumn();
-        col_Date = new DataGridViewTextBoxColumn();
         btn_addCustomer = new Button();
         btn_edit = new Button();
         btn_purchaseHistory = new Button();
@@ -58,6 +52,12 @@ partial class FormGuest
         btn_cancel = new Button();
         pnl_top = new Panel();
         groupBox1 = new GroupBox();
+        col_phones = new DataGridViewTextBoxColumn();
+        col_names = new DataGridViewTextBoxColumn();
+        col_types = new DataGridViewTextBoxColumn();
+        col_points = new DataGridViewTextBoxColumn();
+        col_totals = new DataGridViewTextBoxColumn();
+        col_dates = new DataGridViewTextBoxColumn();
         ((ISupportInitialize)dgv_guest).BeginInit();
         groupBox2.SuspendLayout();
         groupBox3.SuspendLayout();
@@ -75,60 +75,18 @@ partial class FormGuest
         // dgv_guest
         // 
         dgv_guest.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dgv_guest.Columns.AddRange(new DataGridViewColumn[] { col_Phone, col_Name, col_Type, col_Point, col_Total, col_Date });
+        dgv_guest.Columns.AddRange(new DataGridViewColumn[] { col_phones, col_names, col_types, col_points, col_totals, col_dates });
         dgv_guest.Location = new Point(5, 13);
-        dgv_guest.Margin = new Padding(0, 0, 0, 0);
+        dgv_guest.Margin = new Padding(0);
         dgv_guest.Name = "dgv_guest";
         dgv_guest.RowHeadersWidth = 51;
         dgv_guest.Size = new Size(494, 378);
         dgv_guest.TabIndex = 1;
         // 
-        // col_Phone
-        // 
-        col_Phone.HeaderText = "SĐT";
-        col_Phone.MinimumWidth = 6;
-        col_Phone.Name = "col_Phone";
-        col_Phone.Width = 125;
-        // 
-        // col_Name
-        // 
-        col_Name.HeaderText = "Họ tên";
-        col_Name.MinimumWidth = 6;
-        col_Name.Name = "col_Name";
-        col_Name.Width = 125;
-        // 
-        // col_Type
-        // 
-        col_Type.HeaderText = "Loại KH";
-        col_Type.MinimumWidth = 6;
-        col_Type.Name = "col_Type";
-        col_Type.Width = 125;
-        // 
-        // col_Point
-        // 
-        col_Point.HeaderText = "Điểm tích lũy";
-        col_Point.MinimumWidth = 6;
-        col_Point.Name = "col_Point";
-        col_Point.Width = 125;
-        // 
-        // col_Total
-        // 
-        col_Total.HeaderText = "Tổng mua";
-        col_Total.MinimumWidth = 6;
-        col_Total.Name = "col_Total";
-        col_Total.Width = 125;
-        // 
-        // col_Date
-        // 
-        col_Date.HeaderText = "Ngày tạo";
-        col_Date.MinimumWidth = 6;
-        col_Date.Name = "col_Date";
-        col_Date.Width = 125;
-        // 
         // btn_addCustomer
         // 
         btn_addCustomer.Location = new Point(5, 8);
-        btn_addCustomer.Margin = new Padding(1, 1, 1, 1);
+        btn_addCustomer.Margin = new Padding(1);
         btn_addCustomer.Name = "btn_addCustomer";
         btn_addCustomer.Size = new Size(214, 26);
         btn_addCustomer.TabIndex = 2;
@@ -138,7 +96,7 @@ partial class FormGuest
         // btn_edit
         // 
         btn_edit.Location = new Point(223, 8);
-        btn_edit.Margin = new Padding(1, 1, 1, 1);
+        btn_edit.Margin = new Padding(1);
         btn_edit.Name = "btn_edit";
         btn_edit.Size = new Size(201, 26);
         btn_edit.TabIndex = 3;
@@ -149,7 +107,7 @@ partial class FormGuest
         // btn_purchaseHistory
         // 
         btn_purchaseHistory.Location = new Point(426, 8);
-        btn_purchaseHistory.Margin = new Padding(1, 1, 1, 1);
+        btn_purchaseHistory.Margin = new Padding(1);
         btn_purchaseHistory.Name = "btn_purchaseHistory";
         btn_purchaseHistory.Size = new Size(194, 26);
         btn_purchaseHistory.TabIndex = 4;
@@ -159,7 +117,7 @@ partial class FormGuest
         // btn_refresh
         // 
         btn_refresh.Location = new Point(623, 8);
-        btn_refresh.Margin = new Padding(1, 1, 1, 1);
+        btn_refresh.Margin = new Padding(1);
         btn_refresh.Name = "btn_refresh";
         btn_refresh.Size = new Size(198, 26);
         btn_refresh.TabIndex = 5;
@@ -170,9 +128,9 @@ partial class FormGuest
         // 
         groupBox2.Controls.Add(dgv_guest);
         groupBox2.Location = new Point(0, 79);
-        groupBox2.Margin = new Padding(1, 1, 1, 1);
+        groupBox2.Margin = new Padding(1);
         groupBox2.Name = "groupBox2";
-        groupBox2.Padding = new Padding(1, 1, 1, 1);
+        groupBox2.Padding = new Padding(1);
         groupBox2.Size = new Size(501, 394);
         groupBox2.TabIndex = 7;
         groupBox2.TabStop = false;
@@ -180,7 +138,7 @@ partial class FormGuest
         // txt_search
         // 
         txt_search.Location = new Point(5, 11);
-        txt_search.Margin = new Padding(1, 1, 1, 1);
+        txt_search.Margin = new Padding(1);
         txt_search.Name = "txt_search";
         txt_search.Size = new Size(818, 27);
         txt_search.TabIndex = 2;
@@ -199,9 +157,9 @@ partial class FormGuest
         groupBox3.Controls.Add(btn_save);
         groupBox3.Controls.Add(btn_cancel);
         groupBox3.Location = new Point(504, 91);
-        groupBox3.Margin = new Padding(1, 1, 1, 1);
+        groupBox3.Margin = new Padding(1);
         groupBox3.Name = "groupBox3";
-        groupBox3.Padding = new Padding(1, 1, 1, 1);
+        groupBox3.Padding = new Padding(1);
         groupBox3.Size = new Size(324, 381);
         groupBox3.TabIndex = 8;
         groupBox3.TabStop = false;
@@ -246,7 +204,7 @@ partial class FormGuest
         // txt_phoneNumber
         // 
         txt_phoneNumber.Location = new Point(9, 48);
-        txt_phoneNumber.Margin = new Padding(1, 1, 1, 1);
+        txt_phoneNumber.Margin = new Padding(1);
         txt_phoneNumber.Name = "txt_phoneNumber";
         txt_phoneNumber.Size = new Size(310, 27);
         txt_phoneNumber.TabIndex = 10;
@@ -254,7 +212,7 @@ partial class FormGuest
         // txt_fullName
         // 
         txt_fullName.Location = new Point(9, 104);
-        txt_fullName.Margin = new Padding(1, 1, 1, 1);
+        txt_fullName.Margin = new Padding(1);
         txt_fullName.Name = "txt_fullName";
         txt_fullName.Size = new Size(310, 27);
         txt_fullName.TabIndex = 9;
@@ -262,7 +220,7 @@ partial class FormGuest
         // txt_address
         // 
         txt_address.Location = new Point(9, 163);
-        txt_address.Margin = new Padding(1, 1, 1, 1);
+        txt_address.Margin = new Padding(1);
         txt_address.Name = "txt_address";
         txt_address.Size = new Size(310, 27);
         txt_address.TabIndex = 3;
@@ -272,7 +230,7 @@ partial class FormGuest
         cbo_customerType.FormattingEnabled = true;
         cbo_customerType.Items.AddRange(new object[] { "Thường", "Thân thiết", "VIP" });
         cbo_customerType.Location = new Point(9, 222);
-        cbo_customerType.Margin = new Padding(1, 1, 1, 1);
+        cbo_customerType.Margin = new Padding(1);
         cbo_customerType.Name = "cbo_customerType";
         cbo_customerType.Size = new Size(310, 28);
         cbo_customerType.TabIndex = 8;
@@ -280,7 +238,7 @@ partial class FormGuest
         // btn_save
         // 
         btn_save.Location = new Point(9, 272);
-        btn_save.Margin = new Padding(1, 1, 1, 1);
+        btn_save.Margin = new Padding(1);
         btn_save.Name = "btn_save";
         btn_save.Size = new Size(308, 26);
         btn_save.TabIndex = 6;
@@ -290,7 +248,7 @@ partial class FormGuest
         // btn_cancel
         // 
         btn_cancel.Location = new Point(9, 309);
-        btn_cancel.Margin = new Padding(1, 1, 1, 1);
+        btn_cancel.Margin = new Padding(1);
         btn_cancel.Name = "btn_cancel";
         btn_cancel.Size = new Size(308, 26);
         btn_cancel.TabIndex = 7;
@@ -304,7 +262,7 @@ partial class FormGuest
         pnl_top.Controls.Add(btn_purchaseHistory);
         pnl_top.Controls.Add(btn_edit);
         pnl_top.Location = new Point(0, -2);
-        pnl_top.Margin = new Padding(1, 1, 1, 1);
+        pnl_top.Margin = new Padding(1);
         pnl_top.Name = "pnl_top";
         pnl_top.Size = new Size(827, 41);
         pnl_top.TabIndex = 9;
@@ -313,12 +271,54 @@ partial class FormGuest
         // 
         groupBox1.Controls.Add(txt_search);
         groupBox1.Location = new Point(0, 41);
-        groupBox1.Margin = new Padding(1, 1, 1, 1);
+        groupBox1.Margin = new Padding(1);
         groupBox1.Name = "groupBox1";
-        groupBox1.Padding = new Padding(1, 1, 1, 1);
+        groupBox1.Padding = new Padding(1);
         groupBox1.Size = new Size(827, 37);
         groupBox1.TabIndex = 10;
         groupBox1.TabStop = false;
+        // 
+        // col_phones
+        // 
+        col_phones.HeaderText = "SĐT";
+        col_phones.MinimumWidth = 6;
+        col_phones.Name = "col_phones";
+        col_phones.Width = 125;
+        // 
+        // col_names
+        // 
+        col_names.HeaderText = "Họ tên";
+        col_names.MinimumWidth = 6;
+        col_names.Name = "col_names";
+        col_names.Width = 125;
+        // 
+        // col_types
+        // 
+        col_types.HeaderText = "Loại KH";
+        col_types.MinimumWidth = 6;
+        col_types.Name = "col_types";
+        col_types.Width = 125;
+        // 
+        // col_points
+        // 
+        col_points.HeaderText = "Điểm tích lũy";
+        col_points.MinimumWidth = 6;
+        col_points.Name = "col_points";
+        col_points.Width = 125;
+        // 
+        // col_totals
+        // 
+        col_totals.HeaderText = "Tổng mua";
+        col_totals.MinimumWidth = 6;
+        col_totals.Name = "col_totals";
+        col_totals.Width = 125;
+        // 
+        // col_dates
+        // 
+        col_dates.HeaderText = "Ngày tạo";
+        col_dates.MinimumWidth = 6;
+        col_dates.Name = "col_dates";
+        col_dates.Width = 125;
         // 
         // FormGuest
         // 
@@ -358,12 +358,6 @@ partial class FormGuest
     private System.Windows.Forms.Button btn_refresh;
     private System.Windows.Forms.GroupBox groupBox2;
     private System.Windows.Forms.GroupBox groupBox3;
-    private DataGridViewTextBoxColumn col_Phone;
-    private DataGridViewTextBoxColumn col_Name;
-    private DataGridViewTextBoxColumn col_Type;
-    private DataGridViewTextBoxColumn col_Point;
-    private DataGridViewTextBoxColumn col_Total;
-    private DataGridViewTextBoxColumn col_Date;
     private System.Windows.Forms.TextBox txt_search;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Label label2;
@@ -373,4 +367,10 @@ partial class FormGuest
     private System.Windows.Forms.ComboBox cbo_customerType;
     private System.Windows.Forms.Button btn_save;
     private System.Windows.Forms.Button btn_cancel;
+    private DataGridViewTextBoxColumn col_phones;
+    private DataGridViewTextBoxColumn col_names;
+    private DataGridViewTextBoxColumn col_types;
+    private DataGridViewTextBoxColumn col_points;
+    private DataGridViewTextBoxColumn col_totals;
+    private DataGridViewTextBoxColumn col_dates;
 }

@@ -42,7 +42,7 @@
             label4 = new Label();
             label3 = new Label();
             groupBox2 = new GroupBox();
-            dgv_guest = new DataGridView();
+            dgv_promotion = new DataGridView();
             col_promotionCode = new DataGridViewTextBoxColumn();
             col_description = new DataGridViewTextBoxColumn();
             col_discountPercentage = new DataGridViewTextBoxColumn();
@@ -57,7 +57,7 @@
             pnl_top = new Panel();
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgv_guest).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_promotion).BeginInit();
             pnl_top.SuspendLayout();
             SuspendLayout();
             // 
@@ -76,9 +76,9 @@
             groupBox3.Controls.Add(label4);
             groupBox3.Controls.Add(label3);
             groupBox3.Location = new Point(478, 48);
-            groupBox3.Margin = new Padding(1, 1, 1, 1);
+            groupBox3.Margin = new Padding(1);
             groupBox3.Name = "groupBox3";
-            groupBox3.Padding = new Padding(1, 1, 1, 1);
+            groupBox3.Padding = new Padding(1);
             groupBox3.Size = new Size(356, 442);
             groupBox3.TabIndex = 11;
             groupBox3.TabStop = false;
@@ -97,7 +97,7 @@
             // dtp_endDate
             // 
             dtp_endDate.Location = new Point(7, 260);
-            dtp_endDate.Margin = new Padding(1, 1, 1, 1);
+            dtp_endDate.Margin = new Padding(1);
             dtp_endDate.Name = "dtp_endDate";
             dtp_endDate.Size = new Size(346, 27);
             dtp_endDate.TabIndex = 12;
@@ -105,7 +105,7 @@
             // dtp_startDate
             // 
             dtp_startDate.Location = new Point(7, 202);
-            dtp_startDate.Margin = new Padding(1, 1, 1, 1);
+            dtp_startDate.Margin = new Padding(1);
             dtp_startDate.Name = "dtp_startDate";
             dtp_startDate.Size = new Size(346, 27);
             dtp_startDate.TabIndex = 11;
@@ -113,7 +113,7 @@
             // txt_promotionCode
             // 
             txt_promotionCode.Location = new Point(7, 42);
-            txt_promotionCode.Margin = new Padding(1, 1, 1, 1);
+            txt_promotionCode.Margin = new Padding(1);
             txt_promotionCode.Name = "txt_promotionCode";
             txt_promotionCode.Size = new Size(346, 27);
             txt_promotionCode.TabIndex = 10;
@@ -121,7 +121,7 @@
             // txt_description
             // 
             txt_description.Location = new Point(7, 94);
-            txt_description.Margin = new Padding(1, 1, 1, 1);
+            txt_description.Margin = new Padding(1);
             txt_description.Name = "txt_description";
             txt_description.Size = new Size(346, 27);
             txt_description.TabIndex = 9;
@@ -129,7 +129,7 @@
             // txt_discountValue
             // 
             txt_discountValue.Location = new Point(7, 148);
-            txt_discountValue.Margin = new Padding(1, 1, 1, 1);
+            txt_discountValue.Margin = new Padding(1);
             txt_discountValue.Name = "txt_discountValue";
             txt_discountValue.Size = new Size(346, 27);
             txt_discountValue.TabIndex = 3;
@@ -137,7 +137,7 @@
             // btn_save
             // 
             btn_save.Location = new Point(7, 314);
-            btn_save.Margin = new Padding(1, 1, 1, 1);
+            btn_save.Margin = new Padding(1);
             btn_save.Name = "btn_save";
             btn_save.Size = new Size(344, 26);
             btn_save.TabIndex = 6;
@@ -147,7 +147,7 @@
             // btn_cancel
             // 
             btn_cancel.Location = new Point(7, 350);
-            btn_cancel.Margin = new Padding(1, 1, 1, 1);
+            btn_cancel.Margin = new Padding(1);
             btn_cancel.Name = "btn_cancel";
             btn_cancel.Size = new Size(344, 26);
             btn_cancel.TabIndex = 7;
@@ -196,26 +196,26 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(dgv_guest);
+            groupBox2.Controls.Add(dgv_promotion);
             groupBox2.Location = new Point(-1, 48);
-            groupBox2.Margin = new Padding(1, 1, 1, 1);
+            groupBox2.Margin = new Padding(1);
             groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(1, 1, 1, 1);
+            groupBox2.Padding = new Padding(1);
             groupBox2.Size = new Size(476, 442);
             groupBox2.TabIndex = 10;
             groupBox2.TabStop = false;
             // 
-            // dgv_guest
+            // dgv_promotion
             // 
-            dgv_guest.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_guest.Columns.AddRange(new DataGridViewColumn[] { col_promotionCode, col_description, col_discountPercentage, col_discountAmount, col_startDate, col_endDate, col_status });
-            dgv_guest.Location = new Point(2, -1);
-            dgv_guest.Margin = new Padding(0, 0, 0, 0);
-            dgv_guest.Name = "dgv_guest";
-            dgv_guest.RowHeadersWidth = 51;
-            dgv_guest.Size = new Size(472, 443);
-            dgv_guest.TabIndex = 1;
-            dgv_guest.CellContentClick += dgv_guest_CellContentClick;
+            dgv_promotion.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_promotion.Columns.AddRange(new DataGridViewColumn[] { col_promotionCode, col_description, col_discountPercentage, col_discountAmount, col_startDate, col_endDate, col_status });
+            dgv_promotion.Location = new Point(2, -1);
+            dgv_promotion.Margin = new Padding(0);
+            dgv_promotion.Name = "dgv_promotion";
+            dgv_promotion.RowHeadersWidth = 51;
+            dgv_promotion.Size = new Size(472, 443);
+            dgv_promotion.TabIndex = 1;
+            dgv_promotion.CellContentClick += dgv_guest_CellContentClick;
             // 
             // col_promotionCode
             // 
@@ -269,7 +269,7 @@
             // btn_createPromotion
             // 
             btn_createPromotion.Location = new Point(8, 6);
-            btn_createPromotion.Margin = new Padding(1, 1, 1, 1);
+            btn_createPromotion.Margin = new Padding(1);
             btn_createPromotion.Name = "btn_createPromotion";
             btn_createPromotion.Size = new Size(185, 26);
             btn_createPromotion.TabIndex = 2;
@@ -279,7 +279,7 @@
             // btn_refresh
             // 
             btn_refresh.Location = new Point(623, 6);
-            btn_refresh.Margin = new Padding(1, 1, 1, 1);
+            btn_refresh.Margin = new Padding(1);
             btn_refresh.Name = "btn_refresh";
             btn_refresh.Size = new Size(208, 26);
             btn_refresh.TabIndex = 5;
@@ -289,7 +289,7 @@
             // btn_disablePromotion
             // 
             btn_disablePromotion.Location = new Point(405, 6);
-            btn_disablePromotion.Margin = new Padding(1, 1, 1, 1);
+            btn_disablePromotion.Margin = new Padding(1);
             btn_disablePromotion.Name = "btn_disablePromotion";
             btn_disablePromotion.Size = new Size(215, 26);
             btn_disablePromotion.TabIndex = 4;
@@ -299,7 +299,7 @@
             // btn_editPromotion
             // 
             btn_editPromotion.Location = new Point(196, 6);
-            btn_editPromotion.Margin = new Padding(1, 1, 1, 1);
+            btn_editPromotion.Margin = new Padding(1);
             btn_editPromotion.Name = "btn_editPromotion";
             btn_editPromotion.Size = new Size(206, 26);
             btn_editPromotion.TabIndex = 3;
@@ -313,7 +313,7 @@
             pnl_top.Controls.Add(btn_editPromotion);
             pnl_top.Controls.Add(btn_disablePromotion);
             pnl_top.Location = new Point(-1, 0);
-            pnl_top.Margin = new Padding(1, 1, 1, 1);
+            pnl_top.Margin = new Padding(1);
             pnl_top.Name = "pnl_top";
             pnl_top.Size = new Size(835, 45);
             pnl_top.TabIndex = 12;
@@ -331,7 +331,7 @@
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgv_guest).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_promotion).EndInit();
             pnl_top.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -352,7 +352,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btn_createPromotion;
-        private System.Windows.Forms.DataGridView dgv_guest;
+        private System.Windows.Forms.DataGridView dgv_promotion;
         private System.Windows.Forms.Button btn_refresh;
         private System.Windows.Forms.Button btn_disablePromotion;
         private System.Windows.Forms.Button btn_editPromotion;
