@@ -10,3 +10,31 @@ C:\Users\PC\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Deb
 C:\Users\PC\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\refint\DTO.dll
 C:\Users\PC\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.pdb
 C:\Users\PC\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\ref\DTO.dll
+<<<<<<< Updated upstream
+=======
+>>>>>>> 6afe1f632f227c5803032a2963d271947b81fbfa
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.deps.json
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.pdb
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.AssemblyInfoInputs.cache
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.AssemblyInfo.cs
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.csproj.CoreCompileInputs.cache
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.sourcelink.json
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\refint\DTO.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.pdb
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\ref\DTO.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.deps.json
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.pdb
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.AssemblyInfoInputs.cache
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.AssemblyInfo.cs
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.csproj.CoreCompileInputs.cache
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.sourcelink.json
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\refint\DTO.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.pdb
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\ref\DTO.dll
+>>>>>>> Stashed changes

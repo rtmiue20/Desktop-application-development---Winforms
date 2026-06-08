@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging; // Add this if not present
+using System.IO;          // Cần thiết để xử lý đường dẫn Path
 using System.Linq;
 using System.Windows.Forms;
 using BUS;
 using DTO;
+using ImageMagick;        // Thư viện giải mã WebP, AVIF
 
 namespace GUI
 {
@@ -26,7 +29,7 @@ namespace GUI
         // 2. Thiết lập trạng thái mặc định và nạp dữ liệu khi khởi tạo Form
         private void FormManageProduct_Load(object sender, EventArgs e)
         {
-            cb_StatusFilter.SelectedIndex = 0; // Khởi tạo tiêu chí lọc mặc định
+            cbb_statusFilter.SelectedIndex = 0; // Khởi tạo tiêu chí lọc mặc định
             LoadCategories();
             LoadProducts();
         }
@@ -35,13 +38,13 @@ namespace GUI
         private void LoadCategories()
         {
             var categories = _categoryBUS.GetAll();
-            dgv_CategoryFilter.DataSource = categories;
+            dgv_categoryFilter.DataSource = categories;
 
             // Tùy chỉnh định dạng hiển thị cho lưới danh mục (ẩn cột ID)
-            if (dgv_CategoryFilter.Columns["CategoryID"] != null)
-                dgv_CategoryFilter.Columns["CategoryID"].Visible = false;
+            if (dgv_categoryFilter.Columns["CategoryID"] != null)
+                dgv_categoryFilter.Columns["CategoryID"].Visible = false;
 
-            dgv_CategoryFilter.ClearSelection();
+            dgv_categoryFilter.ClearSelection();
         }
 
         // Truy xuất toàn bộ bản ghi sản phẩm và kích hoạt chu trình lọc
@@ -66,7 +69,7 @@ namespace GUI
             }
 
             // Áp dụng rào lọc dựa trên số lượng tồn kho định mức
-            string statusFilter = cb_StatusFilter.Text;
+            string statusFilter = cbb_statusFilter.Text;
             if (statusFilter == "Còn hàng")
             {
                 filteredList = filteredList.Where(p => p.MinStock > 0);
@@ -77,7 +80,7 @@ namespace GUI
             }
 
             // Ràng buộc tập dữ liệu đã qua xử lý lên giao diện người dùng
-            dgv_ProductList.DataSource = filteredList.ToList();
+            dgv_productList.DataSource = filteredList.ToList();
 
             UpdateBottomStatus();
         }
@@ -85,15 +88,15 @@ namespace GUI
         // Tính toán và hiển thị thông số quản trị trên thanh trạng thái (StatusStrip)
         private void UpdateBottomStatus()
         {
-            int totalProducts = dgv_ProductList.Rows.Count;
+            int totalProducts = dgv_productList.Rows.Count;
             string selectedName = "Không";
 
-            if (dgv_ProductList.SelectedRows.Count > 0)
+            if (dgv_productList.SelectedRows.Count > 0)
             {
-                selectedName = dgv_ProductList.SelectedRows[0].Cells["ProductName"]?.Value?.ToString() ?? "Không";
+                selectedName = dgv_productList.SelectedRows[0].Cells["ProductName"]?.Value?.ToString() ?? "Không";
             }
 
-            lbl_StatusSummary.Text = $"Tổng: {totalProducts} sản phẩm | Đang chọn: {selectedName}";
+            lbl_statusSummary.Text = $"Tổng: {totalProducts} sản phẩm | Đang chọn: {selectedName}";
         }
 
         // 4. Kiểm soát các sự kiện tương tác trên lưới dữ liệu (DataGridView)
@@ -103,7 +106,7 @@ namespace GUI
         {
             if (e.RowIndex >= 0)
             {
-                var cellValue = dgv_CategoryFilter.Rows[e.RowIndex].Cells["CategoryID"].Value;
+                var cellValue = dgv_categoryFilter.Rows[e.RowIndex].Cells["CategoryID"].Value;
                 if (cellValue != null && int.TryParse(cellValue.ToString(), out int catId))
                 {
                     _selectedCategoryID = catId;
@@ -116,17 +119,61 @@ namespace GUI
             }
         }
 
-        // Ghi nhận khóa chính của bản ghi khi người dùng thiết lập tiêu điểm
+        // Ghi nhận khóa chính của bản ghi khi người dùng thiết lập tiêu điểm VÀ LOAD ẢNH
         private void dgv_ProductList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                var cellValue = dgv_ProductList.Rows[e.RowIndex].Cells["ProductID"].Value;
+                var cellValue = dgv_productList.Rows[e.RowIndex].Cells["ProductID"].Value;
                 if (cellValue != null && int.TryParse(cellValue.ToString(), out int prodId))
                 {
                     _selectedProductID = prodId;
                 }
                 UpdateBottomStatus();
+
+                // Lấy đối tượng DTO từ dòng được chọn để truyền ImagePath
+                var selectedProduct = dgv_productList.Rows[e.RowIndex].DataBoundItem as ProductsDTO;
+                if (selectedProduct != null)
+                {
+                    HienThiAnhSanPham(selectedProduct.ImagePath);
+                }
+            }
+        }
+
+        // HÀM MỚI: Xử lý giải mã ảnh WebP/AVIF bằng Magick.NET
+        private void HienThiAnhSanPham(string imagePath)
+        {
+            // Dọn bộ nhớ ảnh cũ nếu có
+            if (pic_productImage.Image != null)
+            {
+                pic_productImage.Image.Dispose();
+                pic_productImage.Image = null;
+            }
+
+            if (string.IsNullOrWhiteSpace(imagePath)) return;
+
+            // Kết hợp thư mục chạy ứng dụng (net9.0-windows) với đường dẫn tương đối trong DB
+            string fullPath = Path.Combine(Application.StartupPath, imagePath);
+
+            if (File.Exists(fullPath))
+            {
+                try
+                {
+                    // Magick.NET không có ToBitmap, cần chuyển đổi thủ công
+                    using (var magickImage = new MagickImage(fullPath))
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            magickImage.Write(memoryStream, MagickFormat.Bmp);
+                            memoryStream.Position = 0;
+                            pic_productImage.Image = new Bitmap(memoryStream);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi load ảnh: {ex.Message}");
+                }
             }
         }
 
@@ -135,7 +182,7 @@ namespace GUI
         {
             if (e.Value == null) return;
 
-            if (dgv_ProductList.Columns[e.ColumnIndex].Name == "Price")
+            if (dgv_productList.Columns[e.ColumnIndex].Name == "Price")
             {
                 if (decimal.TryParse(e.Value.ToString(), out decimal price))
                 {
@@ -204,7 +251,7 @@ namespace GUI
         // Hủy bỏ các bộ lọc cục bộ và đồng bộ hóa lại toàn bộ tập dữ liệu
         private void btn_ProductRefresh_Click(object sender, EventArgs e)
         {
-            cb_StatusFilter.SelectedIndex = 0;
+            cbb_statusFilter.SelectedIndex = 0;
             _selectedCategoryID = -1;
             _selectedProductID = -1;
             LoadCategories();

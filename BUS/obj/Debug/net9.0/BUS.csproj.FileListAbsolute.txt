@@ -16,3 +16,43 @@ C:\Users\PC\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Deb
 C:\Users\PC\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\refint\BUS.dll
 C:\Users\PC\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.pdb
 C:\Users\PC\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\ref\BUS.dll
+<<<<<<< Updated upstream
+=======
+>>>>>>> 6afe1f632f227c5803032a2963d271947b81fbfa
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\BUS.deps.json
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\BUS.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\BUS.pdb
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\DAL.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\DTO.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\DAL.pdb
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\DTO.pdb
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.csproj.AssemblyReference.cache
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.AssemblyInfoInputs.cache
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.AssemblyInfo.cs
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.csproj.CoreCompileInputs.cache
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.sourcelink.json
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.csproj.Up2Date
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\refint\BUS.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.pdb
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\ref\BUS.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\BUS.deps.json
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\BUS.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\BUS.pdb
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\DAL.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\DTO.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\DAL.pdb
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\bin\Debug\net9.0\DTO.pdb
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.csproj.AssemblyReference.cache
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.AssemblyInfoInputs.cache
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.AssemblyInfo.cs
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.csproj.CoreCompileInputs.cache
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.sourcelink.json
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.csproj.Up2Date
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\refint\BUS.dll
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\BUS.pdb
+C:\Users\MSI\Source\Repos\Desktop-application-development---Winforms\BUS\obj\Debug\net9.0\ref\BUS.dll
+>>>>>>> Stashed changes

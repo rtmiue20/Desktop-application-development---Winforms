@@ -17,267 +17,297 @@ namespace GUI
 
         private void InitializeComponent()
         {
-            this.pnl_TopBar = new System.Windows.Forms.Panel();
-            this.btn_ProductRefresh = new System.Windows.Forms.Button();
-            this.btn_Category = new System.Windows.Forms.Button();
-            this.btn_ProductDelete = new System.Windows.Forms.Button();
-            this.btn_ProductEdit = new System.Windows.Forms.Button();
-            this.btn_ProductAdd = new System.Windows.Forms.Button();
-            this.pnl_Bottom = new System.Windows.Forms.Panel();
-            this.lbl_InventoryWarning = new System.Windows.Forms.Label();
-            this.lbl_StatusSummary = new System.Windows.Forms.Label();
-            this.pnl_Left = new System.Windows.Forms.Panel();
-            this.dgv_CategoryFilter = new System.Windows.Forms.DataGridView();
-            this.lbl_CategoryTitle = new System.Windows.Forms.Label();
-            this.pnl_Main = new System.Windows.Forms.Panel();
-            this.dgv_ProductList = new System.Windows.Forms.DataGridView();
-            this.pnl_MainTop = new System.Windows.Forms.Panel();
-            this.cb_StatusFilter = new System.Windows.Forms.ComboBox();
-            this.pnl_TopBar.SuspendLayout();
-            this.pnl_Bottom.SuspendLayout();
-            this.pnl_Left.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_CategoryFilter)).BeginInit();
-            this.pnl_Main.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_ProductList)).BeginInit();
-            this.pnl_MainTop.SuspendLayout();
-            this.SuspendLayout();
+            pnl_topBar = new System.Windows.Forms.Panel();
+            btn_productRefresh = new System.Windows.Forms.Button();
+            btn_category = new System.Windows.Forms.Button();
+            btn_productDelete = new System.Windows.Forms.Button();
+            btn_productEdit = new System.Windows.Forms.Button();
+            btn_productAdd = new System.Windows.Forms.Button();
+            pnl_Bottom = new System.Windows.Forms.Panel();
+            lbl_inventoryWarning = new System.Windows.Forms.Label();
+            lbl_statusSummary = new System.Windows.Forms.Label();
+            pnl_Left = new System.Windows.Forms.Panel();
+            dgv_categoryFilter = new System.Windows.Forms.DataGridView();
+            lbl_CategoryTitle = new System.Windows.Forms.Label();
+            pnl_main = new System.Windows.Forms.Panel();
+            dgv_productList = new System.Windows.Forms.DataGridView();
+            pnl_mainTop = new System.Windows.Forms.Panel();
+            cbb_statusFilter = new System.Windows.Forms.ComboBox();
+            pic_productImage = new System.Windows.Forms.PictureBox();
+            pnl_topBar.SuspendLayout();
+            pnl_Bottom.SuspendLayout();
+            pnl_Left.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_categoryFilter).BeginInit();
+            pnl_main.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_productList).BeginInit();
+            pnl_mainTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pic_productImage).BeginInit();
+            SuspendLayout();
             // 
-            // pnl_TopBar
+            // pnl_topBar
             // 
-            this.pnl_TopBar.Controls.Add(this.btn_ProductRefresh);
-            this.pnl_TopBar.Controls.Add(this.btn_Category);
-            this.pnl_TopBar.Controls.Add(this.btn_ProductDelete);
-            this.pnl_TopBar.Controls.Add(this.btn_ProductEdit);
-            this.pnl_TopBar.Controls.Add(this.btn_ProductAdd);
-            this.pnl_TopBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnl_TopBar.Location = new System.Drawing.Point(0, 0);
-            this.pnl_TopBar.Name = "pnl_TopBar";
-            this.pnl_TopBar.Size = new System.Drawing.Size(984, 60);
-            this.pnl_TopBar.TabIndex = 0;
+            pnl_topBar.Controls.Add(btn_productRefresh);
+            pnl_topBar.Controls.Add(btn_category);
+            pnl_topBar.Controls.Add(btn_productDelete);
+            pnl_topBar.Controls.Add(btn_productEdit);
+            pnl_topBar.Controls.Add(btn_productAdd);
+            pnl_topBar.Dock = System.Windows.Forms.DockStyle.Top;
+            pnl_topBar.Location = new System.Drawing.Point(0, 0);
+            pnl_topBar.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            pnl_topBar.Name = "pnl_topBar";
+            pnl_topBar.Size = new System.Drawing.Size(2091, 154);
+            pnl_topBar.TabIndex = 0;
             // 
-            // btn_ProductRefresh
+            // btn_productRefresh
             // 
-            this.btn_ProductRefresh.Location = new System.Drawing.Point(440, 15);
-            this.btn_ProductRefresh.Name = "btn_ProductRefresh";
-            this.btn_ProductRefresh.Size = new System.Drawing.Size(100, 30);
-            this.btn_ProductRefresh.TabIndex = 4;
-            this.btn_ProductRefresh.Text = "Làm mới";
-            this.btn_ProductRefresh.UseVisualStyleBackColor = true;
-            this.btn_ProductRefresh.Click += new System.EventHandler(this.btn_ProductRefresh_Click);
+            btn_productRefresh.Location = new System.Drawing.Point(935, 38);
+            btn_productRefresh.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            btn_productRefresh.Name = "btn_productRefresh";
+            btn_productRefresh.Size = new System.Drawing.Size(212, 77);
+            btn_productRefresh.TabIndex = 4;
+            btn_productRefresh.Text = "Làm mới";
+            btn_productRefresh.UseVisualStyleBackColor = true;
+            btn_productRefresh.Click += btn_ProductRefresh_Click;
             // 
-            // btn_Category
+            // btn_category
             // 
-            this.btn_Category.Location = new System.Drawing.Point(340, 15);
-            this.btn_Category.Name = "btn_Category";
-            this.btn_Category.Size = new System.Drawing.Size(100, 30);
-            this.btn_Category.TabIndex = 3;
-            this.btn_Category.Text = "Danh mục";
-            this.btn_Category.UseVisualStyleBackColor = true;
-            this.btn_Category.Click += new System.EventHandler(this.btn_Category_Click);
+            btn_category.Location = new System.Drawing.Point(722, 38);
+            btn_category.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            btn_category.Name = "btn_category";
+            btn_category.Size = new System.Drawing.Size(212, 77);
+            btn_category.TabIndex = 3;
+            btn_category.Text = "Danh mục";
+            btn_category.UseVisualStyleBackColor = true;
+            btn_category.Click += btn_Category_Click;
             // 
-            // btn_ProductDelete
+            // btn_productDelete
             // 
-            this.btn_ProductDelete.Location = new System.Drawing.Point(240, 15);
-            this.btn_ProductDelete.Name = "btn_ProductDelete";
-            this.btn_ProductDelete.Size = new System.Drawing.Size(100, 30);
-            this.btn_ProductDelete.TabIndex = 2;
-            this.btn_ProductDelete.Text = "Xóa";
-            this.btn_ProductDelete.UseVisualStyleBackColor = true;
-            this.btn_ProductDelete.Click += new System.EventHandler(this.btn_ProductDelete_Click);
+            btn_productDelete.Location = new System.Drawing.Point(510, 38);
+            btn_productDelete.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            btn_productDelete.Name = "btn_productDelete";
+            btn_productDelete.Size = new System.Drawing.Size(212, 77);
+            btn_productDelete.TabIndex = 2;
+            btn_productDelete.Text = "Xóa";
+            btn_productDelete.UseVisualStyleBackColor = true;
+            btn_productDelete.Click += btn_ProductDelete_Click;
             // 
-            // btn_ProductEdit
+            // btn_productEdit
             // 
-            this.btn_ProductEdit.Location = new System.Drawing.Point(140, 15);
-            this.btn_ProductEdit.Name = "btn_ProductEdit";
-            this.btn_ProductEdit.Size = new System.Drawing.Size(100, 30);
-            this.btn_ProductEdit.TabIndex = 1;
-            this.btn_ProductEdit.Text = "- Sửa";
-            this.btn_ProductEdit.UseVisualStyleBackColor = true;
-            this.btn_ProductEdit.Click += new System.EventHandler(this.btn_ProductEdit_Click);
+            btn_productEdit.Location = new System.Drawing.Point(298, 38);
+            btn_productEdit.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            btn_productEdit.Name = "btn_productEdit";
+            btn_productEdit.Size = new System.Drawing.Size(212, 77);
+            btn_productEdit.TabIndex = 1;
+            btn_productEdit.Text = "Sửa";
+            btn_productEdit.UseVisualStyleBackColor = true;
+            btn_productEdit.Click += btn_ProductEdit_Click;
             // 
-            // btn_ProductAdd
+            // btn_productAdd
             // 
-            this.btn_ProductAdd.Location = new System.Drawing.Point(20, 15);
-            this.btn_ProductAdd.Name = "btn_ProductAdd";
-            this.btn_ProductAdd.Size = new System.Drawing.Size(120, 30);
-            this.btn_ProductAdd.TabIndex = 0;
-            this.btn_ProductAdd.Text = "+ Thêm SP";
-            this.btn_ProductAdd.UseVisualStyleBackColor = true;
-            this.btn_ProductAdd.Click += new System.EventHandler(this.btn_ProductAdd_Click);
+            btn_productAdd.Location = new System.Drawing.Point(42, 38);
+            btn_productAdd.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            btn_productAdd.Name = "btn_productAdd";
+            btn_productAdd.Size = new System.Drawing.Size(255, 77);
+            btn_productAdd.TabIndex = 0;
+            btn_productAdd.Text = "Thêm SP";
+            btn_productAdd.UseVisualStyleBackColor = true;
+            btn_productAdd.Click += btn_ProductAdd_Click;
             // 
             // pnl_Bottom
             // 
-            this.pnl_Bottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnl_Bottom.Controls.Add(this.lbl_InventoryWarning);
-            this.pnl_Bottom.Controls.Add(this.lbl_StatusSummary);
-            this.pnl_Bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnl_Bottom.Location = new System.Drawing.Point(0, 531);
-            this.pnl_Bottom.Name = "pnl_Bottom";
-            this.pnl_Bottom.Size = new System.Drawing.Size(984, 30);
-            this.pnl_Bottom.TabIndex = 1;
+            pnl_Bottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnl_Bottom.Controls.Add(lbl_inventoryWarning);
+            pnl_Bottom.Controls.Add(lbl_statusSummary);
+            pnl_Bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            pnl_Bottom.Location = new System.Drawing.Point(0, 1364);
+            pnl_Bottom.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            pnl_Bottom.Name = "pnl_Bottom";
+            pnl_Bottom.Size = new System.Drawing.Size(2091, 74);
+            pnl_Bottom.TabIndex = 1;
             // 
-            // lbl_InventoryWarning
+            // lbl_inventoryWarning
             // 
-            this.lbl_InventoryWarning.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbl_InventoryWarning.AutoSize = true;
-            this.lbl_InventoryWarning.ForeColor = System.Drawing.Color.DimGray;
-            this.lbl_InventoryWarning.Location = new System.Drawing.Point(750, 6);
-            this.lbl_InventoryWarning.Name = "lbl_InventoryWarning";
-            this.lbl_InventoryWarning.Size = new System.Drawing.Size(221, 16);
-            this.lbl_InventoryWarning.TabIndex = 1;
-            this.lbl_InventoryWarning.Text = "Tồn kho thấp: 0 SP | Hết hàng: 0 SP";
-            this.lbl_InventoryWarning.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            lbl_inventoryWarning.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            lbl_inventoryWarning.AutoSize = true;
+            lbl_inventoryWarning.ForeColor = System.Drawing.Color.DimGray;
+            lbl_inventoryWarning.Location = new System.Drawing.Point(1596, 15);
+            lbl_inventoryWarning.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            lbl_inventoryWarning.Name = "lbl_inventoryWarning";
+            lbl_inventoryWarning.Size = new System.Drawing.Size(484, 41);
+            lbl_inventoryWarning.TabIndex = 1;
+            lbl_inventoryWarning.Text = "Tồn kho thấp: 0 SP | Hết hàng: 0 SP";
+            lbl_inventoryWarning.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lbl_StatusSummary
+            // lbl_statusSummary
             // 
-            this.lbl_StatusSummary.AutoSize = true;
-            this.lbl_StatusSummary.Location = new System.Drawing.Point(12, 6);
-            this.lbl_StatusSummary.Name = "lbl_StatusSummary";
-            this.lbl_StatusSummary.Size = new System.Drawing.Size(242, 16);
-            this.lbl_StatusSummary.TabIndex = 0;
-            this.lbl_StatusSummary.Text = "Tổng: 0 sản phẩm | Đang chọn: Không";
+            lbl_statusSummary.AutoSize = true;
+            lbl_statusSummary.Location = new System.Drawing.Point(26, 15);
+            lbl_statusSummary.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            lbl_statusSummary.Name = "lbl_statusSummary";
+            lbl_statusSummary.Size = new System.Drawing.Size(525, 41);
+            lbl_statusSummary.TabIndex = 0;
+            lbl_statusSummary.Text = "Tổng: 0 sản phẩm | Đang chọn: Không";
             // 
             // pnl_Left
             // 
-            this.pnl_Left.BackColor = System.Drawing.Color.White;
-            this.pnl_Left.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnl_Left.Controls.Add(this.dgv_CategoryFilter);
-            this.pnl_Left.Controls.Add(this.lbl_CategoryTitle);
-            this.pnl_Left.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnl_Left.Location = new System.Drawing.Point(0, 60);
-            this.pnl_Left.Name = "pnl_Left";
-            this.pnl_Left.Size = new System.Drawing.Size(220, 471);
-            this.pnl_Left.TabIndex = 2;
+            pnl_Left.BackColor = System.Drawing.Color.White;
+            pnl_Left.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnl_Left.Controls.Add(dgv_categoryFilter);
+            pnl_Left.Controls.Add(lbl_CategoryTitle);
+            pnl_Left.Dock = System.Windows.Forms.DockStyle.Left;
+            pnl_Left.Location = new System.Drawing.Point(0, 154);
+            pnl_Left.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            pnl_Left.Name = "pnl_Left";
+            pnl_Left.Size = new System.Drawing.Size(465, 1210);
+            pnl_Left.TabIndex = 2;
             // 
-            // dgv_CategoryFilter
+            // dgv_categoryFilter
             // 
-            this.dgv_CategoryFilter.AllowUserToAddRows = false;
-            this.dgv_CategoryFilter.AllowUserToDeleteRows = false;
-            this.dgv_CategoryFilter.AllowUserToResizeColumns = false;
-            this.dgv_CategoryFilter.AllowUserToResizeRows = false;
-            this.dgv_CategoryFilter.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_CategoryFilter.BackgroundColor = System.Drawing.Color.White;
-            this.dgv_CategoryFilter.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_CategoryFilter.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgv_CategoryFilter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_CategoryFilter.ColumnHeadersVisible = false;
-            this.dgv_CategoryFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_CategoryFilter.Location = new System.Drawing.Point(0, 40);
-            this.dgv_CategoryFilter.MultiSelect = false;
-            this.dgv_CategoryFilter.Name = "dgv_CategoryFilter";
-            this.dgv_CategoryFilter.ReadOnly = true;
-            this.dgv_CategoryFilter.RowHeadersVisible = false;
-            this.dgv_CategoryFilter.RowTemplate.Height = 35;
-            this.dgv_CategoryFilter.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_CategoryFilter.Size = new System.Drawing.Size(218, 429);
-            this.dgv_CategoryFilter.TabIndex = 1;
-            this.dgv_CategoryFilter.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CategoryFilter_CellClick);
+            dgv_categoryFilter.AllowUserToAddRows = false;
+            dgv_categoryFilter.AllowUserToDeleteRows = false;
+            dgv_categoryFilter.AllowUserToResizeColumns = false;
+            dgv_categoryFilter.AllowUserToResizeRows = false;
+            dgv_categoryFilter.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dgv_categoryFilter.BackgroundColor = System.Drawing.Color.White;
+            dgv_categoryFilter.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dgv_categoryFilter.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dgv_categoryFilter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_categoryFilter.ColumnHeadersVisible = false;
+            dgv_categoryFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            dgv_categoryFilter.Location = new System.Drawing.Point(0, 102);
+            dgv_categoryFilter.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            dgv_categoryFilter.MultiSelect = false;
+            dgv_categoryFilter.Name = "dgv_categoryFilter";
+            dgv_categoryFilter.ReadOnly = true;
+            dgv_categoryFilter.RowHeadersVisible = false;
+            dgv_categoryFilter.RowHeadersWidth = 102;
+            dgv_categoryFilter.RowTemplate.Height = 35;
+            dgv_categoryFilter.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            dgv_categoryFilter.Size = new System.Drawing.Size(463, 1106);
+            dgv_categoryFilter.TabIndex = 1;
+            dgv_categoryFilter.CellClick += dgv_CategoryFilter_CellClick;
             // 
             // lbl_CategoryTitle
             // 
-            this.lbl_CategoryTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lbl_CategoryTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CategoryTitle.Location = new System.Drawing.Point(0, 0);
-            this.lbl_CategoryTitle.Name = "lbl_CategoryTitle";
-            this.lbl_CategoryTitle.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.lbl_CategoryTitle.Size = new System.Drawing.Size(218, 40);
-            this.lbl_CategoryTitle.TabIndex = 0;
-            this.lbl_CategoryTitle.Text = "Danh mục";
-            this.lbl_CategoryTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lbl_CategoryTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            lbl_CategoryTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
+            lbl_CategoryTitle.Location = new System.Drawing.Point(0, 0);
+            lbl_CategoryTitle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            lbl_CategoryTitle.Name = "lbl_CategoryTitle";
+            lbl_CategoryTitle.Padding = new System.Windows.Forms.Padding(21, 0, 0, 0);
+            lbl_CategoryTitle.Size = new System.Drawing.Size(463, 102);
+            lbl_CategoryTitle.TabIndex = 0;
+            lbl_CategoryTitle.Text = "Danh mục";
+            lbl_CategoryTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnl_Main
+            // pnl_main
             // 
-            this.pnl_Main.Controls.Add(this.dgv_ProductList);
-            this.pnl_Main.Controls.Add(this.pnl_MainTop);
-            this.pnl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_Main.Location = new System.Drawing.Point(220, 60);
-            this.pnl_Main.Name = "pnl_Main";
-            this.pnl_Main.Padding = new System.Windows.Forms.Padding(10);
-            this.pnl_Main.Size = new System.Drawing.Size(764, 471);
-            this.pnl_Main.TabIndex = 3;
+            pnl_main.Controls.Add(dgv_productList);
+            pnl_main.Controls.Add(pnl_mainTop);
+            pnl_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_main.Location = new System.Drawing.Point(465, 154);
+            pnl_main.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            pnl_main.Name = "pnl_main";
+            pnl_main.Padding = new System.Windows.Forms.Padding(21, 26, 21, 26);
+            pnl_main.Size = new System.Drawing.Size(1626, 1210);
+            pnl_main.TabIndex = 3;
             // 
-            // dgv_ProductList
+            // dgv_productList
             // 
-            this.dgv_ProductList.AllowUserToAddRows = false;
-            this.dgv_ProductList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_ProductList.BackgroundColor = System.Drawing.Color.White;
-            this.dgv_ProductList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_ProductList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_ProductList.Location = new System.Drawing.Point(10, 60);
-            this.dgv_ProductList.Name = "dgv_ProductList";
-            this.dgv_ProductList.ReadOnly = true;
-            this.dgv_ProductList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_ProductList.Size = new System.Drawing.Size(744, 401);
-            this.dgv_ProductList.TabIndex = 1;
-            this.dgv_ProductList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_ProductList_CellClick);
-            this.dgv_ProductList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_ProductList_CellFormatting);
+            dgv_productList.AllowUserToAddRows = false;
+            dgv_productList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dgv_productList.BackgroundColor = System.Drawing.Color.White;
+            dgv_productList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_productList.Dock = System.Windows.Forms.DockStyle.Fill;
+            dgv_productList.Location = new System.Drawing.Point(21, 154);
+            dgv_productList.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            dgv_productList.Name = "dgv_productList";
+            dgv_productList.ReadOnly = true;
+            dgv_productList.RowHeadersWidth = 102;
+            dgv_productList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            dgv_productList.Size = new System.Drawing.Size(1584, 1030);
+            dgv_productList.TabIndex = 1;
+            dgv_productList.CellClick += dgv_ProductList_CellClick;
+            dgv_productList.CellFormatting += dgv_ProductList_CellFormatting;
             // 
-            // pnl_MainTop
+            // pnl_mainTop
             // 
-            this.pnl_MainTop.Controls.Add(this.cb_StatusFilter);
-            this.pnl_MainTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnl_MainTop.Location = new System.Drawing.Point(10, 10);
-            this.pnl_MainTop.Name = "pnl_MainTop";
-            this.pnl_MainTop.Size = new System.Drawing.Size(744, 50);
-            this.pnl_MainTop.TabIndex = 0;
+            pnl_mainTop.Controls.Add(pic_productImage);
+            pnl_mainTop.Controls.Add(cbb_statusFilter);
+            pnl_mainTop.Dock = System.Windows.Forms.DockStyle.Top;
+            pnl_mainTop.Location = new System.Drawing.Point(21, 26);
+            pnl_mainTop.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            pnl_mainTop.Name = "pnl_mainTop";
+            pnl_mainTop.Size = new System.Drawing.Size(1584, 128);
+            pnl_mainTop.TabIndex = 0;
             // 
-            // cb_StatusFilter
+            // cbb_statusFilter
             // 
-            this.cb_StatusFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_StatusFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_StatusFilter.FormattingEnabled = true;
-            this.cb_StatusFilter.Items.AddRange(new object[] {
-            "Tất cả trạng thái",
-            "Còn hàng",
-            "Sắp hết",
-            "Hết hàng"});
-            this.cb_StatusFilter.Location = new System.Drawing.Point(0, 10);
-            this.cb_StatusFilter.Name = "cb_StatusFilter";
-            this.cb_StatusFilter.Size = new System.Drawing.Size(250, 28);
-            this.cb_StatusFilter.TabIndex = 0;
-            this.cb_StatusFilter.SelectedIndexChanged += new System.EventHandler(this.cb_StatusFilter_SelectedIndexChanged);
+            cbb_statusFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cbb_statusFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
+            cbb_statusFilter.FormattingEnabled = true;
+            cbb_statusFilter.Items.AddRange(new object[] { "Tất cả trạng thái", "Còn hàng", "Sắp hết", "Hết hàng" });
+            cbb_statusFilter.Location = new System.Drawing.Point(0, 26);
+            cbb_statusFilter.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            cbb_statusFilter.Name = "cbb_statusFilter";
+            cbb_statusFilter.Size = new System.Drawing.Size(640, 47);
+            cbb_statusFilter.TabIndex = 0;
+            cbb_statusFilter.SelectedIndexChanged += cb_StatusFilter_SelectedIndexChanged;
+            // 
+            // pic_productImage
+            // 
+            pic_productImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            pic_productImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pic_productImage.Location = new System.Drawing.Point(1370, 8);
+            pic_productImage.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            pic_productImage.Name = "pic_productImage";
+            pic_productImage.Size = new System.Drawing.Size(200, 110);
+            pic_productImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pic_productImage.TabIndex = 1;
+            pic_productImage.TabStop = false;
             // 
             // FormManageProduct
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 561);
-            this.Controls.Add(this.pnl_Main);
-            this.Controls.Add(this.pnl_Left);
-            this.Controls.Add(this.pnl_Bottom);
-            this.Controls.Add(this.pnl_TopBar);
-            this.Name = "FormManageProduct";
-            this.Text = "Quản lý sản phẩm";
-            this.Load += new System.EventHandler(this.FormManageProduct_Load);
-            this.pnl_TopBar.ResumeLayout(false);
-            this.pnl_Bottom.ResumeLayout(false);
-            this.pnl_Bottom.PerformLayout();
-            this.pnl_Left.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_CategoryFilter)).EndInit();
-            this.pnl_Main.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_ProductList)).EndInit();
-            this.pnl_MainTop.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(2091, 1438);
+            Controls.Add(pnl_main);
+            Controls.Add(pnl_Left);
+            Controls.Add(pnl_Bottom);
+            Controls.Add(pnl_topBar);
+            Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            Text = "Quản lý sản phẩm";
+            Load += FormManageProduct_Load;
+            pnl_topBar.ResumeLayout(false);
+            pnl_Bottom.ResumeLayout(false);
+            pnl_Bottom.PerformLayout();
+            pnl_Left.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgv_categoryFilter).EndInit();
+            pnl_main.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgv_productList).EndInit();
+            pnl_mainTop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pic_productImage).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnl_TopBar;
-        private System.Windows.Forms.Button btn_ProductAdd;
-        private System.Windows.Forms.Button btn_ProductEdit;
-        private System.Windows.Forms.Button btn_ProductDelete;
-        private System.Windows.Forms.Button btn_Category;
-        private System.Windows.Forms.Button btn_ProductRefresh;
+        private System.Windows.Forms.Panel pnl_topBar;
+        private System.Windows.Forms.Button btn_productAdd;
+        private System.Windows.Forms.Button btn_productEdit;
+        private System.Windows.Forms.Button btn_productDelete;
+        private System.Windows.Forms.Button btn_category;
+        private System.Windows.Forms.Button btn_productRefresh;
         private System.Windows.Forms.Panel pnl_Bottom;
-        private System.Windows.Forms.Label lbl_StatusSummary;
-        private System.Windows.Forms.Label lbl_InventoryWarning;
+        private System.Windows.Forms.Label lbl_statusSummary;
+        private System.Windows.Forms.Label lbl_inventoryWarning;
         private System.Windows.Forms.Panel pnl_Left;
         private System.Windows.Forms.Label lbl_CategoryTitle;
-        private System.Windows.Forms.DataGridView dgv_CategoryFilter;
-        private System.Windows.Forms.Panel pnl_Main;
-        private System.Windows.Forms.Panel pnl_MainTop;
-        private System.Windows.Forms.ComboBox cb_StatusFilter;
-        private System.Windows.Forms.DataGridView dgv_ProductList;
+        private System.Windows.Forms.DataGridView dgv_categoryFilter;
+        private System.Windows.Forms.Panel pnl_main;
+        private System.Windows.Forms.Panel pnl_mainTop;
+        private System.Windows.Forms.ComboBox cbb_statusFilter;
+        private System.Windows.Forms.DataGridView dgv_productList;
+        private System.Windows.Forms.PictureBox pic_productImage;
     }
 }

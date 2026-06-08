@@ -11,4 +11,5 @@ public class ProductsDTO
     public decimal CostPrice { get; set; }
     public int WarrantyMonths { get; set; }
     public int MinStock { get; set; }
+    public string? ImagePath { get; set; }
 }
