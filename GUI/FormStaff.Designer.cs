@@ -15,355 +15,338 @@ namespace GUI
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            pnl_topBar = new Panel();
-            btn_staffRefresh = new Button();
-            btn_staffResetPass = new Button();
-            btn_staffDisable = new Button();
-            btn_staffEdit = new Button();
-            btn_staffAdd = new Button();
-            pnl_status = new Panel();
-            lbl_statusSummary = new Label();
-            pnl_left = new Panel();
-            dgv_staffList = new DataGridView();
-            pnl_right = new Panel();
-            btn_staffCancel = new Button();
-            btn_staffSave = new Button();
-            cbb_role = new ComboBox();
-            lbl_Role = new Label();
-            txt_phone = new TextBox();
-            lbl_Phone = new Label();
-            txt_password = new TextBox();
-            lbl_Password = new Label();
-            txt_username = new TextBox();
-            lbl_Username = new Label();
-            txt_fullName = new TextBox();
-            lbl_FullName = new Label();
-            lbl_SectionTitle = new Label();
-            groupBox1 = new GroupBox();
-            pnl_topBar.SuspendLayout();
-            pnl_status.SuspendLayout();
-            pnl_left.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgv_staffList).BeginInit();
-            pnl_right.SuspendLayout();
-            SuspendLayout();
+            this.grp_topBar = new System.Windows.Forms.GroupBox();
+            this.btn_refresh = new System.Windows.Forms.Button();
+            this.btn_changePassword = new System.Windows.Forms.Button();
+            this.btn_disable = new System.Windows.Forms.Button();
+            this.btn_edit = new System.Windows.Forms.Button();
+            this.btn_add = new System.Windows.Forms.Button();
+            this.grp_bottom = new System.Windows.Forms.GroupBox();
+            this.lbl_selectedStaff = new System.Windows.Forms.Label();
+            this.lbl_totalStaff = new System.Windows.Forms.Label();
+            this.grp_staffInfo = new System.Windows.Forms.GroupBox();
+            this.btn_cancel = new System.Windows.Forms.Button();
+            this.btn_save = new System.Windows.Forms.Button();
+            this.cbb_role = new System.Windows.Forms.ComboBox();
+            this.lbl_role = new System.Windows.Forms.Label();
+            this.txt_phone = new System.Windows.Forms.TextBox();
+            this.lbl_phone = new System.Windows.Forms.Label();
+            this.txt_password = new System.Windows.Forms.TextBox();
+            this.lbl_password = new System.Windows.Forms.Label();
+            this.txt_username = new System.Windows.Forms.TextBox();
+            this.lbl_username = new System.Windows.Forms.Label();
+            this.txt_fullName = new System.Windows.Forms.TextBox();
+            this.lbl_fullName = new System.Windows.Forms.Label();
+            this.grp_list = new System.Windows.Forms.GroupBox();
+            this.dgv_staffList = new System.Windows.Forms.DataGridView();
+
+            this.grp_topBar.SuspendLayout();
+            this.grp_bottom.SuspendLayout();
+            this.grp_staffInfo.SuspendLayout();
+            this.grp_list.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_staffList)).BeginInit();
+            this.SuspendLayout();
+
             // 
-            // pnl_topBar
+            // grp_topBar
             // 
-            pnl_topBar.Controls.Add(btn_staffRefresh);
-            pnl_topBar.Controls.Add(btn_staffResetPass);
-            pnl_topBar.Controls.Add(btn_staffDisable);
-            pnl_topBar.Controls.Add(btn_staffEdit);
-            pnl_topBar.Controls.Add(btn_staffAdd);
-            pnl_topBar.Dock = DockStyle.Top;
-            pnl_topBar.Location = new Point(0, 0);
-            pnl_topBar.Margin = new Padding(6, 8, 6, 8);
-            pnl_topBar.Name = "pnl_topBar";
-            pnl_topBar.Size = new Size(1587, 102);
-            pnl_topBar.TabIndex = 0;
+            this.grp_topBar.Controls.Add(this.btn_refresh);
+            this.grp_topBar.Controls.Add(this.btn_changePassword);
+            this.grp_topBar.Controls.Add(this.btn_disable);
+            this.grp_topBar.Controls.Add(this.btn_edit);
+            this.grp_topBar.Controls.Add(this.btn_add);
+            this.grp_topBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grp_topBar.Location = new System.Drawing.Point(0, 0);
+            this.grp_topBar.Name = "grp_topBar";
+            this.grp_topBar.Size = new System.Drawing.Size(1200, 70);
+            this.grp_topBar.TabIndex = 0;
+            this.grp_topBar.TabStop = false;
             // 
-            // btn_staffRefresh
+            // btn_refresh
             // 
-            btn_staffRefresh.Location = new Point(1228, 12);
-            btn_staffRefresh.Margin = new Padding(6, 8, 6, 8);
-            btn_staffRefresh.Name = "btn_staffRefresh";
-            btn_staffRefresh.Size = new Size(347, 63);
-            btn_staffRefresh.TabIndex = 4;
-            btn_staffRefresh.Text = "🔄 Làm mới";
-            btn_staffRefresh.UseVisualStyleBackColor = true;
-            btn_staffRefresh.Visible = false;
-            btn_staffRefresh.Click += btn_StaffRefresh_Click;
+            this.btn_refresh.Location = new System.Drawing.Point(520, 20);
+            this.btn_refresh.Name = "btn_refresh";
+            this.btn_refresh.Size = new System.Drawing.Size(100, 40);
+            this.btn_refresh.TabIndex = 4;
+            this.btn_refresh.Text = "Làm mới";
+            this.btn_refresh.UseVisualStyleBackColor = true;
+            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
             // 
-            // btn_staffResetPass
+            // btn_changePassword
             // 
-            btn_staffResetPass.Location = new Point(1228, 12);
-            btn_staffResetPass.Margin = new Padding(6, 8, 6, 8);
-            btn_staffResetPass.Name = "btn_staffResetPass";
-            btn_staffResetPass.Size = new Size(347, 63);
-            btn_staffResetPass.TabIndex = 3;
-            btn_staffResetPass.Text = "🔑 Đổi mật khẩu";
-            btn_staffResetPass.UseVisualStyleBackColor = true;
-            btn_staffResetPass.Click += btn_StaffResetPass_Click;
+            this.btn_changePassword.Location = new System.Drawing.Point(370, 20);
+            this.btn_changePassword.Name = "btn_changePassword";
+            this.btn_changePassword.Size = new System.Drawing.Size(140, 40);
+            this.btn_changePassword.TabIndex = 3;
+            this.btn_changePassword.Text = "Đổi mật khẩu";
+            this.btn_changePassword.UseVisualStyleBackColor = true;
+            this.btn_changePassword.Click += new System.EventHandler(this.btn_changePassword_Click);
             // 
-            // btn_staffDisable
+            // btn_disable
             // 
-            btn_staffDisable.Location = new Point(801, 12);
-            btn_staffDisable.Margin = new Padding(6, 8, 6, 8);
-            btn_staffDisable.Name = "btn_staffDisable";
-            btn_staffDisable.Size = new Size(421, 63);
-            btn_staffDisable.TabIndex = 2;
-            btn_staffDisable.Text = "🔒 Vô hiệu hóa";
-            btn_staffDisable.UseVisualStyleBackColor = true;
-            btn_staffDisable.Click += btn_StaffDisable_Click;
+            this.btn_disable.Location = new System.Drawing.Point(240, 20);
+            this.btn_disable.Name = "btn_disable";
+            this.btn_disable.Size = new System.Drawing.Size(120, 40);
+            this.btn_disable.TabIndex = 2;
+            this.btn_disable.Text = "Vô hiệu hóa";
+            this.btn_disable.UseVisualStyleBackColor = true;
+            this.btn_disable.Click += new System.EventHandler(this.btn_disable_Click);
             // 
-            // btn_staffEdit
+            // btn_edit
             // 
-            btn_staffEdit.Location = new Point(393, 12);
-            btn_staffEdit.Margin = new Padding(6, 8, 6, 8);
-            btn_staffEdit.Name = "btn_staffEdit";
-            btn_staffEdit.Size = new Size(402, 63);
-            btn_staffEdit.TabIndex = 1;
-            btn_staffEdit.Text = "✏️ Sửa";
-            btn_staffEdit.UseVisualStyleBackColor = true;
-            btn_staffEdit.Click += btn_StaffEdit_Click;
+            this.btn_edit.Location = new System.Drawing.Point(130, 20);
+            this.btn_edit.Name = "btn_edit";
+            this.btn_edit.Size = new System.Drawing.Size(100, 40);
+            this.btn_edit.TabIndex = 1;
+            this.btn_edit.Text = "Sửa";
+            this.btn_edit.UseVisualStyleBackColor = true;
+            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click);
             // 
-            // btn_staffAdd
+            // btn_add
             // 
-            btn_staffAdd.Location = new Point(12, 12);
-            btn_staffAdd.Margin = new Padding(6, 8, 6, 8);
-            btn_staffAdd.Name = "btn_staffAdd";
-            btn_staffAdd.Size = new Size(375, 63);
-            btn_staffAdd.TabIndex = 0;
-            btn_staffAdd.Text = "➕ Thêm NV";
-            btn_staffAdd.UseVisualStyleBackColor = true;
-            btn_staffAdd.Click += btn_StaffAdd_Click;
+            this.btn_add.Location = new System.Drawing.Point(20, 20);
+            this.btn_add.Name = "btn_add";
+            this.btn_add.Size = new System.Drawing.Size(100, 40);
+            this.btn_add.TabIndex = 0;
+            this.btn_add.Text = "+ Thêm NV";
+            this.btn_add.UseVisualStyleBackColor = true;
+            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
-            // pnl_status
+            // grp_bottom
             // 
-            pnl_status.Controls.Add(lbl_statusSummary);
-            pnl_status.Dock = DockStyle.Bottom;
-            pnl_status.Location = new Point(0, 848);
-            pnl_status.Margin = new Padding(6, 8, 6, 8);
-            pnl_status.Name = "pnl_status";
-            pnl_status.Size = new Size(1587, 102);
-            pnl_status.TabIndex = 1;
+            this.grp_bottom.Controls.Add(this.lbl_selectedStaff);
+            this.grp_bottom.Controls.Add(this.lbl_totalStaff);
+            this.grp_bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.grp_bottom.Location = new System.Drawing.Point(0, 660);
+            this.grp_bottom.Name = "grp_bottom";
+            this.grp_bottom.Size = new System.Drawing.Size(1200, 40);
+            this.grp_bottom.TabIndex = 3;
+            this.grp_bottom.TabStop = false;
             // 
-            // lbl_statusSummary
+            // lbl_selectedStaff
             // 
-            lbl_statusSummary.AutoSize = true;
-            lbl_statusSummary.Location = new Point(26, 30);
-            lbl_statusSummary.Margin = new Padding(6, 0, 6, 0);
-            lbl_statusSummary.Name = "lbl_statusSummary";
-            lbl_statusSummary.Size = new Size(524, 41);
-            lbl_statusSummary.TabIndex = 0;
-            lbl_statusSummary.Text = "Tổng: 0 nhân viên | Đang chọn: Không";
+            this.lbl_selectedStaff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbl_selectedStaff.AutoSize = true;
+            this.lbl_selectedStaff.Location = new System.Drawing.Point(950, 15);
+            this.lbl_selectedStaff.Name = "lbl_selectedStaff";
+            this.lbl_selectedStaff.Size = new System.Drawing.Size(200, 16);
+            this.lbl_selectedStaff.TabIndex = 1;
+            this.lbl_selectedStaff.Text = "Đang chọn: Không có";
+            this.lbl_selectedStaff.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // pnl_left
+            // lbl_totalStaff
             // 
-            pnl_left.Controls.Add(groupBox1);
-            pnl_left.Controls.Add(dgv_staffList);
-            pnl_left.Dock = DockStyle.Left;
-            pnl_left.Location = new Point(0, 102);
-            pnl_left.Margin = new Padding(6, 8, 6, 8);
-            pnl_left.Name = "pnl_left";
-            pnl_left.Size = new Size(640, 746);
-            pnl_left.TabIndex = 2;
+            this.lbl_totalStaff.AutoSize = true;
+            this.lbl_totalStaff.Location = new System.Drawing.Point(20, 15);
+            this.lbl_totalStaff.Name = "lbl_totalStaff";
+            this.lbl_totalStaff.Size = new System.Drawing.Size(115, 16);
+            this.lbl_totalStaff.TabIndex = 0;
+            this.lbl_totalStaff.Text = "Tổng: 0 nhân viên";
             // 
-            // dgv_staffList
+            // grp_staffInfo
             // 
-            dgv_staffList.ColumnHeadersHeight = 58;
-            dgv_staffList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgv_staffList.Dock = DockStyle.Fill;
-            dgv_staffList.Location = new Point(0, 0);
-            dgv_staffList.Margin = new Padding(6, 8, 6, 8);
-            dgv_staffList.Name = "dgv_staffList";
-            dgv_staffList.RowHeadersWidth = 102;
-            dgv_staffList.Size = new Size(640, 746);
-            dgv_staffList.TabIndex = 0;
-            dgv_staffList.CellClick += dgv_StaffList_CellClick;
-            dgv_staffList.CellFormatting += dgv_StaffList_CellFormatting;
+            this.grp_staffInfo.Controls.Add(this.btn_cancel);
+            this.grp_staffInfo.Controls.Add(this.btn_save);
+            this.grp_staffInfo.Controls.Add(this.cbb_role);
+            this.grp_staffInfo.Controls.Add(this.lbl_role);
+            this.grp_staffInfo.Controls.Add(this.txt_phone);
+            this.grp_staffInfo.Controls.Add(this.lbl_phone);
+            this.grp_staffInfo.Controls.Add(this.txt_password);
+            this.grp_staffInfo.Controls.Add(this.lbl_password);
+            this.grp_staffInfo.Controls.Add(this.txt_username);
+            this.grp_staffInfo.Controls.Add(this.lbl_username);
+            this.grp_staffInfo.Controls.Add(this.txt_fullName);
+            this.grp_staffInfo.Controls.Add(this.lbl_fullName);
+            this.grp_staffInfo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.grp_staffInfo.Location = new System.Drawing.Point(850, 70); // Right side
+            this.grp_staffInfo.Name = "grp_staffInfo";
+            this.grp_staffInfo.Size = new System.Drawing.Size(350, 590); // Thu nhỏ Form thông tin
+            this.grp_staffInfo.TabIndex = 2;
+            this.grp_staffInfo.TabStop = false;
+            this.grp_staffInfo.Text = "Thông tin nhân viên";
             // 
-            // pnl_right
+            // btn_cancel
             // 
-            pnl_right.Controls.Add(btn_staffCancel);
-            pnl_right.Controls.Add(btn_staffSave);
-            pnl_right.Controls.Add(cbb_role);
-            pnl_right.Controls.Add(lbl_Role);
-            pnl_right.Controls.Add(txt_phone);
-            pnl_right.Controls.Add(lbl_Phone);
-            pnl_right.Controls.Add(txt_password);
-            pnl_right.Controls.Add(lbl_Password);
-            pnl_right.Controls.Add(txt_username);
-            pnl_right.Controls.Add(lbl_Username);
-            pnl_right.Controls.Add(txt_fullName);
-            pnl_right.Controls.Add(lbl_FullName);
-            pnl_right.Controls.Add(lbl_SectionTitle);
-            pnl_right.Dock = DockStyle.Fill;
-            pnl_right.Location = new Point(640, 102);
-            pnl_right.Margin = new Padding(6, 8, 6, 8);
-            pnl_right.Name = "pnl_right";
-            pnl_right.Padding = new Padding(6);
-            pnl_right.Size = new Size(947, 746);
-            pnl_right.TabIndex = 3;
+            this.btn_cancel.Location = new System.Drawing.Point(180, 390);
+            this.btn_cancel.Name = "btn_cancel";
+            this.btn_cancel.Size = new System.Drawing.Size(140, 45);
+            this.btn_cancel.TabIndex = 11;
+            this.btn_cancel.Text = "X Hủy";
+            this.btn_cancel.UseVisualStyleBackColor = true;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
-            // btn_staffCancel
+            // btn_save
             // 
-            btn_staffCancel.Location = new Point(478, 635);
-            btn_staffCancel.Margin = new Padding(6, 8, 6, 8);
-            btn_staffCancel.Name = "btn_staffCancel";
-            btn_staffCancel.Size = new Size(457, 64);
-            btn_staffCancel.TabIndex = 12;
-            btn_staffCancel.Text = "❌ Hủy";
-            btn_staffCancel.UseVisualStyleBackColor = true;
-            btn_staffCancel.Click += btn_StaffCancel_Click;
-            // 
-            // btn_staffSave
-            // 
-            btn_staffSave.Location = new Point(6, 635);
-            btn_staffSave.Margin = new Padding(6, 8, 6, 8);
-            btn_staffSave.Name = "btn_staffSave";
-            btn_staffSave.Size = new Size(466, 64);
-            btn_staffSave.TabIndex = 11;
-            btn_staffSave.Text = "💾 Lưu";
-            btn_staffSave.UseVisualStyleBackColor = true;
-            btn_staffSave.Click += btn_StaffSave_Click;
+            this.btn_save.Location = new System.Drawing.Point(20, 390);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(140, 45);
+            this.btn_save.TabIndex = 10;
+            this.btn_save.Text = "Lưu";
+            this.btn_save.UseVisualStyleBackColor = true;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
             // cbb_role
             // 
-            cbb_role.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbb_role.FormattingEnabled = true;
-            cbb_role.Items.AddRange(new object[] { "Admin", "Quản lý", "Thu ngân", "Kho", "Kỹ thuật" });
-            cbb_role.Location = new Point(6, 566);
-            cbb_role.Margin = new Padding(6, 8, 6, 8);
-            cbb_role.Name = "cbb_role";
-            cbb_role.Size = new Size(929, 49);
-            cbb_role.TabIndex = 10;
+            this.cbb_role.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbb_role.FormattingEnabled = true;
+            this.cbb_role.Items.AddRange(new object[] { "Quản lý", "Thu ngân", "Kho" });
+            this.cbb_role.Location = new System.Drawing.Point(20, 330);
+            this.cbb_role.Name = "cbb_role";
+            this.cbb_role.Size = new System.Drawing.Size(300, 24);
+            this.cbb_role.TabIndex = 9;
             // 
-            // lbl_Role
+            // lbl_role
             // 
-            lbl_Role.Location = new Point(6, 517);
-            lbl_Role.Name = "lbl_Role";
-            lbl_Role.Size = new Size(314, 46);
-            lbl_Role.TabIndex = 9;
-            lbl_Role.Text = "Vai trò:";
+            this.lbl_role.AutoSize = true;
+            this.lbl_role.Location = new System.Drawing.Point(20, 310);
+            this.lbl_role.Name = "lbl_role";
+            this.lbl_role.Size = new System.Drawing.Size(45, 16);
+            this.lbl_role.TabIndex = 8;
+            this.lbl_role.Text = "Vai trò";
             // 
             // txt_phone
             // 
-            txt_phone.Location = new Point(6, 455);
-            txt_phone.Margin = new Padding(6, 8, 6, 8);
-            txt_phone.Name = "txt_phone";
-            txt_phone.Size = new Size(929, 47);
-            txt_phone.TabIndex = 8;
+            this.txt_phone.Location = new System.Drawing.Point(20, 260);
+            this.txt_phone.Name = "txt_phone";
+            this.txt_phone.Size = new System.Drawing.Size(300, 30);
+            this.txt_phone.TabIndex = 7;
             // 
-            // lbl_Phone
+            // lbl_phone
             // 
-            lbl_Phone.Location = new Point(6, 406);
-            lbl_Phone.Name = "lbl_Phone";
-            lbl_Phone.Size = new Size(314, 46);
-            lbl_Phone.TabIndex = 7;
-            lbl_Phone.Text = "Số điện thoại:";
+            this.lbl_phone.AutoSize = true;
+            this.lbl_phone.Location = new System.Drawing.Point(20, 240);
+            this.lbl_phone.Name = "lbl_phone";
+            this.lbl_phone.Size = new System.Drawing.Size(85, 16);
+            this.lbl_phone.TabIndex = 6;
+            this.lbl_phone.Text = "Số điện thoại";
             // 
             // txt_password
             // 
-            txt_password.Location = new Point(6, 344);
-            txt_password.Margin = new Padding(6, 8, 6, 8);
-            txt_password.Name = "txt_password";
-            txt_password.Size = new Size(929, 47);
-            txt_password.TabIndex = 6;
-            txt_password.UseSystemPasswordChar = true;
+            this.txt_password.Location = new System.Drawing.Point(20, 190);
+            this.txt_password.Name = "txt_password";
+            this.txt_password.PasswordChar = '*';
+            this.txt_password.Size = new System.Drawing.Size(300, 30);
+            this.txt_password.TabIndex = 5;
             // 
-            // lbl_Password
+            // lbl_password
             // 
-            lbl_Password.Location = new Point(6, 295);
-            lbl_Password.Name = "lbl_Password";
-            lbl_Password.Size = new Size(314, 46);
-            lbl_Password.TabIndex = 5;
-            lbl_Password.Text = "Mật khẩu *:";
+            this.lbl_password.AutoSize = true;
+            this.lbl_password.Location = new System.Drawing.Point(20, 170);
+            this.lbl_password.Name = "lbl_password";
+            this.lbl_password.Size = new System.Drawing.Size(61, 16);
+            this.lbl_password.TabIndex = 4;
+            this.lbl_password.Text = "Mật khẩu";
             // 
             // txt_username
             // 
-            txt_username.Location = new Point(6, 233);
-            txt_username.Margin = new Padding(6, 8, 6, 8);
-            txt_username.Name = "txt_username";
-            txt_username.Size = new Size(929, 47);
-            txt_username.TabIndex = 4;
+            this.txt_username.Location = new System.Drawing.Point(20, 120);
+            this.txt_username.Name = "txt_username";
+            this.txt_username.Size = new System.Drawing.Size(300, 30);
+            this.txt_username.TabIndex = 3;
             // 
-            // lbl_Username
+            // lbl_username
             // 
-            lbl_Username.Location = new Point(6, 184);
-            lbl_Username.Name = "lbl_Username";
-            lbl_Username.Size = new Size(314, 46);
-            lbl_Username.TabIndex = 3;
-            lbl_Username.Text = "Tài khoản *:";
+            this.lbl_username.AutoSize = true;
+            this.lbl_username.Location = new System.Drawing.Point(20, 100);
+            this.lbl_username.Name = "lbl_username";
+            this.lbl_username.Size = new System.Drawing.Size(76, 16);
+            this.lbl_username.TabIndex = 2;
+            this.lbl_username.Text = "Tài khoản *";
             // 
             // txt_fullName
             // 
-            txt_fullName.Location = new Point(6, 122);
-            txt_fullName.Margin = new Padding(6, 8, 6, 8);
-            txt_fullName.Name = "txt_fullName";
-            txt_fullName.Size = new Size(929, 47);
-            txt_fullName.TabIndex = 2;
+            this.txt_fullName.Location = new System.Drawing.Point(20, 50);
+            this.txt_fullName.Name = "txt_fullName";
+            this.txt_fullName.Size = new System.Drawing.Size(300, 30);
+            this.txt_fullName.TabIndex = 1;
             // 
-            // lbl_FullName
+            // lbl_fullName
             // 
-            lbl_FullName.Location = new Point(6, 73);
-            lbl_FullName.Name = "lbl_FullName";
-            lbl_FullName.Size = new Size(314, 46);
-            lbl_FullName.TabIndex = 1;
-            lbl_FullName.Text = "Họ tên *:";
+            this.lbl_fullName.AutoSize = true;
+            this.lbl_fullName.Location = new System.Drawing.Point(20, 30);
+            this.lbl_fullName.Name = "lbl_fullName";
+            this.lbl_fullName.Size = new System.Drawing.Size(55, 16);
+            this.lbl_fullName.TabIndex = 0;
+            this.lbl_fullName.Text = "Họ tên *";
             // 
-            // lbl_SectionTitle
+            // grp_list
             // 
-            lbl_SectionTitle.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold);
-            lbl_SectionTitle.Location = new Point(6, 12);
-            lbl_SectionTitle.Name = "lbl_SectionTitle";
-            lbl_SectionTitle.Size = new Size(935, 46);
-            lbl_SectionTitle.TabIndex = 0;
-            lbl_SectionTitle.Text = "👤 Thông tin nhân viên";
+            this.grp_list.Controls.Add(this.dgv_staffList);
+            this.grp_list.Dock = System.Windows.Forms.DockStyle.Fill; // Fill phần còn lại, bự ra
+            this.grp_list.Location = new System.Drawing.Point(0, 70);
+            this.grp_list.Name = "grp_list";
+            this.grp_list.Padding = new System.Windows.Forms.Padding(10);
+            this.grp_list.Size = new System.Drawing.Size(850, 590);
+            this.grp_list.TabIndex = 1;
+            this.grp_list.TabStop = false;
             // 
-            // groupBox1
+            // dgv_staffList
             // 
-            groupBox1.Location = new Point(268, 83);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(500, 250);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Thông tin nhân viên";
+            this.dgv_staffList.AllowUserToAddRows = false;
+            this.dgv_staffList.AllowUserToDeleteRows = false;
+            this.dgv_staffList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill; // Hiển thị full chiều rộng
+            this.dgv_staffList.BackgroundColor = System.Drawing.Color.White;
+            this.dgv_staffList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_staffList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_staffList.Location = new System.Drawing.Point(10, 25);
+            this.dgv_staffList.Name = "dgv_staffList";
+            this.dgv_staffList.ReadOnly = true;
+            this.dgv_staffList.RowHeadersVisible = false;
+            this.dgv_staffList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_staffList.Size = new System.Drawing.Size(830, 555);
+            this.dgv_staffList.TabIndex = 0;
+            this.dgv_staffList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_staffList_CellClick);
             // 
             // FormStaff
             // 
-            AutoScaleDimensions = new SizeF(17F, 41F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1587, 950);
-            Controls.Add(pnl_right);
-            Controls.Add(pnl_left);
-            Controls.Add(pnl_status);
-            Controls.Add(pnl_topBar);
-            Margin = new Padding(6, 8, 6, 8);
-            Name = "FormStaff";
-            Text = "Quản lý nhân viên";
-            Load += FormStaff_Load;
-            pnl_topBar.ResumeLayout(false);
-            pnl_status.ResumeLayout(false);
-            pnl_status.PerformLayout();
-            pnl_left.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgv_staffList).EndInit();
-            pnl_right.ResumeLayout(false);
-            pnl_right.PerformLayout();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1200, 700);
+            this.Controls.Add(this.grp_list);
+            this.Controls.Add(this.grp_staffInfo);
+            this.Controls.Add(this.grp_bottom);
+            this.Controls.Add(this.grp_topBar);
+            this.Name = "FormStaff";
+            this.Text = "Quản lý nhân viên";
+            this.Load += new System.EventHandler(this.FormStaff_Load);
+            this.grp_topBar.ResumeLayout(false);
+            this.grp_bottom.ResumeLayout(false);
+            this.grp_bottom.PerformLayout();
+            this.grp_staffInfo.ResumeLayout(false);
+            this.grp_staffInfo.PerformLayout();
+            this.grp_list.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_staffList)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnl_topBar;
-        private System.Windows.Forms.Button btn_staffAdd;
-        private System.Windows.Forms.Button btn_staffEdit;
-        private System.Windows.Forms.Button btn_staffDisable;
-        private System.Windows.Forms.Button btn_staffResetPass;
-        private System.Windows.Forms.Button btn_staffRefresh;
-        private System.Windows.Forms.Panel pnl_status;
-        private System.Windows.Forms.Label lbl_statusSummary;
-        private System.Windows.Forms.Panel pnl_left;
+        private System.Windows.Forms.GroupBox grp_topBar;
+        private System.Windows.Forms.Button btn_refresh;
+        private System.Windows.Forms.Button btn_changePassword;
+        private System.Windows.Forms.Button btn_disable;
+        private System.Windows.Forms.Button btn_edit;
+        private System.Windows.Forms.Button btn_add;
+        private System.Windows.Forms.GroupBox grp_bottom;
+        private System.Windows.Forms.Label lbl_selectedStaff;
+        private System.Windows.Forms.Label lbl_totalStaff;
+        private System.Windows.Forms.GroupBox grp_staffInfo;
+        private System.Windows.Forms.GroupBox grp_list;
         private System.Windows.Forms.DataGridView dgv_staffList;
-        private System.Windows.Forms.Panel pnl_right;
-        private System.Windows.Forms.Label lbl_SectionTitle;
-        private System.Windows.Forms.Label lbl_FullName;
         private System.Windows.Forms.TextBox txt_fullName;
-        private System.Windows.Forms.Label lbl_Username;
-        private System.Windows.Forms.TextBox txt_username;
-        private System.Windows.Forms.Label lbl_Password;
-        private System.Windows.Forms.TextBox txt_password;
-        private System.Windows.Forms.Label lbl_Phone;
-        private System.Windows.Forms.TextBox txt_phone;
-        private System.Windows.Forms.Label lbl_Role;
+        private System.Windows.Forms.Label lbl_fullName;
         private System.Windows.Forms.ComboBox cbb_role;
-        private System.Windows.Forms.Button btn_staffSave;
-        private System.Windows.Forms.Button btn_staffCancel;
-        private GroupBox groupBox1;
+        private System.Windows.Forms.Label lbl_role;
+        private System.Windows.Forms.TextBox txt_phone;
+        private System.Windows.Forms.Label lbl_phone;
+        private System.Windows.Forms.TextBox txt_password;
+        private System.Windows.Forms.Label lbl_password;
+        private System.Windows.Forms.TextBox txt_username;
+        private System.Windows.Forms.Label lbl_username;
+        private System.Windows.Forms.Button btn_cancel;
+        private System.Windows.Forms.Button btn_save;
     }
 }
