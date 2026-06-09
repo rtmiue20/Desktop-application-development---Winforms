@@ -1,21 +1,23 @@
 ﻿using System;
-using System.Data;
 using System.Windows.Forms;
-// using BUS; // Bỏ comment và điền namespace chứa tầng nghiệp vụ (BUS/BLL) của bạn tại đây
+using BUS;
+using DTO;
 
 namespace GUI
 {
     public partial class FormPromotion : Form
     {
-        // Biến cờ để nhận diện đang ở chế độ "Thêm mới" hay "Sửa"
+        private readonly PromotionsBUS _bus = new PromotionsBUS();
+
+        // Biến xác định đang thêm hay sửa
         private bool isAdding = false;
 
         public FormPromotion()
         {
             InitializeComponent();
 
-            // Đăng ký các sự kiện nút bấm và sự kiện lưới
-            this.Load += FormPromotion_Load;
+            Load += FormPromotion_Load;
+
             btn_createPromotion.Click += btn_createPromotion_Click;
             btn_editPromotion.Click += btn_editPromotion_Click;
             btn_disablePromotion.Click += btn_disablePromotion_Click;
@@ -23,14 +25,14 @@ namespace GUI
             btn_save.Click += btn_save_Click;
             btn_cancel.Click += btn_cancel_Click;
 
-            // Đã sửa tên hàm cho đồng nhất với FormPromotion
             dgv_promotion.CellClick += dgv_promotion_CellClick;
         }
+      
 
-        // ==========================================
-        // 1. FORM LOAD: Cấu hình bảng & Tải dữ liệu thật từ DB
-        // ==========================================
-        private void FormPromotion_Load(object sender, EventArgs e)
+            // ==========================================
+            // 1. FORM LOAD: Cấu hình bảng & Tải dữ liệu thật từ DB
+            // ==========================================
+            private void FormPromotion_Load(object sender, EventArgs e)
         {
             // Thiết lập thuộc tính chuẩn cho DataGridView
             dgv_promotion.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -40,13 +42,13 @@ namespace GUI
             dgv_promotion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // Ánh xạ các cột trên Grid với tên thuộc tính/trường dữ liệu trả về từ Database thông qua BUS
-            col_promotionCode.DataPropertyName = "PromotionCode";
+            col_promotionCode.DataPropertyName = "PromoCode";
             col_description.DataPropertyName = "Description";
-            col_discountPercentage.DataPropertyName = "DiscountPercentage";
+            col_discountPercentage.DataPropertyName = "DiscountPercent";
             col_discountAmount.DataPropertyName = "DiscountAmount";
             col_startDate.DataPropertyName = "StartDate";
             col_endDate.DataPropertyName = "EndDate";
-            col_status.DataPropertyName = "Status";
+            col_status.DataPropertyName = "IsActive";
 
             LoadPromotionsData();
             ResetInputFields(false); // Khóa các ô nhập liệu khi mới mở form
@@ -57,8 +59,29 @@ namespace GUI
         {
             try
             {
-                // NGUYÊN TẮC: Tuyệt đối không tạo List giả lập, lấy trực tiếp từ tầng xử lý
-                // dgv_promotion.DataSource = PromotionsBUS.GetAllPromotions();
+                // Gọi BUS để lấy dữ liệu thật
+                var data = _bus.GetAllPromotions(); // expects DataTable, List<DTO> or similar
+
+                // BindingSource cho phép dùng linh hoạt với DataTable / List<T> / BindingList<T>
+                var bs = new BindingSource();
+                bs.DataSource = data;
+
+                dgv_promotion.DataSource = bs;
+
+                dgv_promotion.DataSource = bs;
+
+                // Áp dụng format hiển thị cho cột ngày (nếu tồn tại)
+                if (dgv_promotion.Columns["col_startDate"] != null)
+                {
+                    dgv_promotion.Columns["col_startDate"].DefaultCellStyle.Format = "yyyy-MM-dd";
+                }
+
+                if (dgv_promotion.Columns["col_endDate"] != null)
+                {
+                    dgv_promotion.Columns["col_endDate"].DefaultCellStyle.Format = "yyyy-MM-dd";
+                }
+
+                dgv_promotion.ClearSelection();
             }
             catch (Exception ex)
             {
@@ -173,9 +196,25 @@ namespace GUI
 
                 if (isAdding)
                 {
-                    // isSuccess = PromotionsBUS.AddPromotion(code, desc, discountVal, start, end);
-                    isSuccess = true;
-                    if (isSuccess) MessageBox.Show("Thêm mới chương trình khuyến mãi thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    PromotionsDTO promo = new PromotionsDTO
+                    {
+                        PromoCode = txt_promotionCode.Text.Trim(),
+                        Description = txt_description.Text.Trim(),
+                        DiscountAmount = discountVal,
+                        StartDate = dtp_startDate.Value,
+                        EndDate = dtp_endDate.Value,
+                        IsActive = true
+                    };
+
+                    var result = _bus.Insert(promo);
+
+                    isSuccess = result.success;
+
+                    if (!result.success)
+                    {
+                        MessageBox.Show(result.error);
+                        return;
+                    }
                 }
                 else
                 {

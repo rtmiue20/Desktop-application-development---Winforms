@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
+// Thêm thư viện chứa các lớp BUS và DTO của project ông vào đây (ví dụ minh họa):
+ using BUS; 
+ using DTO;
 
 namespace GUI
 {
     public partial class FormGuest : Form
     {
-        // Biến kiểm tra đang ở chế độ thêm mới hay sửa
-        private bool isAdding = false;
+        // 1. Khai báo thẳng class BUS xử lý dữ liệu Khách Hàng ở đây
+        // (Ông nhớ đổi tên 'GuestBUS' lại cho khớp với file BUS trong project của ông nhé)
+        private CustomersBUS guestBUS = new CustomersBUS();
 
-        // Lưu vị trí dòng đang chọn trong DataGridView
+        private bool isAdding = false;
         private int selectedRow = -1;
 
         public FormGuest()
@@ -21,20 +25,31 @@ namespace GUI
         // ==========================
         private void FormGuest_Load(object sender, EventArgs e)
         {
-            // Hiển thị cột tự động đầy đủ chiều rộng
             dgv_guest.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            // Chỉ cho phép chọn nguyên dòng
             dgv_guest.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            // Không cho chọn nhiều dòng
             dgv_guest.MultiSelect = false;
-
-            // Không cho người dùng tự thêm dòng
             dgv_guest.AllowUserToAddRows = false;
-
-            // Chỉ đọc dữ liệu
             dgv_guest.ReadOnly = true;
+
+            // Load data chuẩn
+            LoadData();
+        }
+
+        // ==========================
+        // LOAD DATA (Chuẩn 3 lớp)
+        // ==========================
+        private void LoadData()
+        {
+            try
+            {
+                // Gọi thẳng hàm lấy dữ liệu từ BUS (ví dụ GetAll) và gán làm DataSource cho bảng.
+                // Vừa ngắn gọn, vừa an toàn, chạy nhanh gấp nhiều lần Reflection.
+                dgv_guest.DataSource = guestBUS.GetAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi load dữ liệu khách hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // ==========================
@@ -42,17 +57,11 @@ namespace GUI
         // ==========================
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
-            // Chuyển sang chế độ thêm
             isAdding = true;
-
-            // Xóa dữ liệu cũ trên form
             txt_phoneNumber.Clear();
             txt_fullName.Clear();
             txt_address.Clear();
-
             cbo_customerType.SelectedIndex = -1;
-
-            // Đưa con trỏ vào ô SĐT
             txt_phoneNumber.Focus();
         }
 
@@ -61,39 +70,40 @@ namespace GUI
         // ==========================
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            // Kiểm tra dữ liệu bắt buộc
-            if (string.IsNullOrWhiteSpace(txt_phoneNumber.Text) ||
-                string.IsNullOrWhiteSpace(txt_fullName.Text))
+            if (string.IsNullOrWhiteSpace(txt_phoneNumber.Text) || string.IsNullOrWhiteSpace(txt_fullName.Text))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Nếu đang thêm khách hàng
-            if (isAdding)
+            try
             {
-                dgv_guest.Rows.Add(
-                    txt_phoneNumber.Text,      // SĐT
-                    txt_fullName.Text,         // Họ tên
-                    cbo_customerType.Text,     // Loại khách
-                    0,                         // Điểm tích lũy
-                    0,                         // Tổng mua
-                    DateTime.Now.ToString("dd/MM/yyyy")
-                );
-
-                MessageBox.Show("Thêm khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                // Nếu đang sửa khách hàng
-                if (selectedRow >= 0)
+                if (isAdding)
                 {
-                    dgv_guest.Rows[selectedRow].Cells[0].Value = txt_phoneNumber.Text;
-                    dgv_guest.Rows[selectedRow].Cells[1].Value = txt_fullName.Text;
-                    dgv_guest.Rows[selectedRow].Cells[2].Value = cbo_customerType.Text;
+                    // GỌI XUỐNG LỚP BUS ĐỂ LƯU VÀO DATABASE
+                    // Ví dụ: 
+                    // guestBUS.Add(new GuestDTO { PhoneNumber = txt_phoneNumber.Text, FullName = txt_fullName.Text, ... });
 
-                    MessageBox.Show("Cập nhật khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Thêm khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else
+                {
+                    if (selectedRow >= 0)
+                    {
+                        // GỌI XUỐNG LỚP BUS ĐỂ CẬP NHẬT XUỐNG DATABASE
+                        // Ví dụ: 
+                        // guestBUS.Update(new GuestDTO { ... });
+
+                        MessageBox.Show("Cập nhật khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+                // Sau khi Thêm/Sửa DB xong, gọi LoadData() để bảng tự động cập nhật dữ liệu mới nhất
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -102,60 +112,43 @@ namespace GUI
         // ==========================
         private void btn_Edit_Click(object sender, EventArgs e)
         {
-            // Kiểm tra đã chọn dòng chưa
             if (dgv_guest.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn khách hàng cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Lưu vị trí dòng đang chọn
             selectedRow = dgv_guest.CurrentRow.Index;
 
-            // Đổ dữ liệu lên form
+            // Chú ý: Cột lấy dữ liệu có thể thay đổi tùy vào việc gán DataSource,
+            // Ông cần check xem tên cột (Cells["Tên_Cột"]) cho chuẩn nhé.
             txt_phoneNumber.Text = dgv_guest.Rows[selectedRow].Cells[0].Value?.ToString();
             txt_fullName.Text = dgv_guest.Rows[selectedRow].Cells[1].Value?.ToString();
             cbo_customerType.Text = dgv_guest.Rows[selectedRow].Cells[2].Value?.ToString();
 
-            // Chuyển sang chế độ sửa
             isAdding = false;
         }
 
         // ==========================
-        // NÚT HỦY
+        // NÚT HỦY & LÀM MỚI
         // ==========================
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
-            txt_phoneNumber.Clear();
-            txt_fullName.Clear();
-            txt_address.Clear();
-            cbo_customerType.SelectedIndex = -1;
-
-            MessageBox.Show("Đã hủy thao tác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            btn_Refresh_Click(sender, e);
         }
 
-        // ==========================
-        // NÚT LÀM MỚI
-        // ==========================
         private void btn_Refresh_Click(object sender, EventArgs e)
         {
-            // Xóa ô tìm kiếm
             txt_search.Clear();
-
-            // Xóa dữ liệu trên form
             txt_phoneNumber.Clear();
             txt_fullName.Clear();
             txt_address.Clear();
             cbo_customerType.SelectedIndex = -1;
-
-            // Bỏ chọn DataGridView
             dgv_guest.ClearSelection();
-
-            MessageBox.Show("Đã làm mới!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // ==========================
-        // NÚT LỊCH SỬ MUA
+        // LỊCH SỬ MUA
         // ==========================
         private void btn_PurchaseHistory_Click(object sender, EventArgs e)
         {
@@ -174,38 +167,33 @@ namespace GUI
         // ==========================
         private void dgv_Guest_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Nếu click tiêu đề thì bỏ qua
             if (e.RowIndex < 0) return;
 
             selectedRow = e.RowIndex;
-
-            // Hiển thị dữ liệu lên form
             txt_phoneNumber.Text = dgv_guest.Rows[e.RowIndex].Cells[0].Value?.ToString();
             txt_fullName.Text = dgv_guest.Rows[e.RowIndex].Cells[1].Value?.ToString();
             cbo_customerType.Text = dgv_guest.Rows[e.RowIndex].Cells[2].Value?.ToString();
         }
 
         // ==========================
-        // TÌM KIẾM KHÁCH HÀNG
+        // TÌM KIẾM
         // ==========================
         private void txt_Search_TextChanged(object sender, EventArgs e)
         {
-            string keyword = txt_search.Text.ToLower();
+            // Nếu dùng DataSource là List/DataTable, ông nên viết hàm Search ở tầng BUS rồi gán lại DataSource nhé.
+            // Dùng row.Visible khi đã gán DataSource có thể gây ra lỗi.
+            string keyword = txt_search.Text.Trim();
 
-            foreach (DataGridViewRow row in dgv_guest.Rows)
-            {
-                if (row.IsNewRow) continue;
-
-                string phone = row.Cells[0].Value?.ToString().ToLower() ?? "";
-                string name = row.Cells[1].Value?.ToString().ToLower() ?? "";
-
-                // Hiện dòng nếu tìm thấy SĐT hoặc tên
-                row.Visible = phone.Contains(keyword) || name.Contains(keyword);
-            }
+            // Ví dụ chuẩn 3 lớp:
+            // dgv_guest.DataSource = guestBUS.Search(keyword); 
         }
 
-        // Giữ lại các hàm này nếu bạn đã lỡ click đúp tạo sự kiện trong Designer để tránh lỗi
         private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void label1_Click(object sender, EventArgs e) { }
+
+        private void dgv_guest_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

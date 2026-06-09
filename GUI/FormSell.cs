@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Windows.Forms;
 using BUS;
+using DTO;
 
 namespace GUI;
 
@@ -15,12 +17,13 @@ public partial class FormSell : Form
 
     public FormSell()
     {
+
         InitializeComponent();
         cbo_paymentMethod.SelectedIndex = 0;
 
         // Gắn sự kiện vẽ hóa đơn cho PrintDocument
         printDocument.PrintPage += PrintDocument_PrintPage;
-        
+
         // Gắn sự kiện tìm kiếm sản phẩm
         txt_searchProduct.KeyDown += txt_SearchProduct_KeyDown;
     }
@@ -31,6 +34,102 @@ public partial class FormSell : Form
         dgv_cart.AllowUserToAddRows = false;
         dgv_cart.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dgv_cart.MultiSelect = false;
+
+        // Load dữ liệu cần thiết từ DB (sản phẩm, autocomplete...)
+        LoadData();
+    }
+
+    // Load dữ liệu hỗ trợ cho FormSell (autocomplete, cấu hình lưới nếu Designer chưa tạo)
+    private void LoadData()
+    {
+        try
+        {
+            var products = _productsBUS.GetAll();
+
+            // Thiết lập AutoComplete cho ô tìm kiếm dựa trên mã và tên sản phẩm
+            var ac = new AutoCompleteStringCollection();
+            if (products != null)
+            {
+                foreach (var p in products)
+                {
+                    if (!string.IsNullOrWhiteSpace(p.ProductCode) && !ac.Contains(p.ProductCode))
+                        ac.Add(p.ProductCode);
+
+                    if (!string.IsNullOrWhiteSpace(p.ProductName) && !ac.Contains(p.ProductName))
+                        ac.Add(p.ProductName);
+                }
+            }
+
+            txt_searchProduct.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txt_searchProduct.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            txt_searchProduct.AutoCompleteCustomSource = ac;
+
+            // Nếu Designer không khởi tạo các cột cần thiết cho dgv_cart, tạo thay thế ở runtime.
+            // Các tên cột phải khớp với phần còn lại của FormSell (ví dụ: tham chiếu bởi tên).
+            if (dgv_cart.Columns.Count == 0)
+            {
+                dgv_cart.Columns.Clear();
+
+                var colProductName = new DataGridViewTextBoxColumn
+                {
+                    Name = "col_productName",
+                    HeaderText = "Tên sản phẩm",
+                    ReadOnly = true,
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                };
+                dgv_cart.Columns.Add(colProductName);
+
+                var colSerial = new DataGridViewTextBoxColumn
+                {
+                    Name = "col_serielNumber",
+                    HeaderText = "Serial / Mã",
+                    Width = 150,
+                    ReadOnly = true
+                };
+                dgv_cart.Columns.Add(colSerial);
+
+                var colQty = new DataGridViewTextBoxColumn
+                {
+                    Name = "col_quantity",
+                    HeaderText = "SL",
+                    Width = 80
+                };
+                dgv_cart.Columns.Add(colQty);
+
+                var colUnit = new DataGridViewTextBoxColumn
+                {
+                    Name = "col_unitPrice",
+                    HeaderText = "Đơn giá",
+                    Width = 120,
+                    ReadOnly = true
+                };
+                dgv_cart.Columns.Add(colUnit);
+
+                var colTotal = new DataGridViewTextBoxColumn
+                {
+                    Name = "col_totalPrice",
+                    HeaderText = "Thành tiền",
+                    Width = 140,
+                    ReadOnly = true
+                };
+                dgv_cart.Columns.Add(colTotal);
+
+                var colRemove = new DataGridViewButtonColumn
+                {
+                    Name = "col_remove",
+                    HeaderText = "Xóa",
+                    Text = "X",
+                    UseColumnTextForButtonValue = true,
+                    Width = 60
+                };
+                dgv_cart.Columns.Add(colRemove);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Không thể tải dữ liệu sản phẩm: {ex.Message}", "Lỗi tải dữ liệu",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     // ── Tìm kiếm sản phẩm khi nhập Serial hoặc Mã SP ────────────────────────
@@ -77,7 +176,7 @@ public partial class FormSell : Form
                 DataGridViewRow existingRow = dgv_cart.Rows[existingRowIndex];
                 int currentQty = int.Parse(existingRow.Cells["col_quantity"].Value?.ToString() ?? "0");
                 existingRow.Cells["col_quantity"].Value = currentQty + 1;
-                
+
                 // Cập nhật lại thành tiền
                 decimal unitPrice = decimal.Parse(existingRow.Cells["col_unitPrice"].Value?.ToString() ?? "0");
                 existingRow.Cells["col_totalPrice"].Value = (currentQty + 1) * unitPrice;
@@ -97,7 +196,7 @@ public partial class FormSell : Form
 
             // Tính lại tổng tiền
             RecalcTotal();
-            
+
             // Xóa ô tìm kiếm để tìm sản phẩm tiếp theo
             txt_searchProduct.Clear();
             txt_searchProduct.Focus();
@@ -135,7 +234,7 @@ public partial class FormSell : Form
         // QUY TRÌNH CHUẨN: Hỏi in hóa đơn TRƯỚC KHI reset form dữ liệu
         var printResult = MessageBox.Show("Bạn có muốn in hóa đơn cho khách hàng không?", "In hóa đơn",
             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            
+
         if (printResult == DialogResult.Yes)
         {
             ExecutePrint(); // Gọi hàm mở màn hình in hóa đơn
@@ -168,7 +267,7 @@ public partial class FormSell : Form
     private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
     {
         Graphics graphics = e.Graphics;
-        
+
         // Khởi tạo các font chữ
         Font fontTitle = new Font("Courier New", 18, FontStyle.Bold);
         Font fontHeader = new Font("Courier New", 14, FontStyle.Bold);
@@ -183,7 +282,7 @@ public partial class FormSell : Form
         // 1. Header (Tên cửa hàng, Ngày giờ)
         graphics.DrawString("CỬA HÀNG CỦA BẢO", fontTitle, new SolidBrush(Color.Black), startX + 50, startY);
         offset += (int)fontTitle.GetHeight() + 10;
-        
+
         graphics.DrawString("HÓA ĐƠN THANH TOÁN", fontHeader, new SolidBrush(Color.Black), startX + 50, startY + offset);
         offset += (int)fontHeader.GetHeight() + 10;
 
@@ -220,7 +319,7 @@ public partial class FormSell : Form
             graphics.DrawString(name, fontRegular, Brushes.Black, startX, startY + offset);
             graphics.DrawString(qty, fontRegular, Brushes.Black, startX + 180, startY + offset);
             graphics.DrawString(totalStr, fontRegular, Brushes.Black, startX + 230, startY + offset);
-            
+
             offset += (int)fontHeight + 5;
         }
 
@@ -230,7 +329,7 @@ public partial class FormSell : Form
         // 3. Tổng tiền
         graphics.DrawString(lbl_subTotal.Text, fontRegular, Brushes.Black, startX, startY + offset);
         offset += (int)fontHeight + 5;
-        
+
         graphics.DrawString(lbl_discount.Text, fontRegular, Brushes.Black, startX, startY + offset);
         offset += (int)fontHeight + 15;
 
@@ -299,8 +398,8 @@ public partial class FormSell : Form
             if (decimal.TryParse(row.Cells["col_totalPrice"].Value?.ToString(), out decimal val))
                 subtotal += val;
         }
-        lbl_subTotal.Text   = $"Tạm tính:    {subtotal:N0} đ";
-        lbl_discount.Text   = "Giảm giá:    - 0 đ";
+        lbl_subTotal.Text = $"Tạm tính:    {subtotal:N0} đ";
+        lbl_discount.Text = "Giảm giá:    - 0 đ";
         lbl_finalTotal.Text = $"Tổng cộng:  {subtotal:N0} đ";
     }
 
@@ -308,12 +407,12 @@ public partial class FormSell : Form
     private void ResetForm()
     {
         dgv_cart.Rows.Clear();
-        lbl_subTotal.Text   = "Tạm tính:    0 đ";
-        lbl_discount.Text   = "Giảm giá:    - 0 đ";
+        lbl_subTotal.Text = "Tạm tính:    0 đ";
+        lbl_discount.Text = "Giảm giá:    - 0 đ";
         lbl_finalTotal.Text = "Tổng cộng:  0 đ";
         cbo_paymentMethod.SelectedIndex = 0;
         grp_paymentMethod.Visible = false;
         txt_searchProduct.Clear();
         txt_searchProduct.Focus();
     }
-}
+}   
