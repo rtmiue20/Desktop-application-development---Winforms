@@ -22,38 +22,33 @@ public partial class FormReport : Form
     public FormReport()
     {
         InitializeComponent();
-        LoadReport();
+        LoadData(); // Gọi hàm load data khi mở form
     }
 
     // ─────────────────────────────────────────────
-    // LOAD CHÍNH
+    // HÀM LOADDATA CHÍNH THỨC — NẠP THẲNG VÀO .DATASOURCE
     // ─────────────────────────────────────────────
-    private void LoadReport()
+    private void LoadData()
     {
         DateTime from = dtp_from.Value.Date;
         DateTime to   = dtp_to.Value.Date.AddDays(1).AddTicks(-1);
 
+        // 1. Lấy dữ liệu từ tầng BUS
         var invoices = _reportsBus.GetInvoicesByRange(from, to);
         if (invoices.Count == 0)
         {
+            dgv_listInvoices.DataSource = null; // Xóa sạch bảng nếu không có data
             UpdateCards(0, 0, 0, 0, 0);
-            dgv_listInvoices.Rows.Clear();
             UpdateFooter(from, to, 0, 0);
             return;
         }
 
-        // Load tất cả details 1 lần (tránh N+1)
-        var allDetails = invoices
-            .SelectMany(inv => _detailDAL.GetByInvoice(inv.InvoiceID))
-            .ToList();
+        // 2. Gom dữ liệu chi tiết (tối ưu hiệu năng)
+        var allDetails = invoices.SelectMany(inv => _detailDAL.GetByInvoice(inv.InvoiceID)).ToList();
+        var allProducts  = _productsBus.GetAll().ToDictionary(p => p.ProductID, p => p.ProductName);
+        var allCustomers = _customersBus.GetAll().ToDictionary(c => c.CustomerID, c => c.FullName);
 
-        // Load lookup 1 lần
-        var allProducts  = _productsBus.GetAll()
-            .ToDictionary(p => p.ProductID, p => p.ProductName);
-        var allCustomers = _customersBus.GetAll()
-            .ToDictionary(c => c.CustomerID, c => c.FullName);
-
-        // Tính summary
+        // 3. Tính toán các con số tổng quan cho thẻ KPI Cards
         decimal revenue      = invoices.Sum(i => i.FinalAmount);
         decimal cost         = allDetails.Sum(d => d.CostPrice * d.Quantity);
         decimal profit       = revenue - cost;
@@ -61,14 +56,76 @@ public partial class FormReport : Form
         int     productCount = allDetails.Sum(d => d.Quantity);
 
         UpdateCards(revenue, profit, invoiceCount, productCount, 0);
-        LoadTable(invoices, allDetails, allProducts, allCustomers);
+
+        // 4. BIẾN ĐỔI DỮ LIỆU THÀNH MỘT DANH SÁCH SẠCH ĐỂ NẠP VÀO DATAGRIDVIEW
+        var detailsByInvoice = allDetails.GroupBy(d => d.InvoiceID).ToDictionary(g => g.Key, g => g.ToList());
+
+        var reportDataSource = invoices.Select(inv => {
+            var details = detailsByInvoice.ContainsKey(inv.InvoiceID) ? detailsByInvoice[inv.InvoiceID] : new List<SalesDetailsDTO>();
+            string customerName = inv.CustomerID.HasValue && allCustomers.ContainsKey(inv.CustomerID.Value) ? allCustomers[inv.CustomerID.Value] : "Khách lẻ";
+            string productSummary = string.Join(", ", details.Select(d => allProducts.ContainsKey(d.ProductID) ? allProducts[d.ProductID] : "SP").Distinct());
+            
+            decimal totalCost   = details.Sum(d => d.CostPrice * d.Quantity);
+            decimal rowProfit   = inv.FinalAmount - totalCost;
+
+            // Trả về đối tượng có các thuộc tính khớp với DataPropertyName ở file thiết kế
+            return new {
+                InvoiceCode    = inv.InvoiceCode,
+                SaleDate       = inv.SaleDate.ToString("dd/MM/yyyy HH:mm"),
+                CustomerName   = customerName,
+                ProductSummary = productSummary,
+                FinalAmount    = $"{inv.FinalAmount:N0}",
+                RowProfit      = $"{rowProfit:N0}",
+                PaymentMethod  = inv.PaymentMethod
+            };
+        }).ToList();
+
+        // 5. ĐỔ DATA VÀO BẢNG CHỈ VỚI 1 DÒNG LỆNH
+        dgv_listInvoices.DataSource = reportDataSource;
+
+        // 6. Sau khi lên data thì đổi màu sắc trạng thái thanh toán
+        FormatGridRows();
 
         decimal profitRate = revenue > 0 ? Math.Round(profit / revenue * 100, 1) : 0;
         UpdateFooter(from, to, revenue, profitRate);
     }
 
     // ─────────────────────────────────────────────
-    // CẬP NHẬT CARDS — dùng đúng tên Designer
+    // HÀM ĐỊNH DẠNG MÀU SẮC CHO BẢNG DỮ LIỆU
+    // ─────────────────────────────────────────────
+    private void FormatGridRows()
+    {
+        dgv_listInvoices.RowHeadersVisible  = false;
+        dgv_listInvoices.AllowUserToAddRows = false;
+        dgv_listInvoices.ReadOnly           = true;
+        dgv_listInvoices.SelectionMode      = DataGridViewSelectionMode.FullRowSelect;
+
+        for (int i = 0; i < dgv_listInvoices.Rows.Count; i++)
+        {
+            var row = dgv_listInvoices.Rows[i];
+            if (row.IsNewRow) continue;
+
+            if (dgv_listInvoices.Columns.Contains("col_thanhToan"))
+            {
+                var payCell = row.Cells["col_thanhToan"];
+                string paymentMethod = payCell.Value?.ToString() ?? "";
+
+                if (paymentMethod == "Tiền mặt")
+                { 
+                    payCell.Style.BackColor = Color.FromArgb(0, 140, 0);   
+                    payCell.Style.ForeColor = Color.White; 
+                }
+                else if (!string.IsNullOrEmpty(paymentMethod))
+                { 
+                    payCell.Style.BackColor = Color.FromArgb(0, 102, 204); 
+                    payCell.Style.ForeColor = Color.White; 
+                }
+            }
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // CẬP NHẬT CARDS
     // ─────────────────────────────────────────────
     private void UpdateCards(decimal revenue, decimal profit,
                              int invoiceCount, int productCount, int warrantyCount)
@@ -81,60 +138,6 @@ public partial class FormReport : Form
     }
 
     // ─────────────────────────────────────────────
-    // LOAD BẢNG — dùng đúng tên Designer
-    // ─────────────────────────────────────────────
-    private void LoadTable(
-        List<SalesInvoicesDTO>  invoices,
-        List<SalesDetailsDTO>   allDetails,
-        Dictionary<int, string> allProducts,
-        Dictionary<int, string> allCustomers)
-    {
-        dgv_listInvoices.Rows.Clear();
-        dgv_listInvoices.RowHeadersVisible  = false;
-        dgv_listInvoices.AllowUserToAddRows = false;
-        dgv_listInvoices.ReadOnly           = true;
-        dgv_listInvoices.SelectionMode      = DataGridViewSelectionMode.FullRowSelect;
-
-        var detailsByInvoice = allDetails
-            .GroupBy(d => d.InvoiceID)
-            .ToDictionary(g => g.Key, g => g.ToList());
-
-        foreach (var inv in invoices)
-        {
-            var details = detailsByInvoice.ContainsKey(inv.InvoiceID)
-                ? detailsByInvoice[inv.InvoiceID]
-                : new List<SalesDetailsDTO>();
-
-            string customerName = inv.CustomerID.HasValue && allCustomers.ContainsKey(inv.CustomerID.Value)
-                ? allCustomers[inv.CustomerID.Value]
-                : "Khách lẻ";
-
-            string productSummary = string.Join(", ", details
-                .Select(d => allProducts.ContainsKey(d.ProductID) ? allProducts[d.ProductID] : "SP")
-                .Distinct());
-
-            decimal totalCost   = details.Sum(d => d.CostPrice * d.Quantity);
-            decimal rowProfit   = inv.FinalAmount - totalCost;
-
-            int i = dgv_listInvoices.Rows.Add(
-                inv.InvoiceCode,
-                inv.SaleDate.ToString("dd/MM/yyyy HH:mm"),
-                customerName,
-                productSummary,
-                $"{inv.FinalAmount:N0}",
-                $"{rowProfit:N0}",
-                inv.PaymentMethod
-            );
-
-            var payCell = dgv_listInvoices.Rows[i].Cells["col_thanhToan"];
-            if (inv.PaymentMethod == "Tiền mặt")
-            { payCell.Style.BackColor = Color.FromArgb(0, 140, 0);   payCell.Style.ForeColor = Color.White; }
-            else
-            { payCell.Style.BackColor = Color.FromArgb(0, 102, 204); payCell.Style.ForeColor = Color.White; }
-        }
-    }
-
-    // ─────────────────────────────────────────────
     // FOOTER
     // ─────────────────────────────────────────────
     private void UpdateFooter(DateTime from, DateTime to, decimal revenue, decimal profitRate)
@@ -144,9 +147,9 @@ public partial class FormReport : Form
     }
 
     // ─────────────────────────────────────────────
-    // EVENTS
+    // EVENTS BUTTON CLICK
     // ─────────────────────────────────────────────
-    private void btn_xemBaocao_Click(object sender, EventArgs e) => LoadReport();
+    private void btn_xemBaocao_Click(object sender, EventArgs e) => LoadData();
 
     private void btn_xuatExcel_Click(object sender, EventArgs e)
     {
