@@ -92,6 +92,7 @@ namespace GUI
         }
 
         private void ApplyFilter()
+
         {
             string selectedCategory = cb_categories.Text ?? string.Empty;
             string selectedStatus = cb_statusFilter.Text ?? string.Empty;

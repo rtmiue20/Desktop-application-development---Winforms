@@ -42,7 +42,7 @@ namespace GUI
             }
             else
             {
-                // Chống crash nếu DB nhà cung cấp rỗng
+               
                 cb_suppliers.Items.Add("--- DB Trống, chưa có NCC ---");
                 cb_suppliers.SelectedIndex = 0;
             }
@@ -79,7 +79,7 @@ namespace GUI
         {
             dgv_details.Columns.Clear();
             dgv_details.AutoGenerateColumns = true;
-            dgv_details.DataSource = _cart.ToList(); // ToList() để trigger refresh DGV
+            dgv_details.DataSource = _cart.ToList(); 
 
             if (dgv_details.Columns["ProductID"] is { } colId) colId.Visible = false;
 
@@ -115,6 +115,7 @@ namespace GUI
             lbl_bottomStatus.Text = $"Phiếu: {txt_receiptCode.Text} — Đã xác nhận";
             ToggleState(false);
         }
+
 
         private void btn_cancelReceipt_Click(object sender, EventArgs e) { _cart.Clear(); UpdateCartGrid(); lbl_bottomStatus.Text = $"Phiếu: {txt_receiptCode.Text} — Đã hủy"; ToggleState(false); }
         private void btn_history_Click(object sender, EventArgs e) { MessageBox.Show("Đang kết nối lịch sử InboundReceipts..."); }

@@ -24,7 +24,6 @@ namespace GUI
             SetStateControls(false);
             LoadSupplierData();
         }
-
         private void LoadSupplierData()
         {
             var suppliers = _supplierBUS.GetAll();
