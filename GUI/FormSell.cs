@@ -42,94 +42,65 @@ public partial class FormSell : Form
     // Load dữ liệu hỗ trợ cho FormSell (autocomplete, cấu hình lưới nếu Designer chưa tạo)
     private void LoadData()
     {
-        try
+        // Xóa sạch cột cũ để code tự động build lại cho chuẩn tên
+        dgv_cart.Columns.Clear();
+
+        var colProductName = new DataGridViewTextBoxColumn
         {
-            var products = _productsBUS.GetAll();
+            Name = "col_productName",
+            HeaderText = "Tên sản phẩm",
+            ReadOnly = true,
+            AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        };
+        dgv_cart.Columns.Add(colProductName);
 
-            // Thiết lập AutoComplete cho ô tìm kiếm dựa trên mã và tên sản phẩm
-            var ac = new AutoCompleteStringCollection();
-            if (products != null)
-            {
-                foreach (var p in products)
-                {
-                    if (!string.IsNullOrWhiteSpace(p.ProductCode) && !ac.Contains(p.ProductCode))
-                        ac.Add(p.ProductCode);
-
-                    if (!string.IsNullOrWhiteSpace(p.ProductName) && !ac.Contains(p.ProductName))
-                        ac.Add(p.ProductName);
-                }
-            }
-
-            txt_searchProduct.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            txt_searchProduct.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            txt_searchProduct.AutoCompleteCustomSource = ac;
-
-            // Nếu Designer không khởi tạo các cột cần thiết cho dgv_cart, tạo thay thế ở runtime.
-            // Các tên cột phải khớp với phần còn lại của FormSell (ví dụ: tham chiếu bởi tên).
-            if (dgv_cart.Columns.Count == 0)
-            {
-                dgv_cart.Columns.Clear();
-
-                var colProductName = new DataGridViewTextBoxColumn
-                {
-                    Name = "col_productName",
-                    HeaderText = "Tên sản phẩm",
-                    ReadOnly = true,
-                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                };
-                dgv_cart.Columns.Add(colProductName);
-
-                var colSerial = new DataGridViewTextBoxColumn
-                {
-                    Name = "col_serielNumber",
-                    HeaderText = "Serial / Mã",
-                    Width = 150,
-                    ReadOnly = true
-                };
-                dgv_cart.Columns.Add(colSerial);
-
-                var colQty = new DataGridViewTextBoxColumn
-                {
-                    Name = "col_quantity",
-                    HeaderText = "SL",
-                    Width = 80
-                };
-                dgv_cart.Columns.Add(colQty);
-
-                var colUnit = new DataGridViewTextBoxColumn
-                {
-                    Name = "col_unitPrice",
-                    HeaderText = "Đơn giá",
-                    Width = 120,
-                    ReadOnly = true
-                };
-                dgv_cart.Columns.Add(colUnit);
-
-                var colTotal = new DataGridViewTextBoxColumn
-                {
-                    Name = "col_totalPrice",
-                    HeaderText = "Thành tiền",
-                    Width = 140,
-                    ReadOnly = true
-                };
-                dgv_cart.Columns.Add(colTotal);
-
-                var colRemove = new DataGridViewButtonColumn
-                {
-                    Name = "col_remove",
-                    HeaderText = "Xóa",
-                    Text = "X",
-                    UseColumnTextForButtonValue = true,
-                    Width = 60
-                };
-                dgv_cart.Columns.Add(colRemove);
-            }
-        }
-        catch (Exception ex)
+        var colSerial = new DataGridViewTextBoxColumn
         {
-            MessageBox.Show($"Không thể tải dữ liệu sản phẩm: {ex.Message}", "Lỗi tải dữ liệu",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+            Name = "col_serielNumber",
+            HeaderText = "Serial / Mã",
+            Width = 150,
+            ReadOnly = true
+        };
+        dgv_cart.Columns.Add(colSerial);
+
+        var colQty = new DataGridViewTextBoxColumn
+        {
+            Name = "col_quantity",
+            HeaderText = "SL",
+            Width = 80
+        };
+        dgv_cart.Columns.Add(colQty);
+
+        var colUnit = new DataGridViewTextBoxColumn
+        {
+            Name = "col_unitPrice",
+            HeaderText = "Đơn giá",
+            Width = 120,
+            ReadOnly = true
+        };
+        // 💡 MẸO: Format tiền tệ trực tiếp trên cột, không format bằng chữ ở lúc Add
+        colUnit.DefaultCellStyle.Format = "N0";
+        dgv_cart.Columns.Add(colUnit);
+
+        var colTotal = new DataGridViewTextBoxColumn
+        {
+            Name = "col_totalPrice",
+            HeaderText = "Thành tiền",
+            Width = 140,
+            ReadOnly = true
+        };
+        colTotal.DefaultCellStyle.Format = "N0"; // Format tiền tệ
+        dgv_cart.Columns.Add(colTotal);
+
+        var colRemove = new DataGridViewButtonColumn
+        {
+            Name = "col_remove",
+            HeaderText = "Xóa",
+            Text = "X",
+            UseColumnTextForButtonValue = true,
+            Width = 60
+        };
+        dgv_cart.Columns.Add(colRemove);
     }
 
     // ── Tìm kiếm sản phẩm khi nhập Serial hoặc Mã SP ────────────────────────
@@ -188,8 +159,8 @@ public partial class FormSell : Form
                     product.ProductName,          // col_productName
                     searchCode,                   // col_serielNumber
                     1,                            // col_quantity
-                    product.UnitPrice.ToString("N0"),  // col_unitPrice
-                    product.UnitPrice.ToString("N0"),  // col_totalPrice
+                    product.UnitPrice,            // col_unitPrice (truyền thẳng số nguyên)
+                    product.UnitPrice,            // col_totalPrice (truyền thẳng số nguyên)
                     "X"                           // col_remove
                 );
             }
@@ -415,4 +386,5 @@ public partial class FormSell : Form
         txt_searchProduct.Clear();
         txt_searchProduct.Focus();
     }
-}   
+}
+
