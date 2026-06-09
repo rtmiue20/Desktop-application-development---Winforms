@@ -22,7 +22,9 @@ namespace GUI
             btn_refresh.Click += btn_refresh_Click;
             btn_save.Click += btn_save_Click;
             btn_cancel.Click += btn_cancel_Click;
-            dgv_promotion.CellClick += dgv_guest_CellClick;
+
+            // Đã sửa tên hàm cho đồng nhất với FormPromotion
+            dgv_promotion.CellClick += dgv_promotion_CellClick;
         }
 
         // ==========================================
@@ -38,7 +40,7 @@ namespace GUI
             dgv_promotion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // Ánh xạ các cột trên Grid với tên thuộc tính/trường dữ liệu trả về từ Database thông qua BUS
-            col_promotionCode.DataPropertyName = "PromotionCode"; // Thay bằng tên cột thực tế trong DB/DTO
+            col_promotionCode.DataPropertyName = "PromotionCode";
             col_description.DataPropertyName = "Description";
             col_discountPercentage.DataPropertyName = "DiscountPercentage";
             col_discountAmount.DataPropertyName = "DiscountAmount";
@@ -56,7 +58,7 @@ namespace GUI
             try
             {
                 // NGUYÊN TẮC: Tuyệt đối không tạo List giả lập, lấy trực tiếp từ tầng xử lý
-                // dgv_guest.DataSource = PromotionsBUS.GetAllPromotions();
+                // dgv_promotion.DataSource = PromotionsBUS.GetAllPromotions();
             }
             catch (Exception ex)
             {
@@ -162,27 +164,23 @@ namespace GUI
 
             try
             {
-                // Thu thập thông tin từ các control giao diện
                 string code = txt_promotionCode.Text.Trim();
                 string desc = txt_description.Text.Trim();
                 DateTime start = dtp_startDate.Value;
                 DateTime end = dtp_endDate.Value;
 
-                // Tùy theo thiết kế DB của bạn để chia % hoặc Số tiền cố định, ở đây ta giả định truyền giá trị tổng quát
                 bool isSuccess = false;
 
                 if (isAdding)
                 {
-                    // NGUYÊN TẮC: Gọi tầng BUS để xử lý INSERT dữ liệu vào cơ sở dữ liệu
                     // isSuccess = PromotionsBUS.AddPromotion(code, desc, discountVal, start, end);
-                    isSuccess = true; // Giả lập chạy thành công
+                    isSuccess = true;
                     if (isSuccess) MessageBox.Show("Thêm mới chương trình khuyến mãi thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // NGUYÊN TẮC: Gọi tầng BUS để xử lý UPDATE dữ liệu trong cơ sở dữ liệu
                     // isSuccess = PromotionsBUS.UpdatePromotion(code, desc, discountVal, start, end);
-                    isSuccess = true; // Giả lập chạy thành công
+                    isSuccess = true;
                     if (isSuccess) MessageBox.Show("Cập nhật thông tin khuyến mãi thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
@@ -207,7 +205,7 @@ namespace GUI
         // ==========================================
         // 4. SỰ KIỆN TƯƠNG TÁC LƯỚI (CELL CLICK)
         // ==========================================
-        private void dgv_guest_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgv_promotion_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Tránh lỗi click vào thanh tiêu đề (Header Row)
             if (e.RowIndex < 0) return;
@@ -231,7 +229,7 @@ namespace GUI
         // ==========================================
         private void ResetInputFields(bool enableEditing)
         {
-            // Bật/Tắt trạng thái tương tác của các ô điền thông tin dựa trên trạng thái thao tác
+            // Bật/Tắt trạng thái tương tác của các ô điền thông tin
             txt_promotionCode.ReadOnly = !enableEditing || !isAdding;
             txt_description.ReadOnly = !enableEditing;
             txt_discountValue.ReadOnly = !enableEditing;
@@ -241,7 +239,7 @@ namespace GUI
             btn_save.Enabled = enableEditing;
             btn_cancel.Enabled = enableEditing;
 
-            // Mở khóa các nút chức năng chính khi không ở chế độ chỉnh sửa chi tiết
+            // Mở khóa các nút chức năng chính khi không ở chế độ chỉnh sửa
             btn_createPromotion.Enabled = !enableEditing;
             btn_editPromotion.Enabled = !enableEditing;
             btn_disablePromotion.Enabled = !enableEditing;
@@ -259,12 +257,7 @@ namespace GUI
             }
         }
 
-        // Tránh lỗi sinh ra do Click nhầm ngoài ý muốn ở file Designer
-        private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
-
-        private void dgv_promotion_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+        // Giữ lại hàm này để tránh Designer bị lỗi nếu đã lỡ click đúp tạo sự kiện
+        private void dgv_promotion_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
     }
 }

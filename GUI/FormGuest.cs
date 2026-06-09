@@ -65,7 +65,7 @@ namespace GUI
             if (string.IsNullOrWhiteSpace(txt_phoneNumber.Text) ||
                 string.IsNullOrWhiteSpace(txt_fullName.Text))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -75,13 +75,13 @@ namespace GUI
                 dgv_guest.Rows.Add(
                     txt_phoneNumber.Text,      // SĐT
                     txt_fullName.Text,         // Họ tên
-                    cbo_customerType.Text,    // Loại khách
+                    cbo_customerType.Text,     // Loại khách
                     0,                         // Điểm tích lũy
                     0,                         // Tổng mua
                     DateTime.Now.ToString("dd/MM/yyyy")
                 );
 
-                MessageBox.Show("Thêm khách hàng thành công!");
+                MessageBox.Show("Thêm khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -92,7 +92,7 @@ namespace GUI
                     dgv_guest.Rows[selectedRow].Cells[1].Value = txt_fullName.Text;
                     dgv_guest.Rows[selectedRow].Cells[2].Value = cbo_customerType.Text;
 
-                    MessageBox.Show("Cập nhật khách hàng thành công!");
+                    MessageBox.Show("Cập nhật khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace GUI
             // Kiểm tra đã chọn dòng chưa
             if (dgv_guest.CurrentRow == null)
             {
-                MessageBox.Show("Vui lòng chọn khách hàng cần sửa!");
+                MessageBox.Show("Vui lòng chọn khách hàng cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -113,14 +113,9 @@ namespace GUI
             selectedRow = dgv_guest.CurrentRow.Index;
 
             // Đổ dữ liệu lên form
-            txt_phoneNumber.Text =
-                dgv_guest.Rows[selectedRow].Cells[0].Value?.ToString();
-
-            txt_fullName.Text =
-                dgv_guest.Rows[selectedRow].Cells[1].Value?.ToString();
-
-            cbo_customerType.Text =
-                dgv_guest.Rows[selectedRow].Cells[2].Value?.ToString();
+            txt_phoneNumber.Text = dgv_guest.Rows[selectedRow].Cells[0].Value?.ToString();
+            txt_fullName.Text = dgv_guest.Rows[selectedRow].Cells[1].Value?.ToString();
+            cbo_customerType.Text = dgv_guest.Rows[selectedRow].Cells[2].Value?.ToString();
 
             // Chuyển sang chế độ sửa
             isAdding = false;
@@ -134,10 +129,9 @@ namespace GUI
             txt_phoneNumber.Clear();
             txt_fullName.Clear();
             txt_address.Clear();
-
             cbo_customerType.SelectedIndex = -1;
 
-            MessageBox.Show("Đã hủy thao tác!");
+            MessageBox.Show("Đã hủy thao tác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // ==========================
@@ -152,13 +146,12 @@ namespace GUI
             txt_phoneNumber.Clear();
             txt_fullName.Clear();
             txt_address.Clear();
-
             cbo_customerType.SelectedIndex = -1;
 
             // Bỏ chọn DataGridView
             dgv_guest.ClearSelection();
 
-            MessageBox.Show("Đã làm mới!");
+            MessageBox.Show("Đã làm mới!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // ==========================
@@ -168,39 +161,28 @@ namespace GUI
         {
             if (dgv_guest.CurrentRow == null)
             {
-                MessageBox.Show("Vui lòng chọn khách hàng!");
+                MessageBox.Show("Vui lòng chọn khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string customerName =
-                dgv_guest.CurrentRow.Cells[1].Value?.ToString();
-
-            MessageBox.Show(
-                "Hiển thị lịch sử mua của khách hàng: "
-                + customerName);
+            string customerName = dgv_guest.CurrentRow.Cells[1].Value?.ToString();
+            MessageBox.Show("Hiển thị lịch sử mua của khách hàng: " + customerName, "Lịch sử mua", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // ==========================
         // CLICK VÀO DÒNG TRONG BẢNG
         // ==========================
-        private void dgv_Guest_CellClick(object sender,
-            DataGridViewCellEventArgs e)
+        private void dgv_Guest_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Nếu click tiêu đề thì bỏ qua
-            if (e.RowIndex < 0)
-                return;
+            if (e.RowIndex < 0) return;
 
             selectedRow = e.RowIndex;
 
             // Hiển thị dữ liệu lên form
-            txt_phoneNumber.Text =
-                dgv_guest.Rows[e.RowIndex].Cells[0].Value?.ToString();
-
-            txt_fullName.Text =
-                dgv_guest.Rows[e.RowIndex].Cells[1].Value?.ToString();
-
-            cbo_customerType.Text =
-                dgv_guest.Rows[e.RowIndex].Cells[2].Value?.ToString();
+            txt_phoneNumber.Text = dgv_guest.Rows[e.RowIndex].Cells[0].Value?.ToString();
+            txt_fullName.Text = dgv_guest.Rows[e.RowIndex].Cells[1].Value?.ToString();
+            cbo_customerType.Text = dgv_guest.Rows[e.RowIndex].Cells[2].Value?.ToString();
         }
 
         // ==========================
@@ -212,29 +194,18 @@ namespace GUI
 
             foreach (DataGridViewRow row in dgv_guest.Rows)
             {
-                if (row.IsNewRow)
-                    continue;
+                if (row.IsNewRow) continue;
 
-                string phone =
-                    row.Cells[0].Value?.ToString().ToLower() ?? "";
-
-                string name =
-                    row.Cells[1].Value?.ToString().ToLower() ?? "";
+                string phone = row.Cells[0].Value?.ToString().ToLower() ?? "";
+                string name = row.Cells[1].Value?.ToString().ToLower() ?? "";
 
                 // Hiện dòng nếu tìm thấy SĐT hoặc tên
-                row.Visible =
-                    phone.Contains(keyword) ||
-                    name.Contains(keyword);
+                row.Visible = phone.Contains(keyword) || name.Contains(keyword);
             }
         }
 
-        private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-        }
+        // Giữ lại các hàm này nếu bạn đã lỡ click đúp tạo sự kiện trong Designer để tránh lỗi
+        private void dgv_guest_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+        private void label1_Click(object sender, EventArgs e) { }
     }
 }

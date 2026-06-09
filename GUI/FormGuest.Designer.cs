@@ -82,7 +82,6 @@ partial class FormGuest
         dgv_guest.RowHeadersWidth = 51;
         dgv_guest.Size = new Size(494, 378);
         dgv_guest.TabIndex = 1;
-        dgv_guest.CellContentClick += dgv_guest_CellContentClick;
         // 
         // btn_addCustomer
         // 
