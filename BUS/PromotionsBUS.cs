@@ -23,7 +23,7 @@ namespace BUS
                 ? totalAmount * promo.DiscountPercent / 100
                 : promo.DiscountAmount;
 
-            return (discount, null);
+            return (discount, string.Empty);
         }
 
         public (bool success, string error) Insert(PromotionsDTO promo)
@@ -33,8 +33,17 @@ namespace BUS
             if (promo.EndDate <= promo.StartDate)
                 return (false, "Ngày kết thúc phải sau ngày bắt đầu.");
 
-            return (_dal.Insert(promo), "Thêm thất bại.");
+            bool result = _dal.Insert(promo);
+
+            return result
+                ? (true, string.Empty)
+                : (false, "Thêm thất bại.");
         }
+        public List<PromotionsDTO> GetAllPromotions()
+        {
+            return _dal.GetAll();
+        }
+
 
         public bool SetActive(int id, bool isActive) => _dal.SetActive(id, isActive);
     }

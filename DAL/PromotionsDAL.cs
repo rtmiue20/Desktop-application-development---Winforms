@@ -1,7 +1,8 @@
 using System.Data;
 using Dapper;
 using DTO;
-
+using System.Linq;
+using System.Collections.Generic;
 namespace DAL
 {
     public class PromotionsDAL
@@ -14,6 +15,14 @@ namespace DAL
                                  WHERE PromoCode=@promoCode AND IsActive=1
                                  AND NOW() BETWEEN StartDate AND EndDate";
                 return db.QueryFirstOrDefault<PromotionsDTO>(query, new { promoCode });
+            }
+        }
+        public List<PromotionsDTO> GetAll()
+        {
+            using (IDbConnection db = DatabaseHelper.GetConnection())
+            {
+                string sql = "SELECT * FROM Promotions";
+                return db.Query<PromotionsDTO>(sql).ToList();
             }
         }
 
