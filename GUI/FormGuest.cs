@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 // Thêm thư viện chứa các lớp BUS và DTO của project ông vào đây (ví dụ minh họa):
- using BUS; 
- using DTO;
+using BUS;
+using DTO;
 
 namespace GUI
 {
@@ -25,6 +25,9 @@ namespace GUI
         // ==========================
         private void FormGuest_Load(object sender, EventArgs e)
         {
+            // 1. TẮT TÍNH NĂNG TỰ ĐỘNG SINH CỘT TỪ DTO
+            dgv_guest.AutoGenerateColumns = false;
+
             dgv_guest.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv_guest.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv_guest.MultiSelect = false;
