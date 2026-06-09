@@ -96,4 +96,55 @@ public partial class FormDashboard : Form
     private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
     {
     }
+
+    /// <summary>
+    /// Bật/tắt menu item dựa trên tên của nó
+    /// </summary>
+    public void SetMenuEnabled(string menuName, bool enabled)
+    {
+        var menu = menuStrip.Items.OfType<ToolStripMenuItem>()
+            .FirstOrDefault(m => m.Name == menuName);
+
+        if (menu != null)
+        {
+            menu.Enabled = enabled;
+            menu.Visible = enabled;
+        }
+    }
+
+    /// <summary>
+    /// Bật/tắt menu item con dựa trên tên parent và child
+    /// </summary>
+    public void SetMenuItemEnabled(string parentMenuName, string childItemName, bool enabled)
+    {
+        var parentMenu = menuStrip.Items.OfType<ToolStripMenuItem>()
+            .FirstOrDefault(m => m.Name == parentMenuName);
+
+        if (parentMenu != null)
+        {
+            var childItem = parentMenu.DropDownItems.OfType<ToolStripMenuItem>()
+                .FirstOrDefault(m => m.Name == childItemName);
+
+            if (childItem != null)
+            {
+                childItem.Enabled = enabled;
+                childItem.Visible = enabled;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Bật/tắt toolbar button dựa trên tên của nó
+    /// </summary>
+    public void SetToolbarButtonEnabled(string buttonName, bool enabled)
+    {
+        var button = toolStrip1.Items.OfType<ToolStripButton>()
+            .FirstOrDefault(b => b.Name == buttonName);
+
+        if (button != null)
+        {
+            button.Enabled = enabled;
+            button.Visible = enabled;
+        }
+    }
 }

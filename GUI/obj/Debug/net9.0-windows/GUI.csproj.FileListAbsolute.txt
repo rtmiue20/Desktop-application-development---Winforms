@@ -196,3 +196,7 @@ C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\bin\Debug\net9.0-windows\runtimes\win-x64\native\Magick.Native-Q8-x64.dll
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\bin\Debug\net9.0-windows\runtimes\win-x86\native\Magick.Native-Q8-x86.dll
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormCategory.resources
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormLogin.resources
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\bin\Debug\net9.0-windows\Guna.UI2.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\bin\Debug\net9.0-windows\System.Management.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\bin\Debug\net9.0-windows\runtimes\win\lib\net7.0\System.Management.dll

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mj5FITazWZc=",
+  "dgSpecHash": "aSCwgINbvHQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\MinhTrieu\\RiderProjects\\Desktop-application-development---Winforms\\GUI\\GUI.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\documentformat.openxml.framework\\3.1.1\\documentformat.openxml.framework.3.1.1.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\google.protobuf\\3.32.0\\google.protobuf.3.32.0.nupkg.sha512",
+    "C:\\Users\\MinhTrieu\\.nuget\\packages\\guna.ui2.winforms\\2.0.4.8\\guna.ui2.winforms.2.0.4.8.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\k4os.compression.lz4\\1.3.8\\k4os.compression.lz4.1.3.8.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\k4os.compression.lz4.streams\\1.3.8\\k4os.compression.lz4.streams.1.3.8.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\k4os.hash.xxhash\\1.0.8\\k4os.hash.xxhash.1.0.8.nupkg.sha512",
@@ -34,6 +35,7 @@
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\system.formats.nrbf\\9.0.0\\system.formats.nrbf.9.0.0.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\system.io.packaging\\9.0.0\\system.io.packaging.9.0.0.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\system.io.pipelines\\6.0.3\\system.io.pipelines.6.0.3.nupkg.sha512",
+    "C:\\Users\\MinhTrieu\\.nuget\\packages\\system.management\\7.0.0\\system.management.7.0.0.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\system.reflection.metadata\\7.0.0\\system.reflection.metadata.7.0.0.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\system.resources.extensions\\9.0.0\\system.resources.extensions.9.0.0.nupkg.sha512",
     "C:\\Users\\MinhTrieu\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",

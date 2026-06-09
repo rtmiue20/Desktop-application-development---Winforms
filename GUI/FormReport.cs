@@ -56,7 +56,7 @@ public partial class FormReport : Form
         // Căn chỉnh bộ lọc trong groupBox1
         groupBox1.Dock = DockStyle.Top;
         groupBox1.Height = 180;
-
+        
         // Sắp xếp các control trong groupBox1 cho gọn gàng
         cbb_dayFill.Location = new Point(12, 25);
         dtp_from.Location = new Point(170, 25);
@@ -70,9 +70,11 @@ public partial class FormReport : Form
 
         // Dàn đều các card thông tin trong panel3
         int cardWidth = (this.ClientSize.Width - 40) / 5;
-        Control[] cards = { lbl_doanhThu, lbl_grossProfit, lbl_productSold, lbl_invoiceNum, lbl_warranty };
+        Control[] cards = { lbl_outCome, lbl_grossProfit, lbl_productSold, lbl_invoiceNum, lbl_warranty };
         for (int i = 0; i < cards.Length; i++)
         {
+            if (cards[i] == null) continue; // Skip null controls
+            
             cards[i].Width = cardWidth;
             cards[i].Height = 100;
             cards[i].Location = new Point(10 + i * cardWidth, 10);

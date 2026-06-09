@@ -2,146 +2,216 @@
 
 partial class FormLogin
 {
-    /// <summary>
-    ///  Required designer variable.
-    /// </summary>
     private System.ComponentModel.IContainer components = null;
 
-    /// <summary>
-    ///  Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
     {
         if (disposing && (components != null))
         {
             components.Dispose();
         }
-
         base.Dispose(disposing);
     }
 
     #region Windows Form Designer generated code
 
-    /// <summary>
-    /// Required method for Designer support - do not modify
-    /// the contents of this method with the code editor.
-    /// </summary>
     private void InitializeComponent()
     {
-        label1 = new System.Windows.Forms.Label();
-        groupBox1 = new System.Windows.Forms.GroupBox();
-        lbl_error = new System.Windows.Forms.Label();
-        btn_login = new System.Windows.Forms.Button();
-        txt_password = new System.Windows.Forms.TextBox();
-        txt_username = new System.Windows.Forms.TextBox();
-        label3 = new System.Windows.Forms.Label();
-        label2 = new System.Windows.Forms.Label();
-        groupBox1.SuspendLayout();
-        SuspendLayout();
+        this.components = new System.ComponentModel.Container();
+        this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+        this.guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(this.components);
+        this.panel_left = new Guna.UI2.WinForms.Guna2Panel();
+        this.lbl_sub_title = new System.Windows.Forms.Label();
+        this.lbl_brand = new System.Windows.Forms.Label();
+        this.btn_close = new Guna.UI2.WinForms.Guna2ControlBox();
+        this.lbl_login_title = new System.Windows.Forms.Label();
+        this.txt_username = new Guna.UI2.WinForms.Guna2TextBox();
+        this.txt_password = new Guna.UI2.WinForms.Guna2TextBox();
+        this.btn_login = new Guna.UI2.WinForms.Guna2Button();
+        this.lbl_error = new System.Windows.Forms.Label();
+        this.panel_left.SuspendLayout();
+        this.SuspendLayout();
         // 
-        // label1
+        // guna2Elipse1
         // 
-        label1.Location = new System.Drawing.Point(266, 86);
-        label1.Name = "label1";
-        label1.Size = new System.Drawing.Size(306, 47);
-        label1.TabIndex = 0;
-        label1.Text = "Đăng nhập hệ thống";
+        this.guna2Elipse1.BorderRadius = 18;
+        this.guna2Elipse1.TargetControl = this;
         // 
-        // groupBox1
+        // guna2DragControl1
         // 
-        groupBox1.Controls.Add(lbl_error);
-        groupBox1.Controls.Add(btn_login);
-        groupBox1.Controls.Add(txt_password);
-        groupBox1.Controls.Add(txt_username);
-        groupBox1.Controls.Add(label3);
-        groupBox1.Controls.Add(label2);
-        groupBox1.Controls.Add(label1);
-        groupBox1.Location = new System.Drawing.Point(350, 111);
-        groupBox1.Name = "groupBox1";
-        groupBox1.Size = new System.Drawing.Size(858, 837);
-        groupBox1.TabIndex = 1;
-        groupBox1.TabStop = false;
+        this.guna2DragControl1.DockForm = true;
+        this.guna2DragControl1.TargetControl = this;
+        this.guna2DragControl1.TransparentWhileDrag = true;
+        this.guna2DragControl1.UseTransparentDrag = true;
         // 
-        // lbl_error
+        // panel_left
         // 
-        lbl_error.BackColor = System.Drawing.SystemColors.ControlDark;
-        lbl_error.Location = new System.Drawing.Point(6, 193);
-        lbl_error.Name = "lbl_error";
-        lbl_error.Size = new System.Drawing.Size(846, 94);
-        lbl_error.TabIndex = 6;
+        this.panel_left.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(53)))), ((int)(((byte)(147)))));
+        this.panel_left.Controls.Add(this.lbl_sub_title);
+        this.panel_left.Controls.Add(this.lbl_brand);
+        this.panel_left.Dock = System.Windows.Forms.DockStyle.Left;
+        this.panel_left.Location = new System.Drawing.Point(0, 0);
+        this.panel_left.Name = "panel_left";
+        this.panel_left.Size = new System.Drawing.Size(350, 500);
+        this.panel_left.TabIndex = 0;
         // 
-        // btn_login
+        // lbl_sub_title
         // 
-        btn_login.Location = new System.Drawing.Point(6, 552);
-        btn_login.Name = "btn_login";
-        btn_login.Size = new System.Drawing.Size(846, 125);
-        btn_login.TabIndex = 5;
-        btn_login.Text = "Đăng nhập";
-        btn_login.UseVisualStyleBackColor = true;
-        btn_login.Click += btn_login_Click;
+        this.lbl_sub_title.AutoSize = true;
+        this.lbl_sub_title.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        this.lbl_sub_title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(202)))), ((int)(((byte)(233)))));
+        this.lbl_sub_title.Location = new System.Drawing.Point(35, 255);
+        this.lbl_sub_title.Name = "lbl_sub_title";
+        this.lbl_sub_title.Size = new System.Drawing.Size(262, 25);
+        this.lbl_sub_title.TabIndex = 1;
+        this.lbl_sub_title.Text = "Hệ thống Quản lý Cửa hàng";
         // 
-        // txt_password
+        // lbl_brand
         // 
-        txt_password.Location = new System.Drawing.Point(246, 432);
-        txt_password.Name = "txt_password";
-        txt_password.Size = new System.Drawing.Size(606, 47);
-        txt_password.TabIndex = 4;
-        txt_password.UseSystemPasswordChar = true;
-        txt_password.KeyDown += txt_password_KeyDown;
+        this.lbl_brand.AutoSize = true;
+        this.lbl_brand.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+        this.lbl_brand.ForeColor = System.Drawing.Color.White;
+        this.lbl_brand.Location = new System.Drawing.Point(30, 190);
+        this.lbl_brand.Name = "lbl_brand";
+        this.lbl_brand.Size = new System.Drawing.Size(279, 60);
+        this.lbl_brand.TabIndex = 0;
+        this.lbl_brand.Text = "TECH STORE";
+        // 
+        // btn_close
+        // 
+        this.btn_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+        this.btn_close.FillColor = System.Drawing.Color.Transparent;
+        this.btn_close.IconColor = System.Drawing.Color.Gray;
+        this.btn_close.Location = new System.Drawing.Point(755, 12);
+        this.btn_close.Name = "btn_close";
+        this.btn_close.Size = new System.Drawing.Size(33, 29);
+        this.btn_close.TabIndex = 5;
+        // 
+        // lbl_login_title
+        // 
+        this.lbl_login_title.AutoSize = true;
+        this.lbl_login_title.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+        this.lbl_login_title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+        this.lbl_login_title.Location = new System.Drawing.Point(400, 90);
+        this.lbl_login_title.Name = "lbl_login_title";
+        this.lbl_login_title.Size = new System.Drawing.Size(225, 46);
+        this.lbl_login_title.TabIndex = 1;
+        this.lbl_login_title.Text = "Đăng Nhập";
         // 
         // txt_username
         // 
-        txt_username.Location = new System.Drawing.Point(246, 341);
-        txt_username.Name = "txt_username";
-        txt_username.Size = new System.Drawing.Size(606, 47);
-        txt_username.TabIndex = 3;
-        txt_username.KeyDown += txt_username_KeyDown;
+        this.txt_username.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(221)))), ((int)(((byte)(233)))));
+        this.txt_username.BorderRadius = 8;
+        this.txt_username.Cursor = System.Windows.Forms.Cursors.IBeam;
+        this.txt_username.DefaultText = "";
+        this.txt_username.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+        this.txt_username.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+        this.txt_username.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+        this.txt_username.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+        this.txt_username.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(53)))), ((int)(((byte)(147)))));
+        this.txt_username.Font = new System.Drawing.Font("Segoe UI", 10.51F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        this.txt_username.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+        this.txt_username.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(81)))), ((int)(((byte)(181)))));
+        this.txt_username.Location = new System.Drawing.Point(405, 175);
+        this.txt_username.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+        this.txt_username.Name = "txt_username";
+        this.txt_username.PasswordChar = '\0';
+        this.txt_username.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+        this.txt_username.PlaceholderText = "Tên đăng nhập";
+        this.txt_username.SelectedText = "";
+        this.txt_username.Size = new System.Drawing.Size(340, 48);
+        this.txt_username.TabIndex = 2;
+        this.txt_username.TextOffset = new System.Drawing.Point(8, 0);
+        this.txt_username.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_username_KeyDown);
         // 
-        // label3
+        // txt_password
         // 
-        label3.BackColor = System.Drawing.SystemColors.ControlDark;
-        label3.Location = new System.Drawing.Point(6, 341);
-        label3.Name = "label3";
-        label3.Size = new System.Drawing.Size(234, 47);
-        label3.TabIndex = 2;
-        label3.Text = "Tên đăng nhập";
+        this.txt_password.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(221)))), ((int)(((byte)(233)))));
+        this.txt_password.BorderRadius = 8;
+        this.txt_password.Cursor = System.Windows.Forms.Cursors.IBeam;
+        this.txt_password.DefaultText = "";
+        this.txt_password.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+        this.txt_password.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+        this.txt_password.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+        this.txt_password.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+        this.txt_password.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(53)))), ((int)(((byte)(147)))));
+        this.txt_password.Font = new System.Drawing.Font("Segoe UI", 10.51F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        this.txt_password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+        this.txt_password.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(81)))), ((int)(((byte)(181)))));
+        this.txt_password.Location = new System.Drawing.Point(405, 245);
+        this.txt_password.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+        this.txt_password.Name = "txt_password";
+        this.txt_password.PasswordChar = '●';
+        this.txt_password.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+        this.txt_password.PlaceholderText = "Mật khẩu";
+        this.txt_password.SelectedText = "";
+        this.txt_password.Size = new System.Drawing.Size(340, 48);
+        this.txt_password.TabIndex = 3;
+        this.txt_password.TextOffset = new System.Drawing.Point(8, 0);
+        this.txt_password.UseSystemPasswordChar = true;
+        this.txt_password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_password_KeyDown);
         // 
-        // label2
+        // btn_login
         // 
-        label2.BackColor = System.Drawing.SystemColors.ControlDark;
-        label2.Location = new System.Drawing.Point(6, 432);
-        label2.Name = "label2";
-        label2.Size = new System.Drawing.Size(234, 47);
-        label2.TabIndex = 1;
-        label2.Text = "Mật khẩu";
+        this.btn_login.Animated = true;
+        this.btn_login.BorderRadius = 8;
+        this.btn_login.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.btn_login.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(53)))), ((int)(((byte)(147)))));
+        this.btn_login.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+        this.btn_login.ForeColor = System.Drawing.Color.White;
+        this.btn_login.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(35)))), ((int)(((byte)(126)))));
+        this.btn_login.Location = new System.Drawing.Point(405, 345);
+        this.btn_login.Name = "btn_login";
+        this.btn_login.Size = new System.Drawing.Size(340, 48);
+        this.btn_login.TabIndex = 4;
+        this.btn_login.Text = "ĐĂNG NHẬP";
+        this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
+        // 
+        // lbl_error
+        // 
+        this.lbl_error.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        this.lbl_error.ForeColor = System.Drawing.Color.Crimson;
+        this.lbl_error.Location = new System.Drawing.Point(405, 303);
+        this.lbl_error.Name = "lbl_error";
+        this.lbl_error.Size = new System.Drawing.Size(340, 30);
+        this.lbl_error.TabIndex = 6;
+        this.lbl_error.Text = "Lỗi hiển thị ở đây";
+        this.lbl_error.Visible = false;
         // 
         // FormLogin
         // 
-        AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
-        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(1564, 1120);
-        Controls.Add(groupBox1);
-        FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-        MinimizeBox = false;
-        StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-        Text = "Đăng nhập";
-        groupBox1.ResumeLayout(false);
-        groupBox1.PerformLayout();
-        ResumeLayout(false);
+        this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        this.BackColor = System.Drawing.Color.White;
+        this.ClientSize = new System.Drawing.Size(800, 500);
+        this.Controls.Add(this.lbl_error);
+        this.Controls.Add(this.btn_login);
+        this.Controls.Add(this.txt_password);
+        this.Controls.Add(this.txt_username);
+        this.Controls.Add(this.lbl_login_title);
+        this.Controls.Add(this.btn_close);
+        this.Controls.Add(this.panel_left);
+        this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+        this.Name = "FormLogin";
+        this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+        this.Text = "Đăng nhập";
+        this.panel_left.ResumeLayout(false);
+        this.panel_left.PerformLayout();
+        this.ResumeLayout(false);
+        this.PerformLayout();
     }
 
-    private System.Windows.Forms.Button btn_login;
-    private System.Windows.Forms.Label lbl_error;
-
-    private System.Windows.Forms.TextBox txt_username;
-    private System.Windows.Forms.TextBox txt_password;
-
-    private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.Label label3;
-
-    private System.Windows.Forms.Label label1;
-
     #endregion
+
+    private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
+    private Guna.UI2.WinForms.Guna2DragControl guna2DragControl1;
+    private Guna.UI2.WinForms.Guna2Panel panel_left;
+    private System.Windows.Forms.Label lbl_sub_title;
+    private System.Windows.Forms.Label lbl_brand;
+    private Guna.UI2.WinForms.Guna2ControlBox btn_close;
+    private System.Windows.Forms.Label lbl_login_title;
+    private Guna.UI2.WinForms.Guna2TextBox txt_username;
+    private Guna.UI2.WinForms.Guna2TextBox txt_password;
+    private Guna.UI2.WinForms.Guna2Button btn_login;
+    private System.Windows.Forms.Label lbl_error;
 }

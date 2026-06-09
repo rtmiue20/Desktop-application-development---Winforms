@@ -17,6 +17,8 @@ namespace BUS
         public static bool IsWarehouse => RoleID == 3;
         public static bool IsTechnician => RoleID == 4;
 
+        public static bool IsActive { get; set; }
+
         public static void Clear()
         {
             UserID = 0;

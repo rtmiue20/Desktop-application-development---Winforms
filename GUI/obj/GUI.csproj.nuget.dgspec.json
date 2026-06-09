@@ -281,6 +281,10 @@
               "target": "Package",
               "version": "[0.105.0, )"
             },
+            "Guna.UI2.WinForms": {
+              "target": "Package",
+              "version": "[2.0.4.8, )"
+            },
             "Magick.NET-Q8-AnyCPU": {
               "target": "Package",
               "version": "[14.14.0, )"

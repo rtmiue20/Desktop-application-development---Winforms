@@ -233,7 +233,6 @@ partial class FormTradeIn
         label2.Size = new System.Drawing.Size(222, 47);
         label2.TabIndex = 3;
         label2.Text = "Lý do trả hàng:";
-        label2.Click += label2_Click;
         // 
         // FormTradeIn
         // 
