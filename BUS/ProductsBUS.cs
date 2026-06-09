@@ -7,6 +7,7 @@ namespace BUS
     public class ProductsBUS
     {
         private readonly ProductsDAL _dal = new ProductsDAL();
+        private readonly ProductsDAL _productsDAL = new ProductsDAL();
 
         public List<ProductsDTO> GetAll() => _dal.GetAll();
 
@@ -43,5 +44,11 @@ namespace BUS
             return (_dal.Delete(id), "Xóa thất bại.");
         }
         public ProductsDTO GetById(int id) => GetAll().Find(p => p.ProductID == id);
+        public ProductsDTO? GetByName(string name)
+        {
+            var products = _productsDAL.GetAll();
+            return products.FirstOrDefault(p => p.ProductName == name);
+        }
+
     }
 }
