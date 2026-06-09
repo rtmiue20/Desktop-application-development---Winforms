@@ -201,7 +201,7 @@ namespace GUI
 
             if (_isAdding)
             {
-                // nếu không nhập pass thì lấy mặc định là 123456
+                // check nếu không nhập pass thì lấy mặc định là 123456
                 user.Password = string.IsNullOrWhiteSpace(txt_password.Text) ? "123456" : txt_password.Text;
                 (success, error) = _userBUS.Insert(user);
             }
@@ -252,7 +252,7 @@ namespace GUI
             }
         }
 
-        // 9. Reset pass về mặc định (sử dụng lại nút Đổi mật khẩu)
+        // 9. Reset pass về mặc định 
         private void btn_changePassword_Click(object sender, EventArgs e)
         {
             if (_selectedUserID == -1)
