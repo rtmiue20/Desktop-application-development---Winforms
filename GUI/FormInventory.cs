@@ -2,14 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using BUS;
+using DTO;
 
 namespace GUI
 {
     public partial class FormInventory : Form
     {
+        // 1. Chỉ khai báo, KHÔNG khởi tạo ở đây
+        private ProductsBUS _productBUS = null!;
+        private CategoriesBUS _categoryBUS = null!;
+
         private class InventoryModel
         {
-            // Triệt tiêu cảnh báo CS8618
             public string ProductCode { get; set; } = string.Empty;
             public string ProductName { get; set; } = string.Empty;
             public string Category { get; set; } = string.Empty;
@@ -27,58 +32,95 @@ namespace GUI
 
         private void FormInventory_Load(object sender, EventArgs e)
         {
-            cbb_categories.Items.AddRange(new[] { "Tất cả danh mục", "Điện thoại", "Máy tính bảng" });
-            cbb_categories.SelectedIndex = 0;
-            cbb_statusFilter.Items.AddRange(new[] { "Tất cả trạng thái", "Còn hàng", "Sắp hết", "Hết hàng" });
-            cbb_statusFilter.SelectedIndex = 0;
+            // 2. Khởi tạo an toàn trong Load
+            _productBUS = new ProductsBUS();
+            _categoryBUS = new CategoriesBUS();
 
-            LoadData();
+            LoadCategoriesToFilter();
+            cb_statusFilter.Items.AddRange(new[] { "Tất cả trạng thái", "Còn hàng", "Sắp hết", "Hết hàng" });
+            cb_statusFilter.SelectedIndex = 0;
+
+            LoadDataFromDB();
         }
 
-        private void LoadData()
+        private void LoadCategoriesToFilter()
         {
-            _items = new List<InventoryModel>
+            cb_categories.Items.Clear();
+            cb_categories.Items.Add("Tất cả danh mục");
+
+            var categories = _categoryBUS.GetAll();
+            foreach (var cat in categories)
             {
-                new InventoryModel { ProductCode = "SP001", ProductName = "iPhone 15 Pro", Category = "Điện thoại", Stock = 8, MinStock = 5, Status = "Còn hàng" },
-                new InventoryModel { ProductCode = "SP002", ProductName = "Samsung S24", Category = "Điện thoại", Stock = 3, MinStock = 5, Status = "Sắp hết" },
-                new InventoryModel { ProductCode = "SP003", ProductName = "iPad Pro M2", Category = "Máy tính bảng", Stock = 0, MinStock = 3, Status = "Hết hàng" }
-            };
+                cb_categories.Items.Add(cat.CategoryName);
+            }
+            cb_categories.SelectedIndex = 0;
+        }
+
+        private void LoadDataFromDB()
+        {
+            var products = _productBUS.GetAll();
+            var categories = _categoryBUS.GetAll();
+
+            _items.Clear();
+            foreach (var p in products)
+            {
+                int currentStock = 0; // Thay bằng p.StockQuantity nếu DTO có
+                string catName = categories.FirstOrDefault(c => c.CategoryID == p.CategoryID)?.CategoryName ?? "Chưa phân loại";
+
+                string status = "Hết hàng";
+                if (currentStock > p.MinStock) status = "Còn hàng";
+                else if (currentStock > 0 && currentStock <= p.MinStock) status = "Sắp hết";
+
+                _items.Add(new InventoryModel
+                {
+                    ProductCode = p.ProductCode,
+                    ProductName = p.ProductName,
+                    Category = catName,
+                    Stock = currentStock,
+                    MinStock = p.MinStock,
+                    Status = status
+                });
+            }
             ApplyFilter();
         }
 
         private void ApplyFilter()
         {
-            // Đảm bảo Text không bị null (CS8602)
-            string selectedCategory = cbb_categories.Text ?? string.Empty;
-            string selectedStatus = cbb_statusFilter.Text ?? string.Empty;
+            string selectedCategory = cb_categories.Text ?? string.Empty;
+            string selectedStatus = cb_statusFilter.Text ?? string.Empty;
 
             var filtered = _items.Where(x =>
-                (cbb_categories.SelectedIndex == 0 || x.Category == selectedCategory) &&
-                (cbb_statusFilter.SelectedIndex == 0 || x.Status == selectedStatus)).ToList();
+                (cb_categories.SelectedIndex == 0 || x.Category == selectedCategory) &&
+                (cb_statusFilter.SelectedIndex == 0 || x.Status == selectedStatus)).ToList();
 
             dgv_inventory.DataSource = filtered;
 
-            if (dgv_inventory.Columns["ProductCode"] != null) dgv_inventory.Columns["ProductCode"].HeaderText = "Mã SP";
-            if (dgv_inventory.Columns["ProductName"] != null) dgv_inventory.Columns["ProductName"].HeaderText = "Tên sản phẩm";
-            if (dgv_inventory.Columns["Category"] != null) dgv_inventory.Columns["Category"].HeaderText = "Danh mục";
-            if (dgv_inventory.Columns["Stock"] != null) dgv_inventory.Columns["Stock"].HeaderText = "Tồn kho";
-            if (dgv_inventory.Columns["MinStock"] != null) dgv_inventory.Columns["MinStock"].HeaderText = "Tồn tối thiểu";
-            if (dgv_inventory.Columns["Status"] != null) dgv_inventory.Columns["Status"].HeaderText = "Trạng thái";
+            if (dgv_inventory.Columns["ProductCode"] is { } colCode) colCode.HeaderText = "Mã SP";
+            if (dgv_inventory.Columns["ProductName"] is { } colName) colName.HeaderText = "Tên sản phẩm";
+            if (dgv_inventory.Columns["Category"] is { } colCat) colCat.HeaderText = "Danh mục";
+            if (dgv_inventory.Columns["Stock"] is { } colStock) colStock.HeaderText = "Tồn thực tế";
+            if (dgv_inventory.Columns["MinStock"] is { } colMin) colMin.HeaderText = "Tồn tối thiểu";
+            if (dgv_inventory.Columns["Status"] is { } colStatus) colStatus.HeaderText = "Trạng thái";
 
-            lbl_totalCount.Text = "24\nTổng sản phẩm";
-            lbl_availableCount.Text = "18\nCòn hàng";
-            lbl_warningCount.Text = "4\nSắp hết (≤ MinStock)";
-            lbl_outOfStockCount.Text = "2\nHết hàng";
+            int total = _items.Count;
+            int available = _items.Count(x => x.Status == "Còn hàng");
+            int warning = _items.Count(x => x.Status == "Sắp hết");
+            int outOfStock = _items.Count(x => x.Status == "Hết hàng");
+
+            lbl_totalCount.Text = $"{total}\nTổng sản phẩm";
+            lbl_availableCount.Text = $"{available}\nCòn hàng";
+            lbl_warningCount.Text = $"{warning}\nSắp hết (≤ MinStock)";
+            lbl_outOfStockCount.Text = $"{outOfStock}\nHết hàng";
             lbl_timeUpdate.Text = $"Cập nhật lúc: {DateTime.Now:HH:mm dd/MM/yyyy}";
         }
 
         private void btn_filter_Click(object sender, EventArgs e) => ApplyFilter();
         private void btn_export_Click(object sender, EventArgs e) => MessageBox.Show("Đã xuất Excel!");
-        private void btn_refresh_Click(object sender, EventArgs e) { cbb_categories.SelectedIndex = 0; cbb_statusFilter.SelectedIndex = 0; LoadData(); }
-
-        private void lbl_timeUpdate_Click(object sender, EventArgs e)
+        private void btn_refresh_Click(object sender, EventArgs e)
         {
-
+            cb_categories.SelectedIndex = 0;
+            cb_statusFilter.SelectedIndex = 0;
+            LoadDataFromDB();
         }
     }
 }

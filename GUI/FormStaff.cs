@@ -10,12 +10,13 @@ namespace GUI
     public partial class FormStaff : Form
     {
         private readonly UsersBUS _userBUS = new UsersBUS();
-        private int _selectedUserID = -1; // lưu id nhân viên đang chọn trên grid
-        private bool _isAdding = false; // check xem đang thêm hay sửa
+        private int _selectedUserID = -1;
+        private bool _isAdding = false;
 
         public FormStaff()
         {
             InitializeComponent();
+            dgv_staffList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void FormStaff_Load(object sender, EventArgs e)
@@ -63,7 +64,7 @@ namespace GUI
         {
             if (e.Value == null) return;
 
-            if (dgv_staffList.Columns[e.ColumnIndex].Name == "IsActive")
+            try
             {
                 if (e.Value is bool isActive)
                 {
@@ -72,7 +73,7 @@ namespace GUI
                     e.FormattingApplied = true;
                 }
             }
-            else if (dgv_staffList.Columns[e.ColumnIndex].Name == "RoleID")
+            catch (Exception ex)
             {
                 if (e.Value is int roleId)
                 {
@@ -149,8 +150,7 @@ namespace GUI
         {
             if (_selectedUserID == -1)
             {
-                MessageBox.Show("Vui lòng chọn nhân viên cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                grp_StaffDetails.Enabled = isEnabled;
             }
             _isAdding = false;
             SetInputState(true);

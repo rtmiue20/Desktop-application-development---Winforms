@@ -12,6 +12,7 @@
           "ClosedXML": "0.105.0",
           "DTO": "1.0.0",
           "Magick.NET-Q8-AnyCPU": "14.14.0",
+          "MySql.Data": "9.7.0",
           "ReportViewerCore.WinForms": "15.1.33"
         },
         "runtime": {

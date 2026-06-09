@@ -65,6 +65,7 @@
     <ItemGroup>
       <PackageReference Include="ClosedXML" Version="0.105.0" />
       <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.14.0" />
+      <PackageReference Include="MySql.Data" Version="9.7.0" />
       <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.33" />
     </ItemGroup>
 

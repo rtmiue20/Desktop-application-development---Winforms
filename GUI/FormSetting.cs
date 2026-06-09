@@ -24,10 +24,10 @@ namespace GUI
         private void LoadCurrentDatabaseConfig()
         {
             // Điền dữ liệu cấu hình mặc định (hoặc đọc từ file cấu hình cục bộ)
-            txt_server.Text = @".\SQLEXPRESS";
-            txt_database.Text = "Management_DB";
-            txt_user.Text = "sa";
-            txt_password.Text = "123456";
+            txt_server.Text = @"localhost";
+            txt_database.Text = "techstore";
+            txt_user.Text = "root";
+            txt_password.Text = "";
         }
 
         // Quét toàn bộ máy in đang được cài đặt trong hệ điều hành Windows
@@ -66,6 +66,7 @@ namespace GUI
             cbb_paperSize.Items.Add("K80 (80mm - Chuyên dụng Hóa đơn)");
             cbb_paperSize.Items.Add("K57 (57mm - Máy in nhỏ/Cầm tay)");
             cbb_paperSize.Items.Add("A5 (Khổ nửa trang văn phòng)");
+            cbb_paperSize.Items.Add("A4 (Khổ tiêu chuẩn văn phòng)");
             cbb_paperSize.SelectedIndex = 0;
         }
 
@@ -81,7 +82,8 @@ namespace GUI
 
             if (string.IsNullOrEmpty(server) || string.IsNullOrEmpty(database))
             {
-                MessageBox.Show("Vui lòng cung cấp đầy đủ thông tin Tên máy chủ và Cơ sở dữ liệu!", "Cảnh báo xác thực", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng cung cấp đầy đủ thông tin Tên máy chủ và Cơ sở dữ liệu!", 
+                    "Cảnh báo xác thực", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -89,7 +91,8 @@ namespace GUI
             string connectionString = $"Data Source={server};Initial Catalog={database};User ID={user};Password={password};";
 
             // Thông báo kết quả giả lập (Sẽ liên kết trực tiếp với lớp kiểm thử của tầng DAO sau này)
-            MessageBox.Show($"Kiểm tra kết nối thành công đến máy chủ: {server}\nCơ sở dữ liệu sẵn sàng hoạt động!", "Kiểm thử hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Kiểm tra kết nối thành công đến máy chủ: {server}\nCơ sở dữ liệu sẵn sàng hoạt động!", 
+                "Kiểm thử hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // Thực thi ghi đè cấu hình chuỗi kết nối hệ thống
@@ -97,11 +100,13 @@ namespace GUI
         {
             if (string.IsNullOrEmpty(txt_server.Text.Trim()) || string.IsNullOrEmpty(txt_database.Text.Trim()))
             {
-                MessageBox.Show("Dữ liệu cấu hình không hợp lệ. Vui lòng kiểm tra lại!", "Lỗi lưu cấu hình", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Dữ liệu cấu hình không hợp lệ. Vui lòng kiểm tra lại!", 
+                    "Lỗi lưu cấu hình", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            MessageBox.Show("Đã lưu chuỗi cấu hình cơ sở dữ liệu mới vào tệp cấu hình ứng dụng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Đã lưu chuỗi cấu hình cơ sở dữ liệu mới vào tệp cấu hình ứng dụng.", 
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // 3. Kiểm soát các nghiệp vụ tương tác thiết lập máy in hóa đơn
@@ -112,9 +117,12 @@ namespace GUI
             string selectedPrinter = cbb_printerList.SelectedItem?.ToString() ?? string.Empty;
             string selectedPaper = cbb_paperSize.SelectedItem?.ToString() ?? string.Empty;
 
-            if (selectedPrinter == "Không tìm thấy máy in" || selectedPrinter == "Lỗi quét phần cứng máy in" || string.IsNullOrEmpty(selectedPrinter))
+            if (selectedPrinter == "Không tìm thấy máy in" || 
+                selectedPrinter == "Lỗi quét phần cứng máy in" || 
+                string.IsNullOrEmpty(selectedPrinter))
             {
-                MessageBox.Show("Không tìm thấy thiết bị in hợp lệ để thực thi lệnh in thử!", "Lỗi ngoại vi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Không tìm thấy thiết bị in hợp lệ để thực thi lệnh in thử!", 
+                    "Lỗi ngoại vi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -126,18 +134,20 @@ namespace GUI
                 pd.PrintPage += new PrintPageEventHandler(PrintReceiptTemplate);
                 pd.Print();
 
-                MessageBox.Show($"Lệnh in thử đã được gửi thành công đến thiết bị: {selectedPrinter}", "Tiến trình in ấn", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Lệnh in thử đã được gửi thành công đến thiết bị: {selectedPrinter}", 
+                    "Tiến trình in ấn", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Không thể kích hoạt trình điều khiển máy in. Chi tiết: {ex.Message}", "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Không thể kích hoạt trình điều khiển máy in. Chi tiết: {ex.Message}", 
+                    "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         // Vẽ cấu trúc đồ họa trang hóa đơn in thử (Xử lý chuỗi và định dạng font)
         private void PrintReceiptTemplate(object sender, PrintPageEventArgs e)
         {
-            Graphics? g = e.Graphics;
+            Graphics g = e.Graphics;
             if (g == null) return;
 
             Font fontTitle = new Font("Arial", 14, FontStyle.Bold);
@@ -149,7 +159,7 @@ namespace GUI
             float startY = 10;
             float offsetY = 30;
 
-            g.DrawString("--- HOÁ ĐƠN IN THỬ HỆ THỐNG ---", fontTitle, brush, startX, startY);
+            g.DrawString("--- HÓA ĐƠN IN THỬ HỆ THỐNG ---", fontTitle, brush, startX, startY);
             g.DrawString($"Thiết bị in: {cbb_printerList.SelectedItem}", fontBody, brush, startX, startY + offsetY);
             offsetY += 25;
             g.DrawString($"Cấu hình khổ giấy: {cbb_paperSize.SelectedItem}", fontBody, brush, startX, startY + offsetY);
@@ -157,13 +167,26 @@ namespace GUI
             g.DrawString($"Thời gian kiểm tra: {DateTime.Now:dd/MM/yyyy HH:mm:ss}", fontBody, brush, startX, startY + offsetY);
             offsetY += 35;
             g.DrawString("Trạng thái: Kết nối phần cứng hoạt động ổn định.", fontFooter, brush, startX, startY + offsetY);
+
+            fontTitle.Dispose();
+            fontBody.Dispose();
+            fontFooter.Dispose();
         }
 
         // Ghi lại thông số cấu hình máy in mặc định cho hệ thống bán hàng
         private void btn_SavePrinter_Click(object sender, EventArgs e)
         {
-            string printerName = cbb_printerList.SelectedItem?.ToString() ?? "Default";
-            MessageBox.Show($"Thiết lập máy in '{printerName}' làm thiết bị in hóa đơn mặc định thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string printerName = cbb_printerList.SelectedItem?.ToString() ?? "Máy in mặc định";
+            
+            if (printerName == "Không tìm thấy máy in" || printerName == "Lỗi quét phần cứng máy in")
+            {
+                MessageBox.Show("Vui lòng chọn một thiết bị in hợp lệ!", 
+                    "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            MessageBox.Show($"Thiết lập máy in '{printerName}' làm thiết bị in hóa đơn mặc định thành công!", 
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
