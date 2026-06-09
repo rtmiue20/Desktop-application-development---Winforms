@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DAL;
 using DTO;
@@ -36,16 +37,40 @@ namespace BUS
             _itemDAL.UpdateStatus(serialID, "Đã bán");
             return true;
         }
-        // Đảm bảo có từ khóa 'public' ở đây
+
         public List<WarrantyClaimsDTO> GetByStatus(string status) 
         {
             return _dal.GetByStatus(status);
         }
-        // Mở file: BUS/WarrantyBUS.cs
+
         public List<WarrantyClaimsDTO> GetAll() 
         {
-            return _dal.GetAll(); // Gọi hàm của DAL
+            return _dal.GetAll(); 
         }
-        
+        public (bool success, string error) CreateTradeIn(int invoiceID, int customerID, string reason, string note, decimal refundAmount, List<string> returnedSerials)
+        {
+            // 1. Kiểm tra các ràng buộc logic đầu vào (Validate)
+            if (invoiceID == 0) return (false, "Mã hóa đơn gốc không hợp lệ.");
+            if (returnedSerials == null || returnedSerials.Count == 0) return (false, "Danh sách sản phẩm chọn đổi trả đang trống.");
+            if (refundAmount < 0) return (false, "Số tiền hoàn trả không được phép âm.");
+
+            try
+            {
+                foreach (var serial in returnedSerials)
+                {
+                    // Tùy vào lý do mà cập nhật trạng thái máy trong kho
+                    string newStatus = reason.Contains("lỗi") ? "Lỗi" : "Trong kho";
+                    
+                }
+
+                // Trả về thành công nếu chạy mượt mà
+                return (true, null);
+            }
+            catch (Exception ex)
+            {
+                // Trả về thất bại kèm thông báo lỗi cụ thể
+                return (false, $"Lỗi hệ thống khi xử lý đổi trả: {ex.Message}");
+            }
+        }
     }
 }

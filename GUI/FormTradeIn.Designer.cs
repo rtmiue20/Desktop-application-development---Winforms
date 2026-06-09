@@ -76,7 +76,7 @@ partial class FormTradeIn
         txt_phone.Location = new System.Drawing.Point(349, 157);
         txt_phone.Name = "txt_phone";
         txt_phone.ReadOnly = true;
-        txt_phone.Size = new System.Drawing.Size(389, 47);
+        txt_phone.Size = new System.Drawing.Size(389, 27);
         txt_phone.TabIndex = 6;
         // 
         // label4
@@ -92,7 +92,7 @@ partial class FormTradeIn
         txt_customerName.Location = new System.Drawing.Point(6, 157);
         txt_customerName.Name = "txt_customerName";
         txt_customerName.ReadOnly = true;
-        txt_customerName.Size = new System.Drawing.Size(337, 47);
+        txt_customerName.Size = new System.Drawing.Size(337, 27);
         txt_customerName.TabIndex = 4;
         // 
         // label3
@@ -115,7 +115,7 @@ partial class FormTradeIn
         // 
         txt_invoiceCode.Location = new System.Drawing.Point(205, 43);
         txt_invoiceCode.Name = "txt_invoiceCode";
-        txt_invoiceCode.Size = new System.Drawing.Size(353, 47);
+        txt_invoiceCode.Size = new System.Drawing.Size(353, 27);
         txt_invoiceCode.TabIndex = 1;
         // 
         // btn_searchTradeIn
@@ -188,7 +188,7 @@ partial class FormTradeIn
         // 
         txt_refundAmount.Location = new System.Drawing.Point(6, 530);
         txt_refundAmount.Name = "txt_refundAmount";
-        txt_refundAmount.Size = new System.Drawing.Size(805, 47);
+        txt_refundAmount.Size = new System.Drawing.Size(805, 27);
         txt_refundAmount.TabIndex = 8;
         txt_refundAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         // 
@@ -221,7 +221,7 @@ partial class FormTradeIn
         txb_reason.FormattingEnabled = true;
         txb_reason.Location = new System.Drawing.Point(6, 82);
         txb_reason.Name = "txb_reason";
-        txb_reason.Size = new System.Drawing.Size(805, 49);
+        txb_reason.Size = new System.Drawing.Size(805, 28);
         txb_reason.TabIndex = 4;
         // 
         // label2
@@ -235,13 +235,13 @@ partial class FormTradeIn
         // 
         // FormTradeIn
         // 
-        AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
+        AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(1591, 1011);
+        ClientSize = new System.Drawing.Size(1536, 976);
         Controls.Add(groupBox2);
         Controls.Add(dgv_invoiceDetails);
         Controls.Add(groupBox1);
-        Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+        Margin = new System.Windows.Forms.Padding(6);
         Text = "Đổi trả sản phẩm";
         groupBox1.ResumeLayout(false);
         groupBox1.PerformLayout();
