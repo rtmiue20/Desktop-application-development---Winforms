@@ -37,5 +37,21 @@ namespace DAL
                     "SELECT * FROM WarrantyClaims WHERE CustomerID=@customerID", new { customerID }).AsList();
             }
         }
+        // Mở file: DAL/WarrantyClaimsDAL.cs
+        public List<WarrantyClaimsDTO> GetAll()
+        {
+            using (IDbConnection db = DatabaseHelper.GetConnection())
+            {
+                return db.Query<WarrantyClaimsDTO>("SELECT * FROM WarrantyClaims").AsList();
+            }
+        }
+
+        public List<WarrantyClaimsDTO> GetByStatus(string status)
+        {
+            using (IDbConnection db = DatabaseHelper.GetConnection())
+            {
+                return db.Query<WarrantyClaimsDTO>("SELECT * FROM WarrantyClaims WHERE Status = @status", new { status }).AsList();
+            }
+        }
     }
 }

@@ -36,5 +36,16 @@ namespace BUS
             _itemDAL.UpdateStatus(serialID, "Đã bán");
             return true;
         }
+        // Đảm bảo có từ khóa 'public' ở đây
+        public List<WarrantyClaimsDTO> GetByStatus(string status) 
+        {
+            return _dal.GetByStatus(status);
+        }
+        // Mở file: BUS/WarrantyBUS.cs
+        public List<WarrantyClaimsDTO> GetAll() 
+        {
+            return _dal.GetAll(); // Gọi hàm của DAL
+        }
+        
     }
 }
