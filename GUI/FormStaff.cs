@@ -16,6 +16,9 @@ namespace GUI
         public FormStaff()
         {
             InitializeComponent();
+
+            // Tự động giãn đều các cột DataGridView cho đẹp kín bảng
+            dgv_staffList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void FormStaff_Load(object sender, EventArgs e)
@@ -48,7 +51,7 @@ namespace GUI
         }
 
         //2. Format lại màu chữ và đổi id quyền sang chữ
-        private void dgv_StaffList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void dgv_staffList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.Value == null) return;
 
@@ -68,7 +71,7 @@ namespace GUI
         }
 
         //3. Click 1 dòng đổ data sang các textbox 
-        private void dgv_StaffList_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgv_staffList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && !_isAdding)
             {
@@ -78,7 +81,7 @@ namespace GUI
                 txt_fullName.Text = row.Cells["FullName"].Value?.ToString();
                 txt_username.Text = row.Cells["Username"].Value?.ToString();
                 txt_phone.Text = row.Cells["Phone"].Value?.ToString();
-                txt_password.Text = "******"; 
+                txt_password.Text = "******";
 
                 int roleId = Convert.ToInt32(row.Cells["RoleID"].Value);
                 cbb_role.Text = GetRoleName(roleId);
@@ -88,14 +91,22 @@ namespace GUI
         //4. Hàm bật/tắt các textbox và 
         private void SetInputState(bool isEnabled)
         {
-            txt_fullName.Enabled = isEnabled;
-            txt_username.Enabled = isEnabled;
-            txt_password.Enabled = isEnabled;
-            txt_phone.Enabled = isEnabled;
-            cbb_role.Enabled = isEnabled;
+            // Tận dụng sức mạnh của GroupBox: Khóa 1 phát là khóa hết TextBox bên trong
+            if (grp_StaffDetails != null)
+            {
+                grp_StaffDetails.Enabled = isEnabled;
+            }
+            else // Dự phòng
+            {
+                txt_fullName.Enabled = isEnabled;
+                txt_username.Enabled = isEnabled;
+                txt_password.Enabled = isEnabled;
+                txt_phone.Enabled = isEnabled;
+                cbb_role.Enabled = isEnabled;
 
-            btn_staffSave.Enabled = isEnabled;
-            btn_staffCancel.Enabled = isEnabled;
+                btn_staffSave.Enabled = isEnabled;
+                btn_staffCancel.Enabled = isEnabled;
+            }
 
             btn_staffAdd.Enabled = !isEnabled;
             btn_staffEdit.Enabled = !isEnabled;
@@ -103,7 +114,7 @@ namespace GUI
             btn_staffResetPass.Enabled = !isEnabled;
             dgv_staffList.Enabled = !isEnabled;
         }
-        
+
         //5. xóa trắng các ô nhập
         private void ClearInputs()
         {
@@ -113,10 +124,10 @@ namespace GUI
             txt_phone.Clear();
             cbb_role.SelectedIndex = -1;
         }
-        
+
         //6. Xử lý các nút 
         // xử lý nút thêm
-        private void btn_StaffAdd_Click(object sender, EventArgs e)
+        private void btn_staffAdd_Click(object sender, EventArgs e)
         {
             _isAdding = true;
             ClearInputs();
@@ -126,7 +137,7 @@ namespace GUI
         }
 
         // xử lý nút sửa
-        private void btn_StaffEdit_Click(object sender, EventArgs e)
+        private void btn_staffEdit_Click(object sender, EventArgs e)
         {
             if (_selectedUserID == -1)
             {
@@ -141,7 +152,7 @@ namespace GUI
         }
 
         // xử lý nút làm mới
-        private void btn_StaffRefresh_Click(object sender, EventArgs e)
+        private void btn_staffRefresh_Click(object sender, EventArgs e)
         {
             LoadData();
             ClearInputs();
@@ -149,7 +160,7 @@ namespace GUI
         }
 
         // xử lý nút hủy
-        private void btn_StaffCancel_Click(object sender, EventArgs e)
+        private void btn_staffCancel_Click(object sender, EventArgs e)
         {
             _isAdding = false;
             ClearInputs();
@@ -157,7 +168,7 @@ namespace GUI
         }
 
         //7. lưu dữ liệu (xài chung cho cả thêm và sửa)
-        private void btn_StaffSave_Click(object sender, EventArgs e)
+        private void btn_staffSave_Click(object sender, EventArgs e)
         {
             // check xem có để trống không
             if (string.IsNullOrWhiteSpace(txt_fullName.Text) || string.IsNullOrWhiteSpace(txt_username.Text))
@@ -193,7 +204,7 @@ namespace GUI
             if (success)
             {
                 MessageBox.Show(_isAdding ? "Thêm mới thành công!" : "Sửa thông tin thành công!", "Thông báo");
-                btn_StaffRefresh_Click(null, null); // load lại grid
+                btn_staffRefresh_Click(null, null); // load lại grid
             }
             else
             {
@@ -202,7 +213,7 @@ namespace GUI
         }
 
         //8. khóa tài khoản nhân viên
-        private void btn_StaffDisable_Click(object sender, EventArgs e)
+        private void btn_staffDisable_Click(object sender, EventArgs e)
         {
             if (_selectedUserID == -1) return;
 
@@ -219,12 +230,12 @@ namespace GUI
                 };
 
                 var (success, err) = _userBUS.Update(disabledUser);
-                if (success) btn_StaffRefresh_Click(null, null);
+                if (success) btn_staffRefresh_Click(null, null);
             }
         }
 
         //9. reset pass về mặc định
-        private void btn_StaffResetPass_Click(object sender, EventArgs e)
+        private void btn_staffResetPass_Click(object sender, EventArgs e)
         {
             if (_selectedUserID == -1) return;
 

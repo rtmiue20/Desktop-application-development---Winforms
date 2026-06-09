@@ -10,7 +10,7 @@ namespace GUI
 {
     public partial class FormCategory : Form
     {
-        //1.Khai báo đối tượng giao tiếp với tầng BUS và các biến lưu trữ trạng thái
+        //1. Khai báo đối tượng giao tiếp với tầng BUS và các biến lưu trữ trạng thái
         private readonly CategoriesBUS _categoryBUS = new CategoriesBUS();
         private List<CategoriesDTO> _originalList = new List<CategoriesDTO>();
 
@@ -20,9 +20,12 @@ namespace GUI
         public FormCategory()
         {
             InitializeComponent();
+
+            // Tự động giãn cột lắp kín bảng DataGridView (như đã hướng dẫn ở bước trước)
+            dgv_categoryList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        //2.Thiết lập trạng thái mặc định khi khởi tạo Form
+        //2. Thiết lập trạng thái mặc định khi khởi tạo Form
         private void FormCategory_Load(object sender, EventArgs e)
         {
             LoadData();
@@ -33,23 +36,23 @@ namespace GUI
         private void LoadData()
         {
             _originalList = _categoryBUS.GetAll() ?? new List<CategoriesDTO>();
-            dgv_listCategory.DataSource = _originalList;
+            dgv_categoryList.DataSource = _originalList;
 
             // Tùy chỉnh tiêu đề hiển thị cho các cột dữ liệu
-            if (dgv_listCategory.Columns["CategoryID"] != null) dgv_listCategory.Columns["CategoryID"].HeaderText = "Mã DM";
-            if (dgv_listCategory.Columns["CategoryName"] != null) dgv_listCategory.Columns["CategoryName"].HeaderText = "Tên danh mục";
-            if (dgv_listCategory.Columns["Description"] != null) dgv_listCategory.Columns["Description"].HeaderText = "Mô tả";
-            if (dgv_listCategory.Columns["Status"] != null) dgv_listCategory.Columns["Status"].HeaderText = "Trạng thái";
+            if (dgv_categoryList.Columns["CategoryID"] != null) dgv_categoryList.Columns["CategoryID"].HeaderText = "Mã DM";
+            if (dgv_categoryList.Columns["CategoryName"] != null) dgv_categoryList.Columns["CategoryName"].HeaderText = "Tên danh mục";
+            if (dgv_categoryList.Columns["Description"] != null) dgv_categoryList.Columns["Description"].HeaderText = "Mô tả";
+            if (dgv_categoryList.Columns["Status"] != null) dgv_categoryList.Columns["Status"].HeaderText = "Trạng thái";
 
-            dgv_listCategory.ClearSelection();
+            dgv_categoryList.ClearSelection();
             _selectedCategoryID = -1;
             UpdateStatusStrip("Không");
         }
 
         //4. Định dạng lại nội dung và màu sắc hiển thị của lưới dữ liệu dựa trên giá trị thô
-        private void dgv_listCategory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void dgv_categoryList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dgv_listCategory.Columns[e.ColumnIndex].Name == "Status" && e.Value != null)
+            if (dgv_categoryList.Columns[e.ColumnIndex].Name == "Status" && e.Value != null)
             {
                 string rawStatus = e.Value.ToString();
                 if (rawStatus == "Hoat dong")
@@ -66,12 +69,12 @@ namespace GUI
             }
         }
 
-        //5.Trích xuất dữ liệu từ dòng được chọn và gán vào các điều khiển nhập liệu
-        private void dgv_listCategory_CellClick(object sender, DataGridViewCellEventArgs e)
+        //5. Trích xuất dữ liệu từ dòng được chọn và gán vào các điều khiển nhập liệu
+        private void dgv_categoryList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && !_isAdding)
             {
-                DataGridViewRow row = dgv_listCategory.Rows[e.RowIndex];
+                DataGridViewRow row = dgv_categoryList.Rows[e.RowIndex];
 
                 _selectedCategoryID = Convert.ToInt32(row.Cells["CategoryID"].Value);
                 txt_categoryName.Text = row.Cells["CategoryName"].Value?.ToString();
@@ -84,20 +87,27 @@ namespace GUI
             }
         }
 
-        //6.Kiểm soát trạng thái kích hoạt của các điều khiển dựa trên ngữ cảnh thao tác
+        //6. Kiểm soát trạng thái kích hoạt của các điều khiển dựa trên ngữ cảnh thao tác
         private void SetInputState(bool isEnabled)
         {
-            txt_categoryName.Enabled = isEnabled;
-            txt_categoryDesc.Enabled = isEnabled;
-            cbb_categoryStatus.Enabled = isEnabled;
-
-            btn_categorySave.Enabled = isEnabled;
-            btn_categoryCancel.Enabled = isEnabled;
+            // Tận dụng sức mạnh của GroupBox: Tắt 1 phát là tắt hết toàn bộ TextBox, ComboBox bên trong
+            if (grp_CategoryDetails != null)
+            {
+                grp_CategoryDetails.Enabled = isEnabled;
+            }
+            else // Backup dự phòng nếu chưa Load kịp
+            {
+                txt_categoryName.Enabled = isEnabled;
+                txt_categoryDesc.Enabled = isEnabled;
+                cbb_categoryStatus.Enabled = isEnabled;
+                btn_categorySave.Enabled = isEnabled;
+                btn_categoryCancel.Enabled = isEnabled;
+            }
 
             btn_categoryAdd.Enabled = !isEnabled;
             btn_categoryEdit.Enabled = !isEnabled;
             btn_categoryDelete.Enabled = !isEnabled;
-            dgv_listCategory.Enabled = !isEnabled;
+            dgv_categoryList.Enabled = !isEnabled;
         }
 
         //7. Làm sạch toàn bộ dữ liệu trên các trường nhập liệu
@@ -108,13 +118,14 @@ namespace GUI
             cbb_categoryStatus.SelectedIndex = -1;
         }
 
-        //8.Cập nhật thông tin thống kê trên thanh trạng thái (StatusStrip)
+        //8. Cập nhật thông tin thống kê trên thanh trạng thái (StatusStrip)
         private void UpdateStatusStrip(string currentSelection)
         {
-            lbl_statusSummary.Text = $"Tổng: {_originalList.Count} danh mục | Đang chọn: {currentSelection}";
+            // Nếu Form có khai báo lbl_StatusSummary thì bỏ comment dòng dưới
+            // lbl_StatusSummary.Text = $"Tổng: {_originalList.Count} danh mục | Đang chọn: {currentSelection}";
         }
 
-        //9.Xử lý sự kiện khởi tạo phiên thêm mới danh mục
+        //9. Xử lý sự kiện khởi tạo phiên thêm mới danh mục
         private void btn_categoryAdd_Click(object sender, EventArgs e)
         {
             _isAdding = true;
@@ -171,7 +182,7 @@ namespace GUI
             txt_categorySearch.ForeColor = Color.Gray;
         }
 
-        //13 Hủy bỏ thao tác hiện tại và khóa các trường nhập liệu
+        //13. Hủy bỏ thao tác hiện tại và khóa các trường nhập liệu
         private void btn_categoryCancel_Click(object sender, EventArgs e)
         {
             _isAdding = false;
@@ -226,7 +237,7 @@ namespace GUI
 
             if (string.IsNullOrEmpty(keyword) || txt_categorySearch.Text == "Tìm danh mục...")
             {
-                dgv_listCategory.DataSource = _originalList;
+                dgv_categoryList.DataSource = _originalList;
             }
             else
             {
@@ -236,7 +247,7 @@ namespace GUI
                     (!string.IsNullOrEmpty(c.Description) && c.Description.ToLower().Contains(keyword))
                 ).ToList();
 
-                dgv_listCategory.DataSource = filtered;
+                dgv_categoryList.DataSource = filtered;
             }
         }
 

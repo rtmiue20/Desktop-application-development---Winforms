@@ -24,6 +24,10 @@ namespace GUI
         public FormManageProduct()
         {
             InitializeComponent();
+
+            // Lệnh thần thánh giúp DataGridView giãn đều cột bít kín khoảng trống màu xám
+            dgv_ProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv_CategoryFilter.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         // 2. Thiết lập trạng thái mặc định và nạp dữ liệu khi khởi tạo Form
