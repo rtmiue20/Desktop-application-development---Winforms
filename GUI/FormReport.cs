@@ -1,6 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using DAL;
+using Dapper;
+using DTO;
 using ClosedXML.Excel; // Đưa thư viện Excel vào sử dụng
 
 namespace GUI;
@@ -18,54 +24,141 @@ public partial class FormReport : Form
 
     private void LoadReport()
     {
-        UpdateCards();
-        LoadTable();
-        UpdateFooter();
+        DateTime from = dtp_from.Value.Date;
+        DateTime to = dtp_to.Value.Date;
+
+        var summary = GetSummary_Direct(from, to);
+        UpdateCards(summary.revenue, summary.profit, summary.invoiceCount, summary.productCount, summary.warrantyCount);
+
+        var data = GetReportData_Direct(from, to);
+        LoadTable(data);
+        UpdateFooter(from, to);
     }
 
-    private void UpdateCards()
+    private (decimal revenue, decimal profit, int invoiceCount, int productCount, int warrantyCount) GetSummary_Direct(DateTime from, DateTime to)
     {
-        // Kiểm tra an toàn trước khi gán dữ liệu để tránh lỗi gạch đỏ từ Designer
-        if (lbl_doanhThu != null) lbl_doanhThu.Text = "\nDoanh thu (đ)";
-        if (lbl_grossProfit != null) lbl_grossProfit.Text = "\nLợi nhuận gộp (đ)";
-        if (lbl_invoiceNum != null) lbl_invoiceNum.Text = "\nHóa đơn đã xuất";
-    }
-
-    private void LoadTable()
-    {
-        // ĐÃ BỎ FAKE DATA: Hàm này giờ chỉ làm nhiệm vụ tự động đổi màu sắc định dạng 
-        // dựa trên dữ liệu THỰC TẾ đang hiển thị sẵn trong bảng dgv_listInvoices
-        if (dgv_listInvoices == null || dgv_listInvoices.Rows.Count == 0) return;
-
-        for (int i = 0; i < dgv_listInvoices.Rows.Count; i++)
+        using (IDbConnection db = DatabaseHelper.GetConnection())
         {
-            var row = dgv_listInvoices.Rows[i];
-            if (row.IsNewRow) continue;
+            string sqlInvoices = "SELECT * FROM SalesInvoices WHERE DATE(SaleDate) BETWEEN DATE(@from) AND DATE(@to)";
+            var invoices = db.Query<SalesInvoicesDTO>(sqlInvoices, new { from, to }).ToList();
 
-            // Kiểm tra xem cột 'col_thanhToan' có tồn tại trong bảng không
+            string sqlWarranties = "SELECT COUNT(*) FROM WarrantyClaims WHERE DATE(ReceiveDate) BETWEEN DATE(@from) AND DATE(@to)";
+            int warrantyCount = db.ExecuteScalar<int>(sqlWarranties, new { from, to });
+
+            decimal revenue = 0, cost = 0;
+            int productCount = 0;
+
+            foreach (var inv in invoices)
+            {
+                revenue += inv.FinalAmount;
+                string sqlDetails = "SELECT * FROM SalesDetails WHERE InvoiceID = @InvoiceID";
+                var details = db.Query<SalesDetailsDTO>(sqlDetails, new { inv.InvoiceID }).ToList();
+                cost += details.Sum(d => d.CostPrice * d.Quantity);
+                productCount += details.Sum(d => d.Quantity);
+            }
+
+            return (revenue, revenue - cost, invoices.Count, productCount, warrantyCount);
+        }
+    }
+
+    private List<object> GetReportData_Direct(DateTime from, DateTime to)
+    {
+        using (IDbConnection db = DatabaseHelper.GetConnection())
+        {
+            string sqlInvoices = "SELECT * FROM SalesInvoices WHERE DATE(SaleDate) BETWEEN DATE(@from) AND DATE(@to)";
+            var invoices = db.Query<SalesInvoicesDTO>(sqlInvoices, new { from, to }).ToList();
+            
+            var reportList = new List<object>();
+            var allProducts = db.Query<ProductsDTO>("SELECT * FROM Products").ToList();
+
+            foreach (var inv in invoices)
+            {
+                string sqlDetails = "SELECT * FROM SalesDetails WHERE InvoiceID = @InvoiceID";
+                var details = db.Query<SalesDetailsDTO>(sqlDetails, new { inv.InvoiceID }).ToList();
+                
+                string sqlCustomer = "SELECT * FROM Customers WHERE CustomerID = @CustomerID";
+                var customer = inv.CustomerID.HasValue 
+                    ? db.QueryFirstOrDefault<CustomersDTO>(sqlCustomer, new { CustomerID = inv.CustomerID.Value }) 
+                    : null;
+
+                decimal totalCost = details.Sum(d => d.CostPrice * d.Quantity);
+                string productSummary = string.Join(", ", details.Select(d => {
+                    var product = allProducts.FirstOrDefault(p => p.ProductID == d.ProductID);
+                    return product != null ? product.ProductName : "Sản phẩm";
+                }));
+
+                reportList.Add(new
+                {
+                    InvoiceID = inv.InvoiceID,
+                    InvoiceCode = inv.InvoiceCode,
+                    SaleDate = inv.SaleDate,
+                    CustomerName = customer?.FullName ?? "Khách lẻ",
+                    ProductSummary = productSummary,
+                    FinalAmount = inv.FinalAmount,
+                    Profit = inv.FinalAmount - totalCost,
+                    PaymentMethod = inv.PaymentMethod
+                });
+            }
+
+            return reportList;
+        }
+    }
+
+    private void UpdateCards(decimal revenue, decimal profit, int invoiceCount, int productCount, int warrantyCount)
+    {
+        if (lbl_doanhThu != null) lbl_doanhThu.Text = $"{revenue:N0} đ\nDoanh thu";
+        if (lbl_grossProfit != null) lbl_grossProfit.Text = $"{profit:N0} đ\nLợi nhuận gộp";
+        if (lbl_invoiceNum != null) lbl_invoiceNum.Text = $"{invoiceCount}\nHóa đơn đã xuất";
+        if (lbl_productSold != null) lbl_productSold.Text = $"{productCount}\nSản phẩm bán ra";
+        if (lbl_warranty != null) lbl_warranty.Text = $"{warrantyCount}\nBảo hành phát sinh";
+    }
+
+    private void LoadTable(System.Collections.Generic.List<object> data)
+    {
+        if (dgv_listInvoices == null) return;
+        
+        dgv_listInvoices.Rows.Clear();
+        foreach (dynamic item in data)
+        {
+            int rowIndex = dgv_listInvoices.Rows.Add(
+                item.InvoiceCode,
+                item.SaleDate.ToString("dd/MM/yyyy HH:mm"),
+                item.CustomerName,
+                item.ProductSummary,
+                $"{item.FinalAmount:N0}",
+                $"{item.Profit:N0}",
+                item.PaymentMethod
+            );
+
+            var row = dgv_listInvoices.Rows[rowIndex];
             if (dgv_listInvoices.Columns.Contains("col_thanhToan"))
             {
                 var payCell = row.Cells["col_thanhToan"];
-                string paymentMethod = payCell.Value?.ToString() ?? "";
+                string paymentMethod = item.PaymentMethod;
 
-                // Đổi màu nền theo phương thức thanh toán thực tế
                 if (paymentMethod == "Tiền mặt")
-                { 
-                    payCell.Style.BackColor = Color.FromArgb(0, 140, 0);   
-                    payCell.Style.ForeColor = Color.White; 
+                {
+                    payCell.Style.BackColor = Color.FromArgb(0, 140, 0);
+                    payCell.Style.ForeColor = Color.White;
                 }
-                else if (!string.IsNullOrEmpty(paymentMethod))
-                { 
-                    payCell.Style.BackColor = Color.FromArgb(0, 102, 204); 
-                    payCell.Style.ForeColor = Color.White; 
+                else
+                {
+                    payCell.Style.BackColor = Color.FromArgb(0, 102, 204);
+                    payCell.Style.ForeColor = Color.White;
                 }
             }
         }
     }
 
-    private void UpdateFooter()
+    private void UpdateFooter(DateTime from, DateTime to)
     {
-        // Nếu form của bạn không có lbl_footerLeft hoặc lbl_footerRight, phần này sẽ tự bỏ qua không báo lỗi đỏ
+        if (lbl_footerLeft != null) 
+            lbl_footerLeft.Text = $"Báo cáo từ ngày: {from:dd/MM/yyyy} đến {to:dd/MM/yyyy}";
+        
+        if (lbl_footerRight != null)
+        {
+            // Tính tỉ lệ lợi nhuận nếu cần
+        }
     }
 
     private void btn_xemBaocao_Click(object sender, EventArgs e)

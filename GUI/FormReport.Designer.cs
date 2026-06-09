@@ -73,29 +73,32 @@ partial class FormReport
         // 
         pnl_top.Controls.Add(btn_excelOut);
         pnl_top.Controls.Add(btn_showReport);
-        pnl_top.Location = new System.Drawing.Point(0, 2);
+        pnl_top.Dock = System.Windows.Forms.DockStyle.Top;
+        pnl_top.Location = new System.Drawing.Point(0, 0);
         pnl_top.Name = "pnl_top";
-        pnl_top.Size = new System.Drawing.Size(1683, 85);
+        pnl_top.Size = new System.Drawing.Size(784, 50);
         pnl_top.TabIndex = 1;
         pnl_top.Paint += pnl_Top_Paint;
         // 
         // btn_excelOut
         // 
-        btn_excelOut.Location = new System.Drawing.Point(196, 14);
+        btn_excelOut.Location = new System.Drawing.Point(180, 10);
         btn_excelOut.Name = "btn_excelOut";
-        btn_excelOut.Size = new System.Drawing.Size(160, 68);
+        btn_excelOut.Size = new System.Drawing.Size(120, 30);
         btn_excelOut.TabIndex = 1;
         btn_excelOut.Text = "📤Xuất Excel";
         btn_excelOut.UseVisualStyleBackColor = true;
+        btn_excelOut.Click += btn_xuatExcel_Click;
         // 
         // btn_showReport
         // 
-        btn_showReport.Location = new System.Drawing.Point(18, 14);
+        btn_showReport.Location = new System.Drawing.Point(15, 10);
         btn_showReport.Name = "btn_showReport";
-        btn_showReport.Size = new System.Drawing.Size(163, 68);
+        btn_showReport.Size = new System.Drawing.Size(150, 30);
         btn_showReport.TabIndex = 0;
         btn_showReport.Text = "📊Xem báo cáo";
         btn_showReport.UseVisualStyleBackColor = true;
+        btn_showReport.Click += btn_xemBaocao_Click;
         // 
         // panel2
         // 
@@ -128,10 +131,11 @@ partial class FormReport
         // 
         dgv_listInvoices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dgv_listInvoices.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { col_maHD, col_thoiGian, col_khachHang, col_sanPham, col_doanhThu, col_loiNhuan, col_thanhToan });
-        dgv_listInvoices.Location = new System.Drawing.Point(-4, 494);
+        dgv_listInvoices.Dock = System.Windows.Forms.DockStyle.Fill;
+        dgv_listInvoices.Location = new System.Drawing.Point(0, 215);
         dgv_listInvoices.Name = "dgv_listInvoices";
         dgv_listInvoices.RowHeadersWidth = 51;
-        dgv_listInvoices.Size = new System.Drawing.Size(1687, 599);
+        dgv_listInvoices.Size = new System.Drawing.Size(784, 150);
         dgv_listInvoices.TabIndex = 2;
         dgv_listInvoices.Text = "dataGridView1";
         // 
@@ -193,25 +197,25 @@ partial class FormReport
         // cbb_dayFill
         // 
         cbb_dayFill.FormattingEnabled = true;
-        cbb_dayFill.Items.AddRange(new object[] { "Hôm nay", "", "Hôm qua", "", "7 ngày qua", "", "Tháng này", "", "Tùy chỉnh" });
-        cbb_dayFill.Location = new System.Drawing.Point(18, 31);
+        cbb_dayFill.Items.AddRange(new object[] { "Hôm nay", "Hôm qua", "7 ngày qua", "Tháng này", "Tùy chỉnh" });
+        cbb_dayFill.Location = new System.Drawing.Point(10, 20);
         cbb_dayFill.Name = "cbb_dayFill";
-        cbb_dayFill.Size = new System.Drawing.Size(480, 28);
+        cbb_dayFill.Size = new System.Drawing.Size(150, 28);
         cbb_dayFill.TabIndex = 3;
         // 
         // dtp_from
         // 
         dtp_from.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-        dtp_from.Location = new System.Drawing.Point(25, 104);
+        dtp_from.Location = new System.Drawing.Point(170, 20);
         dtp_from.Name = "dtp_from";
-        dtp_from.Size = new System.Drawing.Size(180, 27);
+        dtp_from.Size = new System.Drawing.Size(110, 27);
         dtp_from.TabIndex = 4;
         // 
         // label1
         // 
-        label1.Location = new System.Drawing.Point(12, 151);
+        label1.Location = new System.Drawing.Point(285, 23);
         label1.Name = "label1";
-        label1.Size = new System.Drawing.Size(107, 40);
+        label1.Size = new System.Drawing.Size(40, 23);
         label1.TabIndex = 5;
         label1.Text = "Đến:";
         label1.Click += label1_Click;
@@ -219,9 +223,9 @@ partial class FormReport
         // dtp_to
         // 
         dtp_to.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-        dtp_to.Location = new System.Drawing.Point(25, 185);
+        dtp_to.Location = new System.Drawing.Point(330, 20);
         dtp_to.Name = "dtp_to";
-        dtp_to.Size = new System.Drawing.Size(180, 27);
+        dtp_to.Size = new System.Drawing.Size(110, 27);
         dtp_to.TabIndex = 6;
         // 
         // panel3
@@ -231,64 +235,61 @@ partial class FormReport
         panel3.Controls.Add(lbl_productSold);
         panel3.Controls.Add(lbl_grossProfit);
         panel3.Controls.Add(lbl_doanhThu);
-        panel3.Location = new System.Drawing.Point(0, 237);
+        panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+        panel3.Location = new System.Drawing.Point(3, 52);
         panel3.Name = "panel3";
-        panel3.Size = new System.Drawing.Size(1683, 177);
+        panel3.Size = new System.Drawing.Size(778, 110);
         panel3.TabIndex = 7;
         // 
         // lbl_warranty
         // 
         lbl_warranty.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-        lbl_warranty.Location = new System.Drawing.Point(1108, 21);
+        lbl_warranty.Location = new System.Drawing.Point(620, 5);
         lbl_warranty.Name = "lbl_warranty";
-        lbl_warranty.Size = new System.Drawing.Size(575, 50);
+        lbl_warranty.Size = new System.Drawing.Size(150, 50);
         lbl_warranty.TabIndex = 4;
-        lbl_warranty.Text = "Bảo hành phát sinh";
-        lbl_warranty.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+        lbl_warranty.Text = "Bảo hành";
+        lbl_warranty.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // lbl_invoiceNum
         // 
         lbl_invoiceNum.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-        lbl_invoiceNum.Location = new System.Drawing.Point(12, 20);
+        lbl_invoiceNum.Location = new System.Drawing.Point(465, 5);
         lbl_invoiceNum.Name = "lbl_invoiceNum";
-        lbl_invoiceNum.Size = new System.Drawing.Size(504, 50);
+        lbl_invoiceNum.Size = new System.Drawing.Size(150, 50);
         lbl_invoiceNum.TabIndex = 3;
         lbl_invoiceNum.Text = "Số hóa đơn";
-        lbl_invoiceNum.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+        lbl_invoiceNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // lbl_productSold
         // 
         lbl_productSold.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-        lbl_productSold.Location = new System.Drawing.Point(522, 21);
+        lbl_productSold.Location = new System.Drawing.Point(310, 5);
         lbl_productSold.Name = "lbl_productSold";
-        lbl_productSold.Size = new System.Drawing.Size(580, 50);
+        lbl_productSold.Size = new System.Drawing.Size(150, 50);
         lbl_productSold.TabIndex = 2;
-        lbl_productSold.Text = "Sản phẩm bán ra";
-        lbl_productSold.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+        lbl_productSold.Text = "Sản phẩm";
+        lbl_productSold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // lbl_grossProfit
         // 
-        lbl_grossProfit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         lbl_grossProfit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-        lbl_grossProfit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        lbl_grossProfit.Location = new System.Drawing.Point(0, 21);
+        lbl_grossProfit.Location = new System.Drawing.Point(155, 5);
         lbl_grossProfit.Name = "lbl_grossProfit";
-        lbl_grossProfit.Size = new System.Drawing.Size(1683, 128);
+        lbl_grossProfit.Size = new System.Drawing.Size(150, 100);
         lbl_grossProfit.TabIndex = 1;
-        lbl_grossProfit.Text = "Lợi nhuận gộp (đ)";
-        lbl_grossProfit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+        lbl_grossProfit.Text = "Lợi nhuận gộp";
+        lbl_grossProfit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // lbl_doanhThu
         // 
-        lbl_doanhThu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         lbl_doanhThu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-        lbl_doanhThu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        lbl_doanhThu.Location = new System.Drawing.Point(18, 21);
+        lbl_doanhThu.Location = new System.Drawing.Point(5, 5);
         lbl_doanhThu.Name = "lbl_doanhThu";
-        lbl_doanhThu.Size = new System.Drawing.Size(1062, 128);
+        lbl_doanhThu.Size = new System.Drawing.Size(145, 100);
         lbl_doanhThu.TabIndex = 0;
-        lbl_doanhThu.Text = "Doanh thu (đ)";
-        lbl_doanhThu.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+        lbl_doanhThu.Text = "Doanh thu";
+        lbl_doanhThu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // pnl_footer
         // 
@@ -296,26 +297,28 @@ partial class FormReport
         pnl_footer.Controls.Add(lbl_footerRight);
         pnl_footer.Controls.Add(lbl_footerLeft);
         pnl_footer.Dock = System.Windows.Forms.DockStyle.Bottom;
-        pnl_footer.Location = new System.Drawing.Point(0, 594);
+        pnl_footer.Location = new System.Drawing.Point(0, 365);
         pnl_footer.Name = "pnl_footer";
-        pnl_footer.Size = new System.Drawing.Size(1343, 53);
+        pnl_footer.Size = new System.Drawing.Size(784, 50);
         pnl_footer.TabIndex = 8;
         // 
         // lbl_footerRight
         // 
-        lbl_footerRight.Location = new System.Drawing.Point(872, 0);
+        lbl_footerRight.Location = new System.Drawing.Point(400, 0);
         lbl_footerRight.Name = "lbl_footerRight";
-        lbl_footerRight.Size = new System.Drawing.Size(802, 51);
+        lbl_footerRight.Size = new System.Drawing.Size(380, 46);
         lbl_footerRight.TabIndex = 1;
         lbl_footerRight.Text = "Tỉ lệ lợi nhuân";
+        lbl_footerRight.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
         // 
         // lbl_footerLeft
         // 
-        lbl_footerLeft.Location = new System.Drawing.Point(0, 0);
+        lbl_footerLeft.Location = new System.Drawing.Point(5, 0);
         lbl_footerLeft.Name = "lbl_footerLeft";
-        lbl_footerLeft.Size = new System.Drawing.Size(866, 51);
+        lbl_footerLeft.Size = new System.Drawing.Size(380, 46);
         lbl_footerLeft.TabIndex = 0;
         lbl_footerLeft.Text = "Báo cáo ngày:";
+        lbl_footerLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
         // 
         // groupBox1
         // 
@@ -324,9 +327,10 @@ partial class FormReport
         groupBox1.Controls.Add(panel3);
         groupBox1.Controls.Add(label1);
         groupBox1.Controls.Add(dtp_to);
-        groupBox1.Location = new System.Drawing.Point(0, 93);
+        groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+        groupBox1.Location = new System.Drawing.Point(0, 50);
         groupBox1.Name = "groupBox1";
-        groupBox1.Size = new System.Drawing.Size(1683, 395);
+        groupBox1.Size = new System.Drawing.Size(784, 165);
         groupBox1.TabIndex = 9;
         groupBox1.TabStop = false;
         // 
@@ -334,10 +338,10 @@ partial class FormReport
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(1343, 647);
+        ClientSize = new System.Drawing.Size(784, 415);
+        Controls.Add(dgv_listInvoices);
         Controls.Add(groupBox1);
         Controls.Add(pnl_footer);
-        Controls.Add(dgv_listInvoices);
         Controls.Add(pnl_top);
         Margin = new System.Windows.Forms.Padding(6);
         Text = "Báo cáo doanh thu";
