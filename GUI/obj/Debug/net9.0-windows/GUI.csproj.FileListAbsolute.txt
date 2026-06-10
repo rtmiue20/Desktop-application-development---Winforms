@@ -50,7 +50,6 @@ C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormDashboard.resources
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\Desktop_Application_Development.FormGuarantee.resources
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormGuest.resources
-C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormIntoWarehouse.resources
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormInventory.resources
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormLogin.resources
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormManageProduct.resources
@@ -200,3 +199,4 @@ C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.genruntimeconfig.cache
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\ref\GUI.dll
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormTradeIn.resources
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormIntoWarehouse.resources
