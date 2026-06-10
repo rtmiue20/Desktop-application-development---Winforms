@@ -64,4 +64,14 @@ public class UsersDAL
             "UPDATE Users SET IsActive = 0 WHERE UserID = @userID",
             new { userID }) > 0;
     }
+
+    public bool Exists(int userId)
+    {
+        using (IDbConnection db = DatabaseHelper.GetConnection())
+        {
+            string sql = "SELECT COUNT(1) FROM users WHERE UserID = @userId";
+            int count = db.ExecuteScalar<int>(sql, new { userId });
+            return count > 0;
+        }
+    }
 }

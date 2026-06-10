@@ -61,7 +61,6 @@ C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormSetting.resources
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormStaff.resources
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormSupplier.resources
-C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\Desktop_Application_Development.FormTradeIn.resources
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.csproj.GenerateResource.cache
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.AssemblyInfoInputs.cache
@@ -200,3 +199,4 @@ C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.pdb
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.genruntimeconfig.cache
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\ref\GUI.dll
+C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\GUI\obj\Debug\net9.0-windows\GUI.FormTradeIn.resources

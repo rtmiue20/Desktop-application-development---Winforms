@@ -1,16 +1,10 @@
-﻿namespace Desktop_Application_Development
+﻿namespace GUI
 {
     partial class FormTradeIn
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,12 +14,10 @@
             base.Dispose(disposing);
         }
 
+
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
+
         private void InitializeComponent()
         {
             panel1 = new Panel();
@@ -34,11 +26,12 @@
             btn_delete = new Button();
             btn_confirm = new Button();
             groupBox1 = new GroupBox();
-            label1 = new Label();
-            guna2ContextMenuStrip1 = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
-            textBox1 = new TextBox();
+            label3 = new Label();
+            txt_resolution = new TextBox();
             label2 = new Label();
-            cbb_reason = new ComboBox();
+            cbb_status = new ComboBox();
+            label1 = new Label();
+            txt_search = new TextBox();
             dgv_tradeIn = new DataGridView();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -47,134 +40,133 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(btn_confirm);
-            panel1.Controls.Add(btn_delete);
             panel1.Controls.Add(btn_createTradein);
-            panel1.Location = new Point(12, 12);
+            panel1.Controls.Add(btn_search);
+            panel1.Controls.Add(btn_delete);
+            panel1.Controls.Add(btn_confirm);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 821);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1831, 81);
+            panel1.Size = new Size(1843, 100);
             panel1.TabIndex = 0;
             // 
             // btn_createTradein
             // 
-            btn_createTradein.Location = new Point(14, 12);
+            btn_createTradein.Location = new Point(30, 25);
             btn_createTradein.Name = "btn_createTradein";
-            btn_createTradein.Size = new Size(298, 58);
+            btn_createTradein.Size = new Size(405, 50);
             btn_createTradein.TabIndex = 0;
-            btn_createTradein.Text = "Tạo phiếu đổi trả";
-            btn_createTradein.UseVisualStyleBackColor = true;
+            btn_createTradein.Text = "+ Tạo Phiếu Mới";
+            btn_createTradein.Click += btn_createTradein_Click;
             // 
             // btn_search
             // 
-            btn_search.Location = new Point(419, 40);
+            btn_search.Location = new Point(451, 25);
             btn_search.Name = "btn_search";
-            btn_search.Size = new Size(188, 47);
+            btn_search.Size = new Size(505, 50);
             btn_search.TabIndex = 1;
-            btn_search.Text = "Tìm";
-            btn_search.UseVisualStyleBackColor = true;
+            btn_search.Text = "Tìm Kiếm";
+            btn_search.Click += btn_search_Click;
             // 
             // btn_delete
             // 
-            btn_delete.Location = new Point(541, 12);
+            btn_delete.Location = new Point(1480, 25);
             btn_delete.Name = "btn_delete";
-            btn_delete.Size = new Size(188, 58);
+            btn_delete.Size = new Size(150, 50);
             btn_delete.TabIndex = 2;
-            btn_delete.Text = "Xóa";
-            btn_delete.UseVisualStyleBackColor = true;
-            btn_delete.Click += button3_Click;
+            btn_delete.Text = "Hủy Phiếu";
+            btn_delete.Click += btn_delete_Click;
             // 
             // btn_confirm
             // 
-            btn_confirm.Location = new Point(318, 12);
+            btn_confirm.Location = new Point(1650, 25);
             btn_confirm.Name = "btn_confirm";
-            btn_confirm.Size = new Size(217, 58);
+            btn_confirm.Size = new Size(160, 50);
             btn_confirm.TabIndex = 3;
-            btn_confirm.Text = "Xác nhận";
-            btn_confirm.UseVisualStyleBackColor = true;
+            btn_confirm.Text = "Xác Nhận Xử Lý";
+            btn_confirm.Click += btn_confirm_Click;
             // 
             // groupBox1
             // 
-            groupBox1.AccessibleRole = AccessibleRole.None;
-            groupBox1.Controls.Add(dgv_tradeIn);
-            groupBox1.Controls.Add(cbb_reason);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(txt_resolution);
             groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(cbb_status);
             groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(btn_search);
-            groupBox1.Location = new Point(12, 99);
+            groupBox1.Controls.Add(txt_search);
+            groupBox1.Dock = DockStyle.Top;
+            groupBox1.Location = new Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1831, 777);
+            groupBox1.Size = new Size(1843, 172);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
+            groupBox1.Text = "Bộ Lọc & Xử Lý Phiếu";
             // 
-            // label1
+            // label3
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(14, 43);
-            label1.Name = "label1";
-            label1.Size = new Size(117, 41);
-            label1.TabIndex = 0;
-            label1.Text = "Mã HĐ:";
+            label3.Location = new Point(589, 47);
+            label3.Name = "label3";
+            label3.Size = new Size(300, 44);
+            label3.TabIndex = 0;
+            label3.Text = "Hướng Giải Quyết:";
             // 
-            // guna2ContextMenuStrip1
+            // txt_resolution
             // 
-            guna2ContextMenuStrip1.ImageScalingSize = new Size(40, 40);
-            guna2ContextMenuStrip1.Name = "guna2ContextMenuStrip1";
-            guna2ContextMenuStrip1.RenderStyle.ArrowColor = Color.FromArgb(151, 143, 255);
-            guna2ContextMenuStrip1.RenderStyle.BorderColor = Color.Gainsboro;
-            guna2ContextMenuStrip1.RenderStyle.ColorTable = null;
-            guna2ContextMenuStrip1.RenderStyle.RoundedEdges = true;
-            guna2ContextMenuStrip1.RenderStyle.SelectionArrowColor = Color.White;
-            guna2ContextMenuStrip1.RenderStyle.SelectionBackColor = Color.FromArgb(100, 88, 255);
-            guna2ContextMenuStrip1.RenderStyle.SelectionForeColor = Color.White;
-            guna2ContextMenuStrip1.RenderStyle.SeparatorColor = Color.Gainsboro;
-            guna2ContextMenuStrip1.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            guna2ContextMenuStrip1.Size = new Size(61, 4);
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(137, 40);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(250, 47);
-            textBox1.TabIndex = 1;
-            textBox1.Tag = "";
-            textBox1.Text = "HD0001";
+            txt_resolution.Location = new Point(860, 47);
+            txt_resolution.Name = "txt_resolution";
+            txt_resolution.Size = new Size(950, 47);
+            txt_resolution.TabIndex = 1;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(728, 43);
+            label2.Location = new Point(12, 109);
             label2.Name = "label2";
-            label2.Size = new Size(97, 41);
+            label2.Size = new Size(289, 44);
             label2.TabIndex = 2;
-            label2.Text = "Lý do:";
+            label2.Text = "Cập nhật Trạng Thái:";
             // 
-            // cbb_reason
+            // cbb_status
             // 
-            cbb_reason.FormattingEnabled = true;
-            cbb_reason.Location = new Point(831, 43);
-            cbb_reason.Name = "cbb_reason";
-            cbb_reason.Size = new Size(443, 49);
-            cbb_reason.TabIndex = 3;
+            cbb_status.Location = new Point(307, 109);
+            cbb_status.Name = "cbb_status";
+            cbb_status.Size = new Size(465, 49);
+            cbb_status.TabIndex = 3;
+            // 
+            // label1
+            // 
+            label1.Location = new Point(12, 50);
+            label1.Name = "label1";
+            label1.Size = new Size(149, 46);
+            label1.TabIndex = 4;
+            label1.Text = "Tìm kiếm:";
+            // 
+            // txt_search
+            // 
+            txt_search.Location = new Point(167, 50);
+            txt_search.Name = "txt_search";
+            txt_search.Size = new Size(300, 47);
+            txt_search.TabIndex = 5;
             // 
             // dgv_tradeIn
             // 
-            dgv_tradeIn.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_tradeIn.Location = new Point(0, 93);
+            dgv_tradeIn.ColumnHeadersHeight = 58;
+            dgv_tradeIn.Dock = DockStyle.Fill;
+            dgv_tradeIn.Location = new Point(0, 172);
             dgv_tradeIn.Name = "dgv_tradeIn";
             dgv_tradeIn.RowHeadersWidth = 102;
-            dgv_tradeIn.Size = new Size(1819, 678);
-            dgv_tradeIn.TabIndex = 4;
+            dgv_tradeIn.Size = new Size(1843, 649);
+            dgv_tradeIn.TabIndex = 2;
+            dgv_tradeIn.SelectionChanged += dgv_tradeIn_SelectionChanged;
             // 
             // FormTradeIn
             // 
-            AutoScaleDimensions = new SizeF(17F, 41F);
-            AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1843, 921);
+            Controls.Add(dgv_tradeIn);
             Controls.Add(groupBox1);
             Controls.Add(panel1);
             Name = "FormTradeIn";
-            Text = "FormTradeIn";
+            Text = "Quản lý Bảo Hành & Đổi Trả";
+            Load += FormTradeIn_Load;
             panel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -182,19 +174,22 @@
             ResumeLayout(false);
         }
 
+
         #endregion
 
-        private Panel panel1;
-        private Button btn_confirm;
-        private Button btn_delete;
-        private Button btn_search;
-        private Button btn_createTradein;
-        private GroupBox groupBox1;
-        private Label label1;
-        private TextBox textBox1;
-        private Guna.UI2.WinForms.Guna2ContextMenuStrip guna2ContextMenuStrip1;
-        private DataGridView dgv_tradeIn;
-        private ComboBox cbb_reason;
-        private Label label2;
+
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btn_createTradein;
+        private System.Windows.Forms.Button btn_search;
+        private System.Windows.Forms.Button btn_delete;
+        private System.Windows.Forms.Button btn_confirm;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txt_search;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbb_status;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txt_resolution;
+        private System.Windows.Forms.DataGridView dgv_tradeIn;
     }
 }
