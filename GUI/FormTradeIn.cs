@@ -1,184 +1,159 @@
 using System;
-using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
-using BUS;
-using DTO;
 
-namespace Desktop_Application_Development
+namespace GUI
 {
     public partial class FormTradeIn : Form
     {
-        // Khởi tạo các đối tượng nghiệp vụ (Đã đặt đúng vị trí bên trong Class)
-        private readonly WarrantyBUS _warrantyBUS = new WarrantyBUS(); 
-        private readonly SalesBUS _salesBUS = new SalesBUS();
-        private readonly CustomersBUS _customerBUS = new CustomersBUS();
-
-        private int _currentInvoiceID = 0;
-        private int _currentCustomerID = 0;
+        // Khởi tạo đối tượng tầng BUS (Ví dụ)
+        // private readonly TradeInBUS _tradeInBUS = new TradeInBUS();
 
         public FormTradeIn()
         {
             InitializeComponent();
+            SetupDataGridView();
         }
 
         private void FormTradeIn_Load(object sender, EventArgs e)
         {
-            SetupDataGridView();
-            txb_reason.Items.Clear();
-            txb_reason.Items.AddRange(new string[] { "Sản phẩm lỗi do NSX", "Thu cũ đổi mới", "Khách đổi ý (Có tính phí)", "Khác..." });
-            if (txb_reason.Items.Count > 0)
-            {
-                txb_reason.SelectedIndex = 0;
-            }
-            SetTradeInPanelState(false);
+            LoadComboBoxReasons();
         }
 
+        // Cập nhật: Thêm các cột mới vào DataGridView theo mẫu
         private void SetupDataGridView()
         {
-            dgv_invoiceDetails.Columns.Clear();
-            dgv_invoiceDetails.AutoGenerateColumns = false;
-            dgv_invoiceDetails.AllowUserToAddRows = false;
-            dgv_invoiceDetails.RowHeadersVisible = false;
-            dgv_invoiceDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvInvoiceDetails.AutoGenerateColumns = false;
+            dgvInvoiceDetails.AllowUserToAddRows = false;
+            dgvInvoiceDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvInvoiceDetails.MultiSelect = false;
+            dgvInvoiceDetails.ReadOnly = true;
+            dgvInvoiceDetails.BackgroundColor = Color.DarkGray; 
+            dgvInvoiceDetails.RowHeadersVisible = false;
+            dgvInvoiceDetails.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            dgv_invoiceDetails.Columns.Add(new DataGridViewCheckBoxColumn { HeaderText = "Chọn", Name = "chkSelect", Width = 50 });
-            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "ItemCode", HeaderText = "Mã Serial", Name = "ItemCode", Width = 120, ReadOnly = true });
-            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "ProductName", HeaderText = "Tên Sản Phẩm", Name = "ProductName", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, ReadOnly = true });
-            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "UnitPrice", HeaderText = "Giá Bán", Name = "UnitPrice", Width = 100, ReadOnly = true });
+            // Xóa các cột cũ (nếu có) để tạo lại
+            dgvInvoiceDetails.Columns.Clear();
+
+            // Cột 1: Mã SP
+            dgvInvoiceDetails.Columns.Add(new DataGridViewTextBoxColumn 
+            { 
+                Name = "colProductID", HeaderText = "Mã SP", DataPropertyName = "ProductID", FillWeight = 15 
+            });
+            // Cột 2: Tên sản phẩm
+            dgvInvoiceDetails.Columns.Add(new DataGridViewTextBoxColumn 
+            { 
+                Name = "colProductName", HeaderText = "Tên sản phẩm", DataPropertyName = "ProductName", FillWeight = 30 
+            });
+            // Cột 3: Serial/IMEI
+            dgvInvoiceDetails.Columns.Add(new DataGridViewTextBoxColumn 
+            { 
+                Name = "colSerial", HeaderText = "Serial/IMEI", DataPropertyName = "SerialNumber", FillWeight = 20 
+            });
+            // Cột 4: Đơn giá bán ban đầu
+            dgvInvoiceDetails.Columns.Add(new DataGridViewTextBoxColumn 
+            { 
+                Name = "colOriginalPrice", HeaderText = "Đơn giá bán", DataPropertyName = "OriginalPrice", FillWeight = 15 
+            });
+            // Cột 5: Tình trạng máy (MỚI THÊM)
+            dgvInvoiceDetails.Columns.Add(new DataGridViewTextBoxColumn 
+            { 
+                Name = "colCondition", HeaderText = "Tình trạng", DataPropertyName = "Condition", FillWeight = 15 
+            });
+            // Cột 6: Giá thu cũ dự kiến (MỚI THÊM)
+            dgvInvoiceDetails.Columns.Add(new DataGridViewTextBoxColumn 
+            { 
+                Name = "colTradeInPrice", HeaderText = "Giá thu lại", DataPropertyName = "TradeInPrice", FillWeight = 15 
+            });
         }
 
-        private void SetTradeInPanelState(bool isEnabled)
+        // Load dữ liệu ComboBox lý do trả hàng
+        private void LoadComboBoxReasons()
         {
-            txb_reason.Enabled = isEnabled;
-            rtb_tradeInNote.Enabled = isEnabled;
-            txt_refundAmount.Enabled = isEnabled;
-            btn_confirmTradeIn.Enabled = isEnabled;
-            btn_createTradeIn.Enabled = isEnabled;
+            cboReason.Items.Clear();
+            cboReason.Items.Add("Sản phẩm bị lỗi do nhà sản xuất");
+            cboReason.Items.Add("Khách hàng muốn đổi mẫu khác");
+            cboReason.Items.Add("Thu cũ đổi mới (Trade-in)");
+            cboReason.Items.Add("Lý do khác");
+            cboReason.SelectedIndex = 0;
         }
 
-        // ==========================================
-        // 1. SỰ KIỆN NÚT TÌM KIẾM HÓA ĐƠN
-        // ==========================================
-        private void btn_searchTradeIn_Click(object sender, EventArgs e)
+        // Sự kiện TÌM KIẾM
+        private void btnSearch_Click(object sender, EventArgs e)
         {
-            string invoiceCode = txt_invoiceCode.Text.Trim();
-            if (string.IsNullOrEmpty(invoiceCode))
+            string invoiceId = txtInvoiceId.Text.Trim();
+
+            if (string.IsNullOrEmpty(invoiceId))
             {
-                MessageBox.Show("Vui lòng nhập Mã Hóa Đơn!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập Mã hóa đơn gốc!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                var invoice = _salesBUS.GetByInvoiceCode(invoiceCode); 
+                // Demo tạo dữ liệu giả lập để hiển thị đủ các cột mới khi test UI
+                DataTable dtMock = new DataTable();
+                dtMock.Columns.Add("ProductID");
+                dtMock.Columns.Add("ProductName");
+                dtMock.Columns.Add("SerialNumber");
+                dtMock.Columns.Add("OriginalPrice");
+                dtMock.Columns.Add("Condition");
+                dtMock.Columns.Add("TradeInPrice");
 
-                if (invoice != null)
-                {
-                    _currentInvoiceID = invoice.InvoiceID;
-                    _currentCustomerID = invoice.CustomerID ?? 0;
-                    
-                    var customer = _customerBUS.GetById(_currentCustomerID);
-                    txt_customerName.Text = customer != null ? customer.FullName : "Khách lẻ";
-                    txt_phone.Text = customer != null ? customer.Phone : "Không có";
-                    
-                    var chiTietHoaDon = _salesBUS.GetInvoiceDetails(_currentInvoiceID);
-                    dgv_invoiceDetails.DataSource = null; 
-                    dgv_invoiceDetails.DataSource = chiTietHoaDon;
-                    
-                    SetTradeInPanelState(true);
-                }
-                else
-                {
-                    MessageBox.Show("Không tìm thấy Hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    btn_cancelTradeIn_Click(null, null);
-                }
+                dtMock.Rows.Add("SP001", "iPhone 15 Pro Max 256GB", "IMEI123456789", "29,000,000", "Trầy xước nhẹ", "20,000,000");
+                dtMock.Rows.Add("SP002", "MacBook Air M2 2022", "SER987654321", "25,000,000", "Hoạt động tốt", "18,500,000");
+
+                dgvInvoiceDetails.DataSource = dtMock;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi truy vấn Database: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi truy xuất dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ==========================================
-        // 2. SỰ KIỆN NÚT XÁC NHẬN (LƯU DATABASE)
-        // ==========================================
-        private void btn_confirmTradeIn_Click(object sender, EventArgs e)
+        // Sự kiện XÁC NHẬN (Xử lý Trade-In)
+        private void btnConfirm_Click(object sender, EventArgs e)
         {
-            if (_currentInvoiceID == 0)
+            if (dgvInvoiceDetails.CurrentRow == null)
             {
-                MessageBox.Show("Vui lòng tìm kiếm hóa đơn trước!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn một sản phẩm từ danh sách để xử lý!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            List<string> selectedSerials = new List<string>();
-            foreach (DataGridViewRow row in dgv_invoiceDetails.Rows)
-            {
-                // Kiểm tra null trước khi ép kiểu để tránh crash app nếu click vào ô trống
-                if (row.Cells["chkSelect"].Value != null && Convert.ToBoolean(row.Cells["chkSelect"].Value))
-                {
-                    selectedSerials.Add(row.Cells["ItemCode"].Value.ToString());
-                }
-            }
+            string reason = cboReason.SelectedItem?.ToString();
+            string resolution = txtResolution.Text.Trim();
 
-            if (selectedSerials.Count == 0)
+            if (string.IsNullOrEmpty(resolution))
             {
-                MessageBox.Show("Vui lòng chọn ít nhất một sản phẩm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập phương án giải quyết!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!decimal.TryParse(txt_refundAmount.Text.Replace(",", ""), out decimal refundAmount) || refundAmount < 0)
+            try
             {
-                MessageBox.Show("Số tiền hoàn không hợp lệ!", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                // Lấy thông tin từ các cột mới
+                string serialNumber = dgvInvoiceDetails.CurrentRow.Cells["colSerial"].Value.ToString();
+                string tradeInPrice = dgvInvoiceDetails.CurrentRow.Cells["colTradeInPrice"].Value.ToString();
+                string condition = dgvInvoiceDetails.CurrentRow.Cells["colCondition"].Value.ToString();
+
+                MessageBox.Show($"Xử lý thành công!\nSerial: {serialNumber}\nTình trạng: {condition}\nGiá thu lại: {tradeInPrice}\nGiải quyết: {resolution}", 
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearForm();
             }
-
-            if (MessageBox.Show("Xác nhận tạo phiếu đổi trả?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            catch (Exception ex)
             {
-                string reason = txb_reason.SelectedItem?.ToString() ?? "Khác...";
-                string note = rtb_tradeInNote.Text.Trim();
-
-                // Bắn dữ liệu xuống WarrantyBUS
-                var result = _warrantyBUS.CreateTradeIn(_currentInvoiceID, _currentCustomerID, reason, note, refundAmount, selectedSerials);
-
-                if (result.success)
-                {
-                    MessageBox.Show("Đã lưu phiếu đổi trả và cập nhật kho thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    btn_cancelTradeIn_Click(null, null); // Clear sạch form sau khi lưu
-                }
-                else
-                {
-                    MessageBox.Show($"Thất bại: {result.error}", "Lỗi xử lý", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Lỗi khi xử lý dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ==========================================
-        // 3. SỰ KIỆN NÚT HỦY / LÀM MỚI
-        // ==========================================
-        private void btn_cancelTradeIn_Click(object sender, EventArgs e)
+        private void ClearForm()
         {
-            txt_invoiceCode.Clear();
-            txt_customerName.Clear();
-            txt_phone.Clear();
-            rtb_tradeInNote.Clear();
-            txt_refundAmount.Clear();
-            
-            // Phải reset ID về 0 để an toàn cho phiên giao dịch tiếp theo
-            _currentInvoiceID = 0; 
-            _currentCustomerID = 0; 
-            
-            dgv_invoiceDetails.DataSource = null;
-            SetTradeInPanelState(false);
-        }
-
-        // ==========================================
-        // 4. SỰ KIỆN NÚT TẠO PHIẾU ĐỔI TRẢ
-        // ==========================================
-        private void btn_createTradeIn_Click(object sender, EventArgs e)
-        {
-            // Trỏ thẳng sang hàm Xác nhận để tái sử dụng toàn bộ logic kiểm tra và lưu DB
-            // Điều này giúp người dùng bấm nút "Xác nhận" hay "Tạo phiếu" đều có tác dụng như nhau.
-            btn_confirmTradeIn_Click(sender, e);
+            txtInvoiceId.Clear();
+            txtNotes.Clear();
+            txtResolution.Clear();
+            cboReason.SelectedIndex = 0;
+            dgvInvoiceDetails.DataSource = null;
         }
     }
 }

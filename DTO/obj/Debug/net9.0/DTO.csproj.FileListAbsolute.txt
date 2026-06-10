@@ -22,3 +22,15 @@ C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\refint\DTO.dll
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.pdb
 C:\Users\MinhTrieu\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\ref\DTO.dll
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.deps.json
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.dll
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\bin\Debug\net9.0\DTO.pdb
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.AssemblyInfoInputs.cache
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.AssemblyInfo.cs
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.sourcelink.json
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.dll
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\refint\DTO.dll
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\DTO.pdb
+C:\Users\ADMIN\RiderProjects\Desktop-application-development---Winforms\DTO\obj\Debug\net9.0\ref\DTO.dll
