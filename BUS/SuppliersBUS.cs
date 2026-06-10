@@ -10,23 +10,31 @@ namespace BUS
 
         public List<SuppliersDTO> GetAll() => _dal.GetAll();
 
-        public (bool success, string error) Insert(SuppliersDTO supplier)
+        public bool Add(SuppliersDTO supplier)
         {
-            if (string.IsNullOrWhiteSpace(supplier.SupplierName))
-                return (false, "Tên nhà cung cấp không được để trống.");
-            if (string.IsNullOrWhiteSpace(supplier.Phone))
-                return (false, "Số điện thoại không được để trống.");
+            if (string.IsNullOrWhiteSpace(supplier.SupplierName)) return false;
+            if (string.IsNullOrWhiteSpace(supplier.Phone)) return false;
 
-            _dal.Insert(supplier);
-            return (true, null);
+            // Tạo mã NCC tự động nếu chưa có
+            if (string.IsNullOrWhiteSpace(supplier.SupplierCode))
+                supplier.SupplierCode = "NCC" + System.DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            int id = _dal.Insert(supplier);
+            return id > 0;
         }
 
-        public (bool success, string error) Update(SuppliersDTO supplier)
+        public bool Update(SuppliersDTO supplier)
         {
-            if (string.IsNullOrWhiteSpace(supplier.SupplierName))
-                return (false, "Tên nhà cung cấp không được để trống.");
+            if (supplier.SupplierID <= 0) return false;
+            if (string.IsNullOrWhiteSpace(supplier.SupplierName)) return false;
 
-            return (_dal.Update(supplier), "Cập nhật thất bại.");
+            return _dal.Update(supplier);
+        }
+
+        public bool Delete(int supplierId)
+        {
+            if (supplierId <= 0) return false;
+            return _dal.Delete(supplierId);
         }
     }
 }

@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic; // Bổ sung để dùng List
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using BUS;
@@ -11,6 +11,7 @@ namespace Desktop_Application_Development
     {
         private readonly WarrantyBUS _warrantyBUS = new WarrantyBUS();
         private int _selectedClaimID = 0;
+        private string _selectedStatus = string.Empty;
 
         public FormGuarantee()
         {
@@ -19,80 +20,133 @@ namespace Desktop_Application_Development
 
         private void FormGuarantee_Load(object sender, EventArgs e)
         {
-            // Thiết lập ComboBox bộ lọc
-            cbb_statusFilter.DropDownStyle = ComboBoxStyle.DropDownList; // Ép người dùng chỉ được chọn
+            // ComboBox bộ lọc
+            cbb_statusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cbb_statusFilter.Items.Clear();
             cbb_statusFilter.Items.Add("Tất cả trạng thái");
             cbb_statusFilter.Items.AddRange(new string[] { "Đang kiểm tra", "Chờ linh kiện", "Đang sửa", "Đã sửa xong", "Đã trả khách" });
             cbb_statusFilter.SelectedIndex = 0;
+
+            // ComboBox cập nhật trạng thái
+            cbb_statusUpdate.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbb_statusUpdate.Items.Clear();
+            cbb_statusUpdate.Items.AddRange(new string[] { "Đang kiểm tra", "Chờ linh kiện", "Đang sửa", "Đã sửa xong", "Đã trả khách" });
 
             LoadWarrantyList();
         }
 
         private void LoadWarrantyList()
         {
-            // Đảm bảo luôn gán một List để tránh null reference
             dgv_guaranteeList.DataSource = _warrantyBUS.GetAll() ?? new List<WarrantyClaimsDTO>();
         }
 
-        // --- CÁC SỰ KIỆN NÚT BẤM ---
-
-        private void btnAddWarranty_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Chức năng mở Form tiếp nhận đang được phát triển!");
-        }
-
-        private void btnUpdateStatus_Click(object sender, EventArgs e)
+        // Nút Tiếp nhận: chỉ đổi "Chờ linh kiện" -> "Đang sửa"
+        private void btn_addWarranty_Click(object sender, EventArgs e)
         {
             if (_selectedClaimID == 0)
             {
-                MessageBox.Show("Vui lòng chọn một phiếu trong danh sách để cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn một phiếu bảo hành!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            // Code xử lý update status gọi _warrantyBUS.UpdateStatus(...) tại đây
+
+            if (_selectedStatus == "Chờ linh kiện")
+            {
+                bool ok = _warrantyBUS.UpdateStatus(_selectedClaimID, "Đang sửa");
+                if (ok)
+                {
+                    MessageBox.Show("Đã chuyển trạng thái sang 'Đang sửa'!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadWarrantyList();
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật trạng thái thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Chỉ phiếu đang 'Chờ linh kiện' mới được tiếp nhận để sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        // Nút Cập nhật trạng thái: đổi sang trạng thái được chọn trong combobox
+        private void btn_updateStatus_Click_1(object sender, EventArgs e)
         {
-            cbb_statusFilter.SelectedIndex = 0; // Reset về mặc định
+            if (_selectedClaimID == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một phiếu trong danh sách!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string newStatus = cbb_statusUpdate.SelectedItem?.ToString();
+            if (string.IsNullOrEmpty(newStatus))
+            {
+                MessageBox.Show("Vui lòng chọn trạng thái mới!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool ok = _warrantyBUS.UpdateStatus(_selectedClaimID, newStatus);
+            if (ok)
+            {
+                MessageBox.Show($"Đã cập nhật trạng thái thành '{newStatus}'!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadWarrantyList();
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật trạng thái thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Nút Làm mới
+        private void btn_refresh_Click(object sender, EventArgs e)
+        {
+            cbb_statusFilter.SelectedIndex = 0;
+            cbb_statusUpdate.SelectedIndex = -1;
+            _selectedClaimID = 0;
+            _selectedStatus = string.Empty;
             LoadWarrantyList();
         }
 
-        // --- XỬ LÝ LƯỚI DỮ LIỆU ---
-
+        // Click vào dòng trong DataGridView
         private void dgv_guaranteeList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Kiểm tra dòng hợp lệ (bỏ qua header)
             if (e.RowIndex >= 0)
             {
-                // THAY ĐỔI: Dùng tên cột "ClaimID" thay vì "Mã BH" 
-                // vì trong DTO thường đặt là ClaimID
-                var cellValue = dgv_guaranteeList.Rows[e.RowIndex].Cells["ClaimID"].Value;
+                var row = dgv_guaranteeList.Rows[e.RowIndex];
+                var cellValue = row.Cells["ClaimID"].Value;
                 if (cellValue != null)
                 {
                     _selectedClaimID = Convert.ToInt32(cellValue);
+                    _selectedStatus = row.Cells["Status"].Value?.ToString() ?? string.Empty;
+
+                    // Chọn đúng trạng thái hiện tại trong combobox cập nhật
+                    if (!string.IsNullOrEmpty(_selectedStatus))
+                    {
+                        int idx = cbb_statusUpdate.Items.IndexOf(_selectedStatus);
+                        if (idx >= 0) cbb_statusUpdate.SelectedIndex = idx;
+                    }
                 }
             }
         }
 
         private void dgv_guaranteeList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Đảm bảo tên cột khớp với thuộc tính trong DTO (thường là 'Status')
             if (dgv_guaranteeList.Columns[e.ColumnIndex].Name == "Status" && e.Value != null)
             {
                 string status = e.Value.ToString();
                 switch (status)
                 {
                     case "Đang kiểm tra": e.CellStyle.BackColor = Color.LightYellow; break;
+                    case "Chờ linh kiện": e.CellStyle.BackColor = Color.Orange; break;
+                    case "Đang sửa": e.CellStyle.BackColor = Color.LightPink; break;
                     case "Đã sửa xong": e.CellStyle.BackColor = Color.LightGreen; break;
                     case "Đã trả khách": e.CellStyle.BackColor = Color.LightBlue; break;
                 }
             }
         }
 
+        // Khi chọn trạng thái trong combobox lọc, sort DataGridView theo trạng thái đó
         private void cbb_statusFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Chỉ chạy khi đã load xong Form
             if (cbb_statusFilter.SelectedIndex <= 0)
             {
                 LoadWarrantyList();
@@ -104,5 +158,7 @@ namespace Desktop_Application_Development
                 dgv_guaranteeList.DataSource = filteredData ?? new List<WarrantyClaimsDTO>();
             }
         }
+
+        private void dgv_guaranteeList_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
     }
-}   
+}

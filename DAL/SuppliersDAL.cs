@@ -11,7 +11,7 @@ namespace DAL
         {
             using (IDbConnection db = DatabaseHelper.GetConnection())
             {
-                return db.Query<SuppliersDTO>("SELECT * FROM Suppliers").AsList();
+                return db.Query<SuppliersDTO>("SELECT * FROM Suppliers ORDER BY SupplierID").AsList();
             }
         }
 
@@ -19,8 +19,8 @@ namespace DAL
         {
             using (IDbConnection db = DatabaseHelper.GetConnection())
             {
-                string query = @"INSERT INTO Suppliers (SupplierCode,SupplierName,Phone,Address,Debt,CreatedAt)
-                                 VALUES (@SupplierCode,@SupplierName,@Phone,@Address,0,NOW());
+                string query = @"INSERT INTO Suppliers (SupplierCode, SupplierName, Phone, Address, Debt, CreatedAt)
+                                 VALUES (@SupplierCode, @SupplierName, @Phone, @Address, @Debt, NOW());
                                  SELECT LAST_INSERT_ID();";
                 return db.ExecuteScalar<int>(query, supplier);
             }
@@ -30,10 +30,22 @@ namespace DAL
         {
             using (IDbConnection db = DatabaseHelper.GetConnection())
             {
-                string query = @"UPDATE Suppliers SET SupplierName=@SupplierName,
-                                 Phone=@Phone, Address=@Address, Debt=@Debt
+                string query = @"UPDATE Suppliers 
+                                 SET SupplierName=@SupplierName,
+                                     Phone=@Phone,
+                                     Address=@Address,
+                                     Debt=@Debt
                                  WHERE SupplierID=@SupplierID";
                 return db.Execute(query, supplier) > 0;
+            }
+        }
+
+        public bool Delete(int supplierId)
+        {
+            using (IDbConnection db = DatabaseHelper.GetConnection())
+            {
+                string query = "DELETE FROM Suppliers WHERE SupplierID=@supplierId";
+                return db.Execute(query, new { supplierId }) > 0;
             }
         }
     }

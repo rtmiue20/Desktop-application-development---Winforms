@@ -12,7 +12,6 @@ namespace GUI
         private ProductsBUS _productBUS = null!;
         private CategoriesBUS _categoryBUS = null!;
 
-        // Model này ánh xạ chính xác các trường cần thiết từ cấu trúc DB
         private class InventoryModel
         {
             public string ProductCode { get; set; } = string.Empty;
@@ -36,8 +35,13 @@ namespace GUI
             _categoryBUS = new CategoriesBUS();
 
             LoadCategoriesToFilter();
+            cb_statusFilter.Items.Clear();
             cb_statusFilter.Items.AddRange(new[] { "Tất cả trạng thái", "Còn hàng", "Sắp hết", "Hết hàng" });
             cb_statusFilter.SelectedIndex = 0;
+
+            // Gắn sự kiện thay đổi
+            cb_categories.SelectedIndexChanged += (s, ev) => ApplyFilter();
+            cb_statusFilter.SelectedIndexChanged += (s, ev) => ApplyFilter();
 
             LoadDataFromDB();
         }
@@ -63,15 +67,15 @@ namespace GUI
 
             if (products == null || products.Count == 0)
             {
-                ApplyFilter(); // Chạy để reset giao diện về 0
+                ApplyFilter();
                 return;
             }
 
             foreach (var p in products)
             {
-                // TODO: Chỗ này nhóm bạn tính Tồn kho từ bảng InboundDetails trừ đi SalesDetails
-                // Tạm thời để mặc định để render form lên trước
+                // TODO: Tính tồn kho thực tế từ InboundDetails - SalesDetails
                 int currentStock = 0;
+
                 string catName = categories?.FirstOrDefault(c => c.CategoryID == p.CategoryID)?.CategoryName ?? "Chưa phân loại";
 
                 string status = "Hết hàng";
@@ -92,7 +96,6 @@ namespace GUI
         }
 
         private void ApplyFilter()
-
         {
             string selectedCategory = cb_categories.Text ?? string.Empty;
             string selectedStatus = cb_statusFilter.Text ?? string.Empty;
@@ -101,7 +104,6 @@ namespace GUI
                 (cb_categories.SelectedIndex == 0 || x.CategoryName == selectedCategory) &&
                 (cb_statusFilter.SelectedIndex == 0 || x.Status == selectedStatus)).ToList();
 
-            // Đè chết cột ảo, vẽ cột thật
             dgv_inventory.Columns.Clear();
             dgv_inventory.AutoGenerateColumns = true;
             dgv_inventory.DataSource = filtered;
@@ -113,16 +115,37 @@ namespace GUI
             if (dgv_inventory.Columns["MinStock"] is { } colMin) colMin.HeaderText = "Tồn tối thiểu";
             if (dgv_inventory.Columns["Status"] is { } colStatus) colStatus.HeaderText = "Trạng thái";
 
-            int total = _items.Count;
-            lbl_totalCount.Text = $"{total}\nTổng sản phẩm";
+            lbl_totalCount.Text = $"{_items.Count}\nTổng sản phẩm";
             lbl_availableCount.Text = $"{_items.Count(x => x.Status == "Còn hàng")}\nCòn hàng";
             lbl_warningCount.Text = $"{_items.Count(x => x.Status == "Sắp hết")}\nSắp hết (≤ MinStock)";
             lbl_outOfStockCount.Text = $"{_items.Count(x => x.Status == "Hết hàng")}\nHết hàng";
             lbl_timeUpdate.Text = $"Cập nhật lúc: {DateTime.Now:HH:mm dd/MM/yyyy}";
+
+            int needOrder = _items.Count(x => x.Stock < x.MinStock);
+            lbl_needOrder.Text = $"Cần nhập thêm: {needOrder}";
         }
 
-        private void btn_filter_Click(object sender, EventArgs e) => ApplyFilter();
-        private void btn_export_Click(object sender, EventArgs e) => MessageBox.Show("Đã xuất Excel!");
-        private void btn_refresh_Click(object sender, EventArgs e) { cb_categories.SelectedIndex = 0; cb_statusFilter.SelectedIndex = 0; LoadDataFromDB(); }
+
+
+        private void btn_filter_Click(object sender, EventArgs e)
+        {
+            ApplyFilter();
+        }
+
+        private void btn_export_Click(object sender, EventArgs e)
+        {
+            // TODO: Thực hiện export Excel
+            MessageBox.Show("Đã xuất Excel!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btn_refresh_Click(object sender, EventArgs e)
+        {
+            cb_categories.SelectedIndex = 0;
+            cb_statusFilter.SelectedIndex = 0;
+            LoadDataFromDB();
+        }
+
+        
+
     }
 }

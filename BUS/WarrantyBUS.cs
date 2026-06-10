@@ -49,27 +49,47 @@ namespace BUS
         }
         public (bool success, string error) CreateTradeIn(int invoiceID, int customerID, string reason, string note, decimal refundAmount, List<string> returnedSerials)
         {
-            // 1. Kiểm tra các ràng buộc logic đầu vào (Validate)
-            if (invoiceID == 0) return (false, "Mã hóa đơn gốc không hợp lệ.");
+            // 1. Kiểm tra đầu vào
+            if (invoiceID <= 0) return (false, "Mã hóa đơn gốc không hợp lệ.");
             if (returnedSerials == null || returnedSerials.Count == 0) return (false, "Danh sách sản phẩm chọn đổi trả đang trống.");
             if (refundAmount < 0) return (false, "Số tiền hoàn trả không được phép âm.");
 
             try
             {
+                // 2. Duyệt qua từng số Serial được tích chọn trên giao diện
                 foreach (var serial in returnedSerials)
                 {
-                    // Tùy vào lý do mà cập nhật trạng thái máy trong kho
+                    // Xác định trạng thái mới dựa trên lý do
                     string newStatus = reason.Contains("lỗi") ? "Lỗi" : "Trong kho";
-                    
+
+                    // Tìm sản phẩm trong DB theo Serial
+                    var item = _itemDAL.GetByItemCode(serial);
+                    if (item != null)
+                    {
+                        // Bước 2.1: Cập nhật lại trạng thái của máy đó trong kho
+                        _itemDAL.UpdateStatus(item.ItemID, newStatus);
+
+                        // Bước 2.2: Tạo một phiếu bảo hành/đổi trả mới lưu vào DB
+                        var claim = new WarrantyClaimsDTO
+                        {
+                            ClaimCode = "ĐỔITRẢ-" + DateTime.Now.ToString("ddMMyyHHmmss"),
+                            SerialID = item.ItemID,
+                            CustomerID = customerID,
+                            UserID = 1, // (Nếu bạn có biến lưu UserID đăng nhập thì thay số 1 bằng biến đó)
+                            InvoiceID = invoiceID,
+                            DefectDescription = note,
+                            Status = "Đã hoàn tất",
+                            Resolution = "Hoàn tiền đổi trả: " + reason
+                        };
+                        _dal.Insert(claim); // Gọi lệnh INSERT xuống bảng WarrantyClaims
+                    }
                 }
 
-                // Trả về thành công nếu chạy mượt mà
                 return (true, null);
             }
             catch (Exception ex)
             {
-                // Trả về thất bại kèm thông báo lỗi cụ thể
-                return (false, $"Lỗi hệ thống khi xử lý đổi trả: {ex.Message}");
+                return (false, $"Lỗi hệ thống khi xử lý: {ex.Message}");
             }
         }
     }

@@ -38,23 +38,23 @@ namespace GUI
             pnl_header.Dock = DockStyle.Top;
             pnl_header.Location = new Point(0, 0);
             pnl_header.Name = "pnl_header";
-            pnl_header.Size = new Size(784, 50);
+            pnl_header.Size = new Size(1592, 73);
             pnl_header.TabIndex = 3;
             // 
             // btn_refresh
             // 
-            btn_refresh.Location = new Point(245, 10);
+            btn_refresh.Location = new Point(671, 12);
             btn_refresh.Name = "btn_refresh";
-            btn_refresh.Size = new Size(100, 30);
+            btn_refresh.Size = new Size(366, 55);
             btn_refresh.TabIndex = 0;
             btn_refresh.Text = "🔄 Làm mới";
             btn_refresh.Click += btn_refresh_Click;
             // 
             // btn_export
             // 
-            btn_export.Location = new Point(125, 10);
+            btn_export.Location = new Point(331, 12);
             btn_export.Name = "btn_export";
-            btn_export.Size = new Size(110, 30);
+            btn_export.Size = new Size(334, 55);
             btn_export.TabIndex = 1;
             btn_export.Text = "📤 Xuất Excel";
             btn_export.Click += btn_export_Click;
@@ -63,7 +63,7 @@ namespace GUI
             // 
             btn_filter.Location = new Point(15, 10);
             btn_filter.Name = "btn_filter";
-            btn_filter.Size = new Size(100, 30);
+            btn_filter.Size = new Size(310, 57);
             btn_filter.TabIndex = 2;
             btn_filter.Text = "🔍 Kiểm kê";
             btn_filter.Click += btn_filter_Click;
@@ -73,23 +73,23 @@ namespace GUI
             pnl_filters.Controls.Add(cb_statusFilter);
             pnl_filters.Controls.Add(cb_categories);
             pnl_filters.Dock = DockStyle.Top;
-            pnl_filters.Location = new Point(0, 50);
+            pnl_filters.Location = new Point(0, 73);
             pnl_filters.Name = "pnl_filters";
-            pnl_filters.Size = new Size(784, 85);
+            pnl_filters.Size = new Size(1592, 152);
             pnl_filters.TabIndex = 2;
             // 
             // cb_statusFilter
             // 
-            cb_statusFilter.Location = new Point(15, 48);
+            cb_statusFilter.Location = new Point(15, 78);
             cb_statusFilter.Name = "cb_statusFilter";
-            cb_statusFilter.Size = new Size(750, 28);
+            cb_statusFilter.Size = new Size(750, 49);
             cb_statusFilter.TabIndex = 0;
             // 
             // cb_categories
             // 
             cb_categories.Location = new Point(15, 12);
             cb_categories.Name = "cb_categories";
-            cb_categories.Size = new Size(750, 28);
+            cb_categories.Size = new Size(750, 49);
             cb_categories.TabIndex = 1;
             // 
             // pnl_dashboard
@@ -99,9 +99,9 @@ namespace GUI
             pnl_dashboard.Controls.Add(lbl_availableCount);
             pnl_dashboard.Controls.Add(lbl_totalCount);
             pnl_dashboard.Dock = DockStyle.Top;
-            pnl_dashboard.Location = new Point(0, 135);
+            pnl_dashboard.Location = new Point(0, 225);
             pnl_dashboard.Name = "pnl_dashboard";
-            pnl_dashboard.Size = new Size(784, 65);
+            pnl_dashboard.Size = new Size(1592, 53);
             pnl_dashboard.TabIndex = 1;
             // 
             // lbl_outOfStockCount
@@ -140,10 +140,10 @@ namespace GUI
             // 
             dgv_inventory.ColumnHeadersHeight = 29;
             dgv_inventory.Dock = DockStyle.Fill;
-            dgv_inventory.Location = new Point(0, 200);
+            dgv_inventory.Location = new Point(0, 278);
             dgv_inventory.Name = "dgv_inventory";
             dgv_inventory.RowHeadersWidth = 51;
-            dgv_inventory.Size = new Size(784, 190);
+            dgv_inventory.Size = new Size(1592, 581);
             dgv_inventory.TabIndex = 0;
             // 
             // pnl_footer
@@ -151,9 +151,9 @@ namespace GUI
             pnl_footer.Controls.Add(lbl_needOrder);
             pnl_footer.Controls.Add(lbl_timeUpdate);
             pnl_footer.Dock = DockStyle.Bottom;
-            pnl_footer.Location = new Point(0, 390);
+            pnl_footer.Location = new Point(0, 859);
             pnl_footer.Name = "pnl_footer";
-            pnl_footer.Size = new Size(784, 25);
+            pnl_footer.Size = new Size(1592, 40);
             pnl_footer.TabIndex = 4;
             // 
             // lbl_needOrder
@@ -167,13 +167,13 @@ namespace GUI
             // 
             lbl_timeUpdate.Location = new Point(15, 3);
             lbl_timeUpdate.Name = "lbl_timeUpdate";
-            lbl_timeUpdate.Size = new Size(220, 17);
+            lbl_timeUpdate.Size = new Size(349, 37);
             lbl_timeUpdate.TabIndex = 1;
             lbl_timeUpdate.Text = "Cập nhật lúc: --:-- --/--/----";
             // 
             // FormInventory
             // 
-            ClientSize = new Size(784, 415);
+            ClientSize = new Size(1592, 899);
             Controls.Add(dgv_inventory);
             Controls.Add(pnl_dashboard);
             Controls.Add(pnl_filters);

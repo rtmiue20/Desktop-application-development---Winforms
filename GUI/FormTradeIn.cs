@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using BUS;
 using DTO;
@@ -8,13 +9,11 @@ namespace Desktop_Application_Development
 {
     public partial class FormTradeIn : Form
     {
-        // Khởi tạo các đối tượng nghiệp vụ (Đã đặt đúng vị trí bên trong Class)
-        private readonly WarrantyBUS _warrantyBUS = new WarrantyBUS(); 
-        private readonly SalesBUS _salesBUS = new SalesBUS();
-        private readonly CustomersBUS _customerBUS = new CustomersBUS();
+        private readonly WarrantyBUS _warrantyBUS = new WarrantyBUS();
 
-        private int _currentInvoiceID = 0;
+        // Hai biến này để lưu lại thông tin khi tìm kiếm mã phiếu
         private int _currentCustomerID = 0;
+        private int _currentInvoiceID = 0;
 
         public FormTradeIn()
         {
@@ -24,13 +23,10 @@ namespace Desktop_Application_Development
         private void FormTradeIn_Load(object sender, EventArgs e)
         {
             SetupDataGridView();
-            txb_reason.Items.Clear();
-            txb_reason.Items.AddRange(new string[] { "Sản phẩm lỗi do NSX", "Thu cũ đổi mới", "Khách đổi ý (Có tính phí)", "Khác..." });
-            if (txb_reason.Items.Count > 0)
-            {
-                txb_reason.SelectedIndex = 0;
-            }
-            SetTradeInPanelState(false);
+            LoadAllClaimsData();
+
+            // Hỗ trợ click vào ô Checkbox trong lưới nhận giá trị ngay lập tức
+            dgv_invoiceDetails.CellContentClick += Dgv_invoiceDetails_CellContentClick;
         }
 
         private void SetupDataGridView()
@@ -42,9 +38,42 @@ namespace Desktop_Application_Development
             dgv_invoiceDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             dgv_invoiceDetails.Columns.Add(new DataGridViewCheckBoxColumn { HeaderText = "Chọn", Name = "chkSelect", Width = 50 });
-            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "ItemCode", HeaderText = "Mã Serial", Name = "ItemCode", Width = 120, ReadOnly = true });
-            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "ProductName", HeaderText = "Tên Sản Phẩm", Name = "ProductName", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, ReadOnly = true });
-            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "UnitPrice", HeaderText = "Giá Bán", Name = "UnitPrice", Width = 100, ReadOnly = true });
+            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "ClaimID", HeaderText = "Mã Claim", Name = "ClaimID", Width = 80, ReadOnly = true });
+            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "ClaimCode", HeaderText = "Mã Phiếu", Name = "ClaimCode", Width = 120, ReadOnly = true });
+            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "SerialID", HeaderText = "Serial", Name = "SerialID", Width = 100, ReadOnly = true });
+            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "DefectDescription", HeaderText = "Lỗi sản phẩm", Name = "DefectDescription", Width = 200, ReadOnly = true });
+            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Status", HeaderText = "Trạng thái", Name = "Status", Width = 120, ReadOnly = true });
+            dgv_invoiceDetails.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Resolution", HeaderText = "Giải quyết", Name = "Resolution", Width = 200, ReadOnly = true });
+        }
+
+        private void LoadAllClaimsData()
+        {
+            try
+            {
+                // 1. Lấy toàn bộ danh sách phiếu
+                var claims = _warrantyBUS.GetAll();
+                dgv_invoiceDetails.DataSource = claims;
+
+                // 2. Lọc ra các lỗi duy nhất (distinct) để đẩy vào Combobox "Lý do trả hàng"
+                var uniqueDefects = claims
+                    .Where(c => !string.IsNullOrEmpty(c.DefectDescription))
+                    .Select(c => c.DefectDescription)
+                    .Distinct()
+                    .ToArray();
+
+                txb_reason.Items.Clear();
+                txb_reason.Items.AddRange(uniqueDefects);
+
+                // Mặc định chọn dòng đầu tiên nếu có dữ liệu
+                if (txb_reason.Items.Count > 0)
+                    txb_reason.SelectedIndex = 0;
+
+                SetTradeInPanelState(true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi tải dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SetTradeInPanelState(bool isEnabled)
@@ -56,41 +85,42 @@ namespace Desktop_Application_Development
             btn_createTradeIn.Enabled = isEnabled;
         }
 
-        // ==========================================
-        // 1. SỰ KIỆN NÚT TÌM KIẾM HÓA ĐƠN
-        // ==========================================
+        // --- SỰ KIỆN NÚT TÌM KIẾM ---
         private void btn_searchTradeIn_Click(object sender, EventArgs e)
         {
-            string invoiceCode = txt_invoiceCode.Text.Trim();
-            if (string.IsNullOrEmpty(invoiceCode))
-            {
-                MessageBox.Show("Vui lòng nhập Mã Hóa Đơn!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             try
             {
-                var invoice = _salesBUS.GetByInvoiceCode(invoiceCode); 
+                string searchKeyword = txt_invoiceCode.Text.Trim();
+                var claims = _warrantyBUS.GetAll();
 
-                if (invoice != null)
+                if (!string.IsNullOrEmpty(searchKeyword))
                 {
-                    _currentInvoiceID = invoice.InvoiceID;
-                    _currentCustomerID = invoice.CustomerID ?? 0;
-                    
-                    var customer = _customerBUS.GetById(_currentCustomerID);
-                    txt_customerName.Text = customer != null ? customer.FullName : "Khách lẻ";
-                    txt_phone.Text = customer != null ? customer.Phone : "Không có";
-                    
-                    var chiTietHoaDon = _salesBUS.GetInvoiceDetails(_currentInvoiceID);
-                    dgv_invoiceDetails.DataSource = null; 
-                    dgv_invoiceDetails.DataSource = chiTietHoaDon;
-                    
-                    SetTradeInPanelState(true);
+                    // Lọc những dòng có chứa từ khóa ClaimCode
+                    claims = claims.Where(c => c.ClaimCode != null &&
+                                               c.ClaimCode.IndexOf(searchKeyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                                   .ToList();
+
+                    // Gán tạm CustomerID và InvoiceID của dòng đầu tiên tìm được để dùng cho việc lưu DB
+                    if (claims.Any())
+                    {
+                        _currentInvoiceID = claims.First().InvoiceID;
+                        _currentCustomerID = claims.First().CustomerID;
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Không tìm thấy Hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    btn_cancelTradeIn_Click(null, null);
+                    // Nếu ô tìm kiếm trống, reset lại biến
+                    _currentInvoiceID = 0;
+                    _currentCustomerID = 0;
+                }
+
+                // Cập nhật lại danh sách hiển thị
+                dgv_invoiceDetails.DataSource = null;
+                dgv_invoiceDetails.DataSource = claims;
+
+                if (claims.Count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy phiếu bảo hành nào khớp với mã đã nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -99,30 +129,24 @@ namespace Desktop_Application_Development
             }
         }
 
-        // ==========================================
-        // 2. SỰ KIỆN NÚT XÁC NHẬN (LƯU DATABASE)
-        // ==========================================
+        // --- SỰ KIỆN NÚT XÁC NHẬN (LƯU DB) ---
         private void btn_confirmTradeIn_Click(object sender, EventArgs e)
         {
-            if (_currentInvoiceID == 0)
-            {
-                MessageBox.Show("Vui lòng tìm kiếm hóa đơn trước!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             List<string> selectedSerials = new List<string>();
+
+            // Quét xem những ô checkbox nào đang được tích chọn
             foreach (DataGridViewRow row in dgv_invoiceDetails.Rows)
             {
-                // Kiểm tra null trước khi ép kiểu để tránh crash app nếu click vào ô trống
                 if (row.Cells["chkSelect"].Value != null && Convert.ToBoolean(row.Cells["chkSelect"].Value))
                 {
-                    selectedSerials.Add(row.Cells["ItemCode"].Value.ToString());
+                    selectedSerials.Add(row.Cells["SerialID"].Value.ToString());
                 }
             }
 
+            // Bắt lỗi logic người dùng nhập thiếu
             if (selectedSerials.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn ít nhất một sản phẩm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng tích chọn ít nhất một phiếu bảo hành ở cột 'Chọn'!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -132,18 +156,19 @@ namespace Desktop_Application_Development
                 return;
             }
 
-            if (MessageBox.Show("Xác nhận tạo phiếu đổi trả?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            // Bắt đầu lưu thông tin
+            if (MessageBox.Show("Xác nhận lưu thông tin hoàn tiền cho các phiếu đã chọn?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string reason = txb_reason.SelectedItem?.ToString() ?? "Khác...";
                 string note = rtb_tradeInNote.Text.Trim();
 
-                // Bắn dữ liệu xuống WarrantyBUS
+                // TRUYỀN BIẾN _currentInvoiceID XUỐNG ĐỂ LƯU
                 var result = _warrantyBUS.CreateTradeIn(_currentInvoiceID, _currentCustomerID, reason, note, refundAmount, selectedSerials);
 
                 if (result.success)
                 {
                     MessageBox.Show("Đã lưu phiếu đổi trả và cập nhật kho thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    btn_cancelTradeIn_Click(null, null); // Clear sạch form sau khi lưu
+                    btn_cancelTradeIn_Click(null, null); // Gọi nút Hủy để clear sạch giao diện
                 }
                 else
                 {
@@ -152,33 +177,45 @@ namespace Desktop_Application_Development
             }
         }
 
-        // ==========================================
-        // 3. SỰ KIỆN NÚT HỦY / LÀM MỚI
-        // ==========================================
+        // Sự kiện hỗ trợ Checkbox
+        private void Dgv_invoiceDetails_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgv_invoiceDetails.Columns["chkSelect"].Index && e.RowIndex >= 0)
+            {
+                dgv_invoiceDetails.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        // --- SỰ KIỆN NÚT HỦY BỎ ---
         private void btn_cancelTradeIn_Click(object sender, EventArgs e)
         {
+            // Xóa sạch chữ trên màn hình
             txt_invoiceCode.Clear();
             txt_customerName.Clear();
             txt_phone.Clear();
             rtb_tradeInNote.Clear();
             txt_refundAmount.Clear();
-            
-            // Phải reset ID về 0 để an toàn cho phiên giao dịch tiếp theo
-            _currentInvoiceID = 0; 
-            _currentCustomerID = 0; 
-            
-            dgv_invoiceDetails.DataSource = null;
-            SetTradeInPanelState(false);
+
+            // Reset biến
+            _currentInvoiceID = 0;
+            _currentCustomerID = 0;
+
+            if (txb_reason.Items.Count > 0) txb_reason.SelectedIndex = 0;
+
+            // Load lại toàn bộ data gốc
+            LoadAllClaimsData();
         }
 
-        // ==========================================
-        // 4. SỰ KIỆN NÚT TẠO PHIẾU ĐỔI TRẢ
-        // ==========================================
+        // --- SỰ KIỆN NÚT TẠO PHIẾU ---
         private void btn_createTradeIn_Click(object sender, EventArgs e)
         {
-            // Trỏ thẳng sang hàm Xác nhận để tái sử dụng toàn bộ logic kiểm tra và lưu DB
-            // Điều này giúp người dùng bấm nút "Xác nhận" hay "Tạo phiếu" đều có tác dụng như nhau.
+            // Dùng chung một chức năng với nút Xác nhận
             btn_confirmTradeIn_Click(sender, e);
+        }
+
+        // Sự kiện để trống (bắt buộc phải giữ lại do file Designer của bạn đang liên kết với nó)
+        private void rtb_tradeInNote_TextChanged(object sender, EventArgs e)
+        {
         }
     }
 }
