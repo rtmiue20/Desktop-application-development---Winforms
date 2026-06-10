@@ -1,217 +1,189 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using BUS;
 using DTO;
+using Microsoft.VisualBasic; // Dùng cho Interaction.InputBox
 
-namespace GUI;
-
-public partial class FormManageShift : Form
+namespace GUI
 {
-    private ShiftsBUS _shiftsBus = new ShiftsBUS();
-    private ShiftsDTO? _currentShift = null;
-    private bool _isShiftOpen => _currentShift != null;
-    private List<ShiftsDTO> _shiftList = new List<ShiftsDTO>();
-
-    public FormManageShift()
+    public partial class FormManageShift : Form
     {
-        InitializeComponent();
-        ControlStandardization.ApplyFormStandard(this);
-        ApplyStyles();
+        private readonly ShiftsBUS _shiftsBus = new ShiftsBUS();
+        
+        // Giả lập ID người dùng hiện tại (Trong dự án thực tế, thay bằng CurrentUser.UserID)
+        private readonly int _currentUserId = 1; 
 
-        btn_shiftOpen.Click   += btn_shiftOpen_Click;
-        btn_shiftStop.Click   += btn_shiftStop_Click;
-        btn_shiftHistory.Click += btn_shiftHistory_Click;
-
-        LoadData();
-    }
-
-    private void ApplyStyles()
-    {
-        ControlStandardization.ApplyTopBarPanelStandard(pnl_top);
-        ControlStandardization.ApplyStatusPanelStandard(pnl_footer);
-        ControlStandardization.ApplyDataGridViewStandard(dgv_listShift);
-
-        this.BackColor = Color.White;
-
-        ControlStandardization.ApplyTopBarButtonStandard(btn_shiftOpen, ButtonPosition.Add);
-        ControlStandardization.ApplyTopBarButtonStandard(btn_shiftStop, ButtonPosition.Edit);
-        ControlStandardization.ApplyTopBarButtonStandard(btn_shiftHistory, ButtonPosition.Delete);
-
-        foreach (Control ctrl in pnl_top.Controls)
+        public FormManageShift()
         {
-            if (ctrl is Button btn)
+            InitializeComponent();
+        }
+
+        private void FormManageShift_Load(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        // ─────────────────────────────────────────────
+        // 1. TẢI DỮ LIỆU & CẬP NHẬT TRẠNG THÁI CA
+        // ─────────────────────────────────────────────
+        private void LoadData()
+        {
+            try
             {
-                btn.ForeColor = Color.Black;
-                btn.UseVisualStyleBackColor = true;
+                // 1. Tải danh sách lịch sử toàn bộ ca làm việc
+                var listShifts = _shiftsBus.GetAllShifts();
+                dgv_listShift.AutoGenerateColumns = false;
+                dgv_listShift.DataSource = listShifts;
+
+                // 2. Lấy thông tin ca đang mở của user hiện tại
+                var currentShift = _shiftsBus.GetOpenShift(_currentUserId);
+                UpdateCurrentShiftUI(currentShift);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dữ liệu ca làm việc:\n" + ex.Message, "Lỗi Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        groupBox1.Dock   = DockStyle.Top;
-        groupBox1.Height = 150;
-
-        int cardWidth = (this.ClientSize.Width - 40) / 5;
-        Panel[] cards = { panel1, panel2, panel3, panel4, panel5 };
-        for (int i = 0; i < cards.Length; i++)
+        private void UpdateCurrentShiftUI(ShiftsDTO currentShift)
         {
-            cards[i].Width    = cardWidth;
-            cards[i].Location = new Point(10 + i * cardWidth, 30);
-            cards[i].Anchor   = AnchorStyles.Top | AnchorStyles.Left;
-        }
-    }
-
-    private void LoadData()
-    {
-        _currentShift = _shiftsBus.GetOpenShift(CurrentUser.UserID);
-        _shiftList    = _shiftsBus.GetAllShifts();
-
-        UpdateCards();
-        LoadTable();
-        UpdateFooter();
-    }
-
-    private void UpdateCards()
-    {
-        lbl_resStatus.Text      = _isShiftOpen ? "Đang mở" : "Đã đóng";
-        lbl_resStatus.ForeColor = _isShiftOpen ? Color.FromArgb(0, 140, 0) : Color.Red;
-
-        if (_isShiftOpen)
-        {
-            lbl_resTime.Text  = _currentShift!.StartTime.ToString("HH:mm");
-            lbl_resMoney.Text = string.Format("{0:N0}đ", _currentShift.OpeningCash);
-
-            var (revenue, profit) = new ReportsBUS().GetDailySummary(CurrentUser.UserID, DateTime.Today);
-            lbl_resRevenue.Text  = string.Format("{0:N0}đ", revenue);
-            lbl_resActivity.Text = "Đang trong ca";
-        }
-        else
-        {
-            lbl_resTime.Text     = "--:--";
-            lbl_resMoney.Text    = "0đ";
-            lbl_resActivity.Text = "Nghỉ";
-            lbl_resRevenue.Text  = "0đ";
-        }
-
-        lbl_resRevenue.ForeColor = Color.FromArgb(0, 102, 204);
-    }
-
-    private void LoadTable()
-    {
-        dgv_listShift.Rows.Clear();
-        dgv_listShift.RowHeadersVisible  = false;
-        dgv_listShift.AllowUserToAddRows = false;
-        dgv_listShift.ReadOnly           = true;
-        dgv_listShift.SelectionMode      = DataGridViewSelectionMode.FullRowSelect;
-        dgv_listShift.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 248, 255);
-
-        foreach (var s in _shiftList)
-        {
-            int i = dgv_listShift.Rows.Add(
-                s.ShiftCode,
-                CurrentUser.FullName,
-                s.StartTime.ToString("dd/MM HH:mm"),
-                s.EndTime?.ToString("dd/MM HH:mm") ?? "—",
-                string.Format("{0:N0}", s.OpeningCash),
-                s.ClosingCash > 0 ? string.Format("{0:N0}", s.ClosingCash) : "—",
-                s.DifferenceAmount != 0 ? string.Format("{0:N0}", s.DifferenceAmount) : "—",
-                s.Status
-            );
-
-            var ttCell = dgv_listShift.Rows[i].Cells["col_trangThai"];
-            if (s.Status == "Đang mở")
-            { ttCell.Style.BackColor = Color.FromArgb(0, 102, 204); ttCell.Style.ForeColor = Color.White; }
-            else
-            { ttCell.Style.BackColor = Color.FromArgb(100, 100, 100); ttCell.Style.ForeColor = Color.White; }
-
-            var clCell = dgv_listShift.Rows[i].Cells["col_chenhLech"];
-            if (s.DifferenceAmount > 0) clCell.Style.ForeColor = Color.Green;
-            else if (s.DifferenceAmount < 0) clCell.Style.ForeColor = Color.Red;
-        }
-    }
-
-    private void UpdateFooter()
-    {
-        if (_isShiftOpen)
-        {
-            lbl_footerLeft.Text  = $"Ca hiện tại: {_currentShift!.ShiftCode} | {CurrentUser.FullName}";
-            lbl_footerRight.Text = $"Mở lúc: {_currentShift.StartTime:HH:mm dd/MM}";
-        }
-        else
-        {
-            lbl_footerLeft.Text  = "Chưa mở ca";
-            lbl_footerRight.Text = "";
-        }
-    }
-
-    private void btn_shiftOpen_Click(object? sender, EventArgs e)
-    {
-        if (_isShiftOpen)
-        {
-            MessageBox.Show("Bạn đang có ca chưa chốt. Vui lòng chốt ca trước.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        string input = Microsoft.VisualBasic.Interaction.InputBox("Nhập số tiền mặt đầu ca:", "Mở ca làm việc", "0");
-        if (string.IsNullOrWhiteSpace(input)) return;
-
-        if (decimal.TryParse(input, out decimal openingCash))
-        {
-            var result = _shiftsBus.OpenShift(openingCash);
-            if (result.success)
+            if (currentShift != null)
             {
-                MessageBox.Show("Mở ca thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                lbl_resStatus.Text = "ĐANG MỞ";
+                lbl_resStatus.ForeColor = Color.ForestGreen;
+                lbl_resTime.Text = currentShift.StartTime.ToString("dd/MM/yyyy HH:mm");
+                lbl_resMoney.Text = $"{currentShift.OpeningCash:N0} đ";
             }
             else
             {
-                MessageBox.Show(result.error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                lbl_resStatus.Text = "CHƯA MỞ CA";
+                lbl_resStatus.ForeColor = Color.Firebrick;
+                lbl_resTime.Text = "--/--/---- --:--";
+                lbl_resMoney.Text = "0 đ";
             }
         }
-        else
+
+        // ─────────────────────────────────────────────
+        // 2. LOGIC MỞ CA (OPEN SHIFT)
+        // ─────────────────────────────────────────────
+        private void btn_shiftOpen_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Số tiền không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-    private void btn_shiftStop_Click(object? sender, EventArgs e)
-    {
-        if (!_isShiftOpen)
-        {
-            MessageBox.Show("Không có ca nào đang mở!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        string inputCash = Microsoft.VisualBasic.Interaction.InputBox("Nhập tổng tiền mặt thực tế tại quầy:", "Chốt ca làm việc", "0");
-        if (string.IsNullOrWhiteSpace(inputCash)) return;
-
-        if (decimal.TryParse(inputCash, out decimal actualCash))
-        {
-            string note = Microsoft.VisualBasic.Interaction.InputBox("Ghi chú chênh lệch (nếu có):", "Ghi chú", "");
-
-            var result = _shiftsBus.CloseShift(actualCash, note);
-            if (result.success)
+            // Kiểm tra xem đã có ca nào đang mở chưa
+            var currentShift = _shiftsBus.GetOpenShift(_currentUserId);
+            if (currentShift != null)
             {
-                MessageBox.Show("Chốt ca thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                MessageBox.Show("Bạn đang có ca chưa chốt. Vui lòng chốt ca cũ trước khi mở ca mới!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Gọi InputBox để nhập tiền mặt đầu ca
+            string inputCash = Interaction.InputBox("Nhập số tiền mặt đầu ca (VNĐ):", "Mở ca làm việc", "0");
+            if (string.IsNullOrWhiteSpace(inputCash)) return;
+
+            if (decimal.TryParse(inputCash, out decimal openingCash))
+            {
+                var result = _shiftsBus.OpenShift(openingCash);
+                if (result.success)
+                {
+                    MessageBox.Show("Mở ca thành công! Chúc bạn một ngày làm việc hiệu quả.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadData();
+                }
+                else
+                {
+                    MessageBox.Show(result.error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show(result.error, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Số tiền không hợp lệ. Vui lòng chỉ nhập số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        else
+
+        // ─────────────────────────────────────────────
+        // 3. LOGIC CHỐT CA (CLOSE SHIFT)
+        // ─────────────────────────────────────────────
+        private void btn_shiftStop_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Số tiền không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            var currentShift = _shiftsBus.GetOpenShift(_currentUserId);
+            if (currentShift == null)
+            {
+                MessageBox.Show("Không có ca nào đang mở để chốt!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Gọi InputBox để kiểm đếm thực tế
+            string inputCash = Interaction.InputBox("Nhập tổng tiền mặt thực tế đang có tại quầy (VNĐ):", "Chốt ca làm việc", "0");
+            if (string.IsNullOrWhiteSpace(inputCash)) return;
+
+            if (decimal.TryParse(inputCash, out decimal actualCash))
+            {
+                string note = Interaction.InputBox("Ghi chú chênh lệch (nếu có):", "Ghi chú chốt ca", "");
+                
+                var result = _shiftsBus.CloseShift(actualCash, note);
+                if (result.success)
+                {
+                    MessageBox.Show("Chốt ca thành công! Số liệu đã được lưu lại hệ thống.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadData();
+                }
+                else
+                {
+                    MessageBox.Show(result.error, "Lỗi chốt ca", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Số tiền không hợp lệ. Vui lòng chỉ nhập số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ─────────────────────────────────────────────
+        // 4. LÀM MỚI LỊCH SỬ CA
+        // ─────────────────────────────────────────────
+        private void btn_shiftHistory_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        // ─────────────────────────────────────────────
+        // 5. ĐỊNH DẠNG MÀU SẮC GRIDVIEW TỰ ĐỘNG
+        // ─────────────────────────────────────────────
+        private void dgv_listShift_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv_listShift.ClearSelection();
+            foreach (DataGridViewRow row in dgv_listShift.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                // Đổi màu theo trạng thái
+                string status = row.Cells["col_trangThai"].Value?.ToString() ?? "";
+                if (status == "Đang mở")
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightYellow;
+                    row.Cells["col_trangThai"].Style.ForeColor = Color.DarkOrange;
+                    row.Cells["col_trangThai"].Style.Font = new Font(dgv_listShift.Font, FontStyle.Bold);
+                }
+                else if (status == "Đã chốt")
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.Cells["col_trangThai"].Style.ForeColor = Color.ForestGreen;
+                }
+
+                // Định dạng cột tiền tệ
+                string[] moneyCols = { "col_tienDauca", "col_tienCuoica", "col_chenhLech" };
+                foreach (var col in moneyCols)
+                {
+                    if (row.Cells[col].Value != null && decimal.TryParse(row.Cells[col].Value.ToString(), out decimal val))
+                    {
+                        row.Cells[col].Value = $"{val:N0} đ";
+                        // Bôi đỏ nếu chênh lệch âm
+                        if (col == "col_chenhLech" && val < 0)
+                        {
+                            row.Cells[col].Style.ForeColor = Color.Red;
+                        }
+                    }
+                }
+            }
         }
     }
-
-    private void btn_shiftHistory_Click(object? sender, EventArgs e)
-    {
-        LoadData();
-    }
-
-    private void label2_Click_1(object sender, EventArgs e) { }
-    private void label2_Click_2(object sender, EventArgs e) { }
-    private void lbl_tienDaucaTitle_Click(object sender, EventArgs e) { }
 }
